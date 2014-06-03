@@ -3,7 +3,7 @@ OpenGLTest
 This project currently uses OpenGL 3.3 to render textured objects to the screen.
 The data for these objects can be specified manually or come from Wavefront OBJ files.
 SDL 2.0 is used to create the OpenGL context, and GLEW is used to access additional OpenGL
-functions. SOIL is used to load texture images.
+functions. SOIL is used to load texture images. GLM is used for vector and matrix calculations.
 
 Controls:
 ---------
