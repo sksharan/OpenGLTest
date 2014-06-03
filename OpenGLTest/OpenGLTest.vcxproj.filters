@@ -142,6 +142,5 @@
     <Text Include="shaders\vert.txt">
       <Filter>src\shaders</Filter>
     </Text>
-    <Text Include="README.txt" />
   </ItemGroup>
 </Project>

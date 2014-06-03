@@ -46,7 +46,6 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="README.txt" />
     <Text Include="shaders\frag.txt" />
     <Text Include="shaders\vert.txt" />
   </ItemGroup>
