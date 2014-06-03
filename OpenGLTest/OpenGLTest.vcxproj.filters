@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{81970b4c-1a98-4d7f-a0da-f2f5f7958f29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\init">
+      <UniqueIdentifier>{286b1cf5-a31e-4238-8f1b-62beb30a64e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\main">
+      <UniqueIdentifier>{d59cac7d-4104-4911-a33d-1a48e3b19e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\globals">
+      <UniqueIdentifier>{71bd8b9f-1100-4ff0-8e68-1b801e2e792f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{91994e51-d408-4ede-a61f-27bb74e05ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shaders">
+      <UniqueIdentifier>{1016dc8a-6544-4494-a6db-95be1bd08ef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{2ea648b2-f335-4099-ada6-74b031d46769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\object">
+      <UniqueIdentifier>{e15cface-ec3a-4768-9d18-3243aad0afdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{0723e127-fc68-46c4-9549-121848e7cb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\transform">
+      <UniqueIdentifier>{53a241db-7eb5-4df6-9bde-9fa12b6c20d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\viewer">
+      <UniqueIdentifier>{435fa977-3ac5-41b7-acd1-0d76398600f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\test">
+      <UniqueIdentifier>{2a80d2e4-b3fb-42cb-8a09-a63ec1c768c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InitSDL.h">
+      <Filter>src\init</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>src\globals</Filter>
+    </ClInclude>
+    <ClInclude Include="InitGLEW.h">
+      <Filter>src\init</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyHandler.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgramState.h">
+      <Filter>src\globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderableObject.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
+    <ClInclude Include="InitGL.h">
+      <Filter>src\init</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixTransform.h">
+      <Filter>src\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>src\globals</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer.h">
+      <Filter>src\viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseHandler.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>src\test</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJObject.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="InitSDL.cpp">
+      <Filter>src\init</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>src\main</Filter>
+    </ClCompile>
+    <ClCompile Include="InitGLEW.cpp">
+      <Filter>src\init</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyHandler.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderableObject.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
+    <ClCompile Include="InitGL.cpp">
+      <Filter>src\init</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixTransform.cpp">
+      <Filter>src\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.cpp">
+      <Filter>src\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewer.cpp">
+      <Filter>src\viewer</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseHandler.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgramState.cpp">
+      <Filter>src\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>src\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>src\test</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJObject.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shaders\frag.txt">
+      <Filter>src\shaders</Filter>
+    </Text>
+    <Text Include="shaders\vert.txt">
+      <Filter>src\shaders</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

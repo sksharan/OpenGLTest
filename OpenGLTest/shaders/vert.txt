@@ -1,0 +1,17 @@
+#version 330
+
+uniform mat4 perspective;
+uniform mat4 modelview;
+
+layout(location = 0) in vec3 v_vertex;
+layout(location = 1) in vec2 v_texcoord;
+layout(location = 2) in vec3 v_normal;
+
+out vec2 f_texcoord;
+out vec3 f_normal;
+
+void main() {
+    gl_Position = perspective * modelview * vec4(v_vertex, 1.0f);
+	f_texcoord = v_texcoord;
+	f_normal = v_normal;
+}
