@@ -49,6 +49,9 @@
     <Text Include="shaders\frag.txt" />
     <Text Include="shaders\vert.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="obj\isosphere.obj" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B97D0D68-C5E2-47BD-96A7-5B06B30F3F7D}</ProjectGuid>
     <RootNamespace>OpenGLTest</RootNamespace>
