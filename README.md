@@ -57,6 +57,8 @@ Viewer.h : class representing an entity that looks into the world
 Some important folders: 
 -----------------------
 
+obj: contains Wavefront OBJ files used for testing
+
 photos: contains photos showing what the program does at runtime
 
 textures: contains texture images (rock.jpg is from CGTextures.com)
