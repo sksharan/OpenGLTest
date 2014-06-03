@@ -6,7 +6,7 @@ SDL 2.0 is used to create the OpenGL context, and GLEW is used to access additio
 functions. SOIL is used to load texture images.
 
 Controls:
-
+---------
 W:   move forward
 
 A:   move left
@@ -23,6 +23,7 @@ The mouse can be used to look around in all directions from the current position
 
 
 Some important files:
+---------------------
 
 Main.cpp : program entry point and home of the main loop
 
@@ -54,6 +55,7 @@ Viewer.h : class representing an entity that looks into the world
 
 
 Some important folders: 
+-----------------------
 
 photos: contains photos showing what the program does at runtime
 
@@ -63,6 +65,7 @@ shaders: contains files for the OpenGL shaders
 
 
 TODO list:
+-----------
 - add a Heightmap class, a type of RenderableObject that pertains to geometry generated
   from greyscale heightmap images
 
