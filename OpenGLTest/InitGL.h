@@ -1,3 +1,5 @@
+/* Set of functions used to get ready for rendering. */
+
 #ifndef INITGL_H
 #define INITGL_H
 

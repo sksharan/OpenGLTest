@@ -8,5 +8,5 @@ in vec3 f_normal;
 out vec4 frag_color;
 
 void main() {
-    frag_color = texture(texture0, f_texcoord) * vec4(0.8, 0.8, 0.8, 1);
+    frag_color = texture(texture0, f_texcoord);
 }

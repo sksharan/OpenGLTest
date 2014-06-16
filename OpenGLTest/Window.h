@@ -1,3 +1,5 @@
+/* Defines a struct for windows and declares the main window used in the program. */
+
 #ifndef WINDOW_H
 #define WINDOW_H
 

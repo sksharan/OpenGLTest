@@ -1,3 +1,5 @@
+/* Initilaizes GLEW. */
+
 #ifndef INITGLEW_H
 #define INITGLEW_H
 

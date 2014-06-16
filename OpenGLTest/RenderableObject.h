@@ -1,3 +1,5 @@
+/* Defines a general class for any object that can be rendered. */
+
 #ifndef RENDERABLEOBJECT_H
 #define RENDERABLEOBJECT_H
 

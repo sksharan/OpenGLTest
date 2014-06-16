@@ -1,3 +1,5 @@
+/* Handles keyboard input from the user. */
+
 #ifndef KEYHANDLER_H
 #define KEYHANDLER_H
 

@@ -1,3 +1,5 @@
+/* Handles mouse input from the user. */
+
 #ifndef MOUSEHANDLER_H
 #define MOUSEHANDLER_H
 

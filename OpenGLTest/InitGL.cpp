@@ -1,3 +1,5 @@
+/* Implementation of functions declared in InitGL.h. */
+
 #include "InitGL.h"
 #include "Util.h"
 #include <GL/glew.h>

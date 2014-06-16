@@ -1,3 +1,6 @@
+/* Defines a struct to keep track of program state (e.g. whether or not the program should
+continue to run). */
+
 #ifndef PROGRAMSTATE_H
 #define PROGRAMSTATE_H
 

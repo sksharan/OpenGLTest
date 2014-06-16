@@ -34,12 +34,6 @@
     <Filter Include="src\viewer">
       <UniqueIdentifier>{435fa977-3ac5-41b7-acd1-0d76398600f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\test">
-      <UniqueIdentifier>{2a80d2e4-b3fb-42cb-8a09-a63ec1c768c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\obj">
-      <UniqueIdentifier>{9f4ad6f9-a546-4d5d-80a3-eab705b6ea7b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -80,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="MouseHandler.h">
       <Filter>src\input</Filter>
-    </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>src\test</Filter>
     </ClInclude>
     <ClInclude Include="OBJObject.h">
       <Filter>src\object</Filter>
@@ -131,9 +122,6 @@
     <ClCompile Include="Window.cpp">
       <Filter>src\globals</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>src\test</Filter>
-    </ClCompile>
     <ClCompile Include="OBJObject.cpp">
       <Filter>src\object</Filter>
     </ClCompile>
@@ -145,10 +133,5 @@
     <Text Include="shaders\vert.txt">
       <Filter>src\shaders</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="obj\isosphere.obj">
-      <Filter>src\obj</Filter>
-    </Object>
   </ItemGroup>
 </Project>

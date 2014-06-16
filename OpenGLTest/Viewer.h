@@ -1,3 +1,5 @@
+/* Defines a class representing an entity that looks into the world. */
+
 #ifndef VIEWER_H
 #define VIEWER_H
 

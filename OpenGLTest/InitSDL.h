@@ -1,3 +1,5 @@
+/* Initializes SDL 2.0. */
+
 #ifndef INITSDL_H
 #define INITSDL_H
 

@@ -1,3 +1,5 @@
+/* Home of the main function and the main loop. */
+
 #include "InitSDL.h"
 #include "InitGLEW.h"
 #include "InitGL.h"
@@ -28,9 +30,7 @@ int main(int argc, char** argv) {
 	}
 
 	/* Initialize depth buffering. */
-	if (!initDepth()) {
-		return -3;
-	}
+	initDepth();
 
 	/* Hide the mouse cursor. */
 	SDL_ShowCursor(0);
@@ -52,8 +52,8 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 
 	/* Create the objects. */
-	//RenderableObject* object = createTestObject();
-	OBJObject object2("objobject", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, "obj/isosphere.obj");
+	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR, TEST_OBJ_CORRECTED);
+	//object.writeOBJ("obj/correctedtower.obj");
 
 	/* Begin the main loop. */
 	programState.done = false;
@@ -73,8 +73,7 @@ int main(int argc, char** argv) {
 		render();
 	}
 
-	/* Delete the objects. */
-	//delete object;
+	/* Delete the objects if needed. */
 
 	/* Deinitialize SDL. */
 	deinitSDL();

@@ -1,3 +1,5 @@
+/* Defines specific values to some of the constants declared in Constants.h. */
+
 #include "Constants.h"
 
 float persp_fov = 45.0f;
