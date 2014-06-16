@@ -93,9 +93,9 @@ void OBJObject::parseOBJ() {
 				stream >> str;
 				size_t first_slash = str.find("/");
 				size_t second_slash = str.find_last_of("/");
-				size_t v_index = atoi(str.substr(0, first_slash).c_str()) - 1;
-				size_t vt_index = atoi(str.substr(first_slash + 1, second_slash).c_str()) - 1;
-				size_t vn_index = atoi(str.substr(second_slash + 1, str.size()).c_str()) - 1;
+				size_t v_index = atoi(str.substr(0, first_slash).c_str());
+				size_t vt_index = atoi(str.substr(first_slash + 1, second_slash).c_str());
+				size_t vn_index = atoi(str.substr(second_slash + 1, str.size()).c_str());
 
 				temp_v_indices.push_back(v_index);
 			    temp_vt_indices.push_back(vt_index);
@@ -104,12 +104,24 @@ void OBJObject::parseOBJ() {
 		}
 	}
 
-	// now we can add to our list of vertices, texcoords, normals (indices won't be used for rendering)
+	// now we can add to our list of vertices, texcoords, normals
 	for (int i = 0; i < temp_v_indices.size(); i++) {
 
-		vertices.push_back( temp_v[temp_v_indices[i]] );
-		texcoords.push_back( temp_vt[temp_vt_indices[i]] );
-		normals.push_back( temp_vn[temp_vn_indices[i]] );
+		//note: indices in OBJ files start at 1 instead of 0
+		int v_index = (temp_v_indices[i] - 1) * 3;
+		int vt_index = (temp_vt_indices[i] - 1) * 2;
+		int vn_index = (temp_vn_indices[i] - 1) * 3;
+
+		vertices.push_back(temp_v[v_index]);
+		vertices.push_back(temp_v[v_index + 1]);
+		vertices.push_back(temp_v[v_index + 2]);
+
+		texcoords.push_back(temp_vt[vt_index]);
+		texcoords.push_back(temp_vt[vt_index + 1]);
+
+		normals.push_back(temp_vn[vn_index]);
+		normals.push_back(temp_vn[vn_index + 1]);
+		normals.push_back(temp_vn[vn_index + 2]);
 	}
 }
 
