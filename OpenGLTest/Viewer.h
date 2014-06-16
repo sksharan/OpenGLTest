@@ -10,7 +10,7 @@ class Viewer {
 public:
 
 	/* Creates a new Viewer at the origin (in world coordinates) that looks in the
-	 * negative z direction. */
+	negative z direction. */
 	Viewer();
 
 	~Viewer();
