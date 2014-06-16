@@ -39,7 +39,9 @@ void OBJObject::parseOBJ() {
 	std::stringstream stream;
 	stream << obj_file_data;
 
-	// 
+	// create temp variables
+	std::vector<float> temp_v, temp_vt, temp_vn;
+	std::vector<GLuint> temp_v_indices, temp_vn_indices, temp_vt_indices;
 
 	// read the input OBJ
 	std::string str;
@@ -53,29 +55,29 @@ void OBJObject::parseOBJ() {
 		// read vertices
 		else if (str == "v") {
 			stream >> str;
-			v_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_v.push_back(static_cast<float>(atof(str.c_str())));
 			stream >> str;
-			v_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_v.push_back(static_cast<float>(atof(str.c_str())));
 			stream >> str;
-			v_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_v.push_back(static_cast<float>(atof(str.c_str())));
 		}
 
 		// read texcoords
 		else if (str == "vt") {
 			stream >> str;
-			vt_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_vt.push_back(static_cast<float>(atof(str.c_str())));
 			stream >> str;
-			vt_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_vt.push_back(static_cast<float>(atof(str.c_str())));
 		}
 
 		// read normals
 		else if (str == "vn") {
 			stream >> str;
-			vn_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_vn.push_back(static_cast<float>(atof(str.c_str())));
 			stream >> str;
-			vn_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_vn.push_back(static_cast<float>(atof(str.c_str())));
 			stream >> str;
-			vn_ptr->push_back(static_cast<float>(atof(str.c_str())));
+			temp_vn.push_back(static_cast<float>(atof(str.c_str())));
 		}
 
 		// read indices
@@ -88,11 +90,9 @@ void OBJObject::parseOBJ() {
 				size_t vt_index = atoi(str.substr(first_slash + 1, second_slash).c_str()) - 1;
 				size_t vn_index = atoi(str.substr(second_slash + 1, str.size()).c_str()) - 1;
 
-				v_indices_ptr->push_back(v_index);
-				if (!obj_correct) {
-					vt_indices_ptr->push_back(vt_index);
-					vn_indices_ptr->push_back(vn_index);
-				}
+				temp_v_indices.push_back(v_index);
+			    temp_vt_indices.push_back(vt_index);
+			    vn_indices_ptr->push_back(vn_index);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-/* Class representing objects created from OBJ files. */
+/* Class representing objects created from OBJ files. The render function does not use element array buffers. */
 
 #ifndef OBJOBJECT_H
 #define OBJOBJECT_H
