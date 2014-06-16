@@ -34,6 +34,9 @@
     <Filter Include="src\viewer">
       <UniqueIdentifier>{435fa977-3ac5-41b7-acd1-0d76398600f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resources">
+      <UniqueIdentifier>{34f5e584-e6e7-4ac9-acea-7c46221e492e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -133,5 +136,16 @@
     <Text Include="shaders\vert.txt">
       <Filter>src\shaders</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="photos\tower_obj_filled.png">
+      <Filter>src\resources</Filter>
+    </Image>
+    <Image Include="photos\tower_obj_wireframe.png">
+      <Filter>src\resources</Filter>
+    </Image>
+    <Image Include="textures\tower.jpg">
+      <Filter>src\resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
