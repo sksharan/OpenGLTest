@@ -1,4 +1,5 @@
-/* Definition of constants used throughout the program. */
+/* Definition of constants used throughout the program. Some variables may
+be modifed in the program's lifetime. */
 
 #ifndef CONTSTANTS_H
 #define CONSTANTS_H

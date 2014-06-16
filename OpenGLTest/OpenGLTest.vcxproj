@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="HeightmapObject.h" />
     <ClInclude Include="InitGL.h" />
     <ClInclude Include="InitGLEW.h" />
     <ClInclude Include="InitSDL.h" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="HeightmapObject.cpp" />
     <ClCompile Include="InitGL.cpp" />
     <ClCompile Include="InitGLEW.cpp" />
     <ClCompile Include="InitSDL.cpp" />

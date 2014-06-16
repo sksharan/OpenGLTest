@@ -12,6 +12,7 @@
 #include "MatrixTransform.h"
 #include "RenderableObject.h"
 #include "OBJObject.h"
+#include "HeightmapObject.h"
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -51,7 +52,9 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 
 	/* Create the objects. */
-	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
+	//OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
+	HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "textures/chadvernon.jpg",
+		                     glm::vec3(0, 0, 0), 10, 0.5);
 
 	/* Begin the main loop. */
 	programState.done = false;

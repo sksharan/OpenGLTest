@@ -10,7 +10,7 @@ float persp_z_far = 100.0f;
 
 float movement_speed = 15.0f;
 
-float mouse_speed = 0.02f;
+float mouse_speed = 0.07f;
 
 Uint32 old_time = 0;
 
