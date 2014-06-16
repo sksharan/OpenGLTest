@@ -24,6 +24,10 @@ public:
 	OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 		      float shininess, std::string tex_filename, std::string obj_filename);
 
+	/* Overrides of RenderableObject methods that don't use indexed rendering. */
+	virtual void render();
+	virtual void initVao();
+
 private:
 	/* The filename of the Wavefront OBJ associated with this object */
 	std::string obj_file;

@@ -12,8 +12,8 @@ void render() {
 	glUseProgram(programState.program);
 
 	for (int i = 0; i < RenderableObject::renderableObjects.size(); i++) {
-		RenderableObject object = *(RenderableObject::renderableObjects[i]);
-		object.render();
+		RenderableObject* object = &*(RenderableObject::renderableObjects[i]);
+		object->render();
 	}
 
 	glUseProgram(0);

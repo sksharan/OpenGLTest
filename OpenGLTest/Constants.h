@@ -14,15 +14,11 @@
 /* Name of the uniform associated with the main texture for each RenderableObject. */
 #define TEXTURE_UNIFORM_STR "texture0"
 
-/* Prefix used in naming 'corrected' OBJ files. */
-#define CORRECTED_OBJ_FILE_PREFIX "corrected_"
-
 /* The .obj file used to the test object. */
-#define TEST_OBJECT_OBJ_STR "obj/otowercorrect.obj"
+#define TEST_OBJECT_OBJ_STR "obj/tower.obj"
+
 /* The name of a 24-bit image used as a texture for test objects.  */
 #define TEST_TEXTURE_STR_24BIT "textures/tower.jpg"
-/* Whether or not the test OBJ file is corrected. */
-#define TEST_OBJ_CORRECTED false
 
 /* The field of view used when creating the perspective matrix. */
 extern float persp_fov;

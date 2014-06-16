@@ -34,7 +34,7 @@ public:
 	~RenderableObject();
 
 	/* Render this object to the screen. */
-	void render();
+	virtual void render();
 
 	/* Returns the name of this object. */
 	std::string getName();
@@ -63,10 +63,10 @@ protected:
 	RenderableObject();
 
 	/* Sets up the vertex array object. Called in the constructor. */
-	void initVao();
+	virtual void initVao();
 
 	/* Initialize the texture for use with this object. */
-	void initTexture();
+	virtual void initTexture();
 
 	/* Name of this object. */
 	std::string objectName;

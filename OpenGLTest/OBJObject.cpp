@@ -6,6 +6,13 @@
 #include <fstream>
 #include <map>
 
+void OBJObject::render() {
+	glBindVertexArray(vao);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	glBindVertexArray(0);
+}
+
 OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 	                 float shininess, std::string tex_filename, std::string obj_filename) {
 
@@ -19,7 +26,7 @@ OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, gl
 	texture_filename = tex_filename;
 	obj_file = obj_filename;
 
-	parseOBJ();
+	parseOBJ();  //initializes vertices, texcoords, normals
 
 	initVao();
 	initTexture();
@@ -92,8 +99,44 @@ void OBJObject::parseOBJ() {
 
 				temp_v_indices.push_back(v_index);
 			    temp_vt_indices.push_back(vt_index);
-			    vn_indices_ptr->push_back(vn_index);
+			    temp_vn_indices.push_back(vn_index);
 			}
 		}
 	}
+
+	// now we can add to our list of vertices, texcoords, normals (indices won't be used for rendering)
+	for (int i = 0; i < temp_v_indices.size(); i++) {
+
+		vertices.push_back( temp_v[temp_v_indices[i]] );
+		texcoords.push_back( temp_vt[temp_vt_indices[i]] );
+		normals.push_back( temp_vn[temp_vn_indices[i]] );
+	}
 }
+
+/* Excludes creation of element array buffer. */
+void OBJObject::initVao() {
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glGenBuffers(1, &vbo_vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(float), &vertices[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glGenBuffers(1, &vbo_texcoords);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_texcoords);
+	glBufferData(GL_ARRAY_BUFFER, texcoords.size()*sizeof(float), &texcoords[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glGenBuffers(1, &vbo_normals);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
+	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(float), &normals[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+

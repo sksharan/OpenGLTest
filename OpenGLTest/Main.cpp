@@ -10,7 +10,6 @@
 #include "Render.h"
 #include "Constants.h"
 #include "MatrixTransform.h"
-#include "Test.h"
 #include "RenderableObject.h"
 #include "OBJObject.h"
 #include <SDL.h>
@@ -52,8 +51,7 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 
 	/* Create the objects. */
-	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR, TEST_OBJ_CORRECTED);
-	//object.writeOBJ("obj/correctedtower.obj");
+	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
 
 	/* Begin the main loop. */
 	programState.done = false;
@@ -72,8 +70,6 @@ int main(int argc, char** argv) {
 		handleMouseInput();
 		render();
 	}
-
-	/* Delete the objects if needed. */
 
 	/* Deinitialize SDL. */
 	deinitSDL();
