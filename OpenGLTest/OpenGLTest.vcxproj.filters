@@ -87,6 +87,9 @@
     <ClInclude Include="Light.h">
       <Filter>src\light</Filter>
     </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>src\light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
@@ -138,6 +141,9 @@
       <Filter>src\object</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
+      <Filter>src\light</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
       <Filter>src\light</Filter>
     </ClCompile>
   </ItemGroup>

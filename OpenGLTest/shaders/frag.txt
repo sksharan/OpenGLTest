@@ -1,5 +1,6 @@
 #version 330
 
+/* Represents a point light. */
 struct PointLight {
 	/* Position of this light */
     vec4 position;
@@ -11,6 +12,7 @@ struct PointLight {
 	vec3 Ls;
 };
 
+/* Represents a directional light. */
 struct DirectionalLight {
 	/* Direction of this light */
     vec4 direction;
@@ -22,16 +24,33 @@ struct DirectionalLight {
 	vec3 Ls;
 };
 
+/* Lists of lights in use. */
 uniform PointLight pLights[4];         //corresponds to MAX_POINT_LIGHTS in Constants.h
-uniform DirectionalLight dLights[2];  //corresponds to MAX_DIRECTIONAL_LIGHTS in Constants.h
+uniform DirectionalLight dLights[2];   //corresponds to MAX_DIRECTIONAL_LIGHTS in Constants.h
 
+/* Sampler for the object's base texture. */
 uniform sampler2D texture0;
 
+/* Input values. */
 in vec2 f_texcoord;
 in vec3 f_normal;
 
+/* Output values. */
 out vec4 frag_color;
 
 void main() {
     frag_color = texture(texture0, f_texcoord) * vec4(0.7, 0.7, 0.7, 1.0);
+}
+
+/* Test for point light (WIP) */
+vec4 pointLightTestWithPhong() {
+    vec4 position = vec4(50, 0, 0, 1);
+	vec3 La = vec3(0.5, 0.5, 0.5);
+	vec3 Ld = vec3(0.5, 0.5, 0.5);
+    vec3 Ls = vec3(0.5, 0.5, 0.5);
+	vec3 Ka = vec3(0.6, 0.6, 0.6);
+	vec3 Kd = vec3(0.6, 0.6, 0.6);
+	vec3 Ks = vec3(0.6, 0.6, 0.6);
+	vec3 v = vec4(0, 0, -10);
+	return position;
 }
