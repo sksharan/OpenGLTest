@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-#define KEYHANDLER_DEBUG 0
+#define KEYHANDLER_DEBUG 1
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
