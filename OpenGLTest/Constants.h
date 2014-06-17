@@ -21,6 +21,14 @@ be modifed in the program's lifetime. */
 /* The name of a 24-bit image used as a texture for test objects.  */
 #define TEST_TEXTURE_STR_24BIT "textures/tower.jpg"
 
+/* The maximum number of point lights allowed (must correspond with the
+number in the fragment shader). */
+#define MAX_POINT_LIGHTS 4
+
+/* The maximum number of directional lights allowed (must correspond with the
+number in the fragment shader). */
+#define MAX_DIRECTIONAL_LIGHTS 2
+
 /* The field of view used when creating the perspective matrix. */
 extern float persp_fov;
 

@@ -1,5 +1,30 @@
 #version 330
 
+struct PointLight {
+	/* Position of this light */
+    vec4 position;
+	/* Ambient component */
+	vec3 La;
+	/* Diffuse component */
+	vec3 Ld;
+	/* Specular component */
+	vec3 Ls;
+};
+
+struct DirectionalLight {
+	/* Direction of this light */
+    vec4 direction;
+	/* Ambient component */
+	vec3 La;
+	/* Diffuse component */
+	vec3 Ld;
+	/* Specular component */
+	vec3 Ls;
+};
+
+uniform PointLight pLights[4];         //corresponds to MAX_POINT_LIGHTS in Constants.h
+uniform DirectionalLight dLights[2];  //corresponds to MAX_DIRECTIONAL_LIGHTS in Constants.h
+
 uniform sampler2D texture0;
 
 in vec2 f_texcoord;
