@@ -44,13 +44,16 @@ void main() {
 
 /* Test for point light (WIP) */
 vec4 pointLightTestWithPhong() {
-    vec4 position = vec4(50, 0, 0, 1);
+    vec4 light_position = vec4(50, 0, 0, 1);
 	vec3 La = vec3(0.5, 0.5, 0.5);
 	vec3 Ld = vec3(0.5, 0.5, 0.5);
     vec3 Ls = vec3(0.5, 0.5, 0.5);
 	vec3 Ka = vec3(0.6, 0.6, 0.6);
 	vec3 Kd = vec3(0.6, 0.6, 0.6);
 	vec3 Ks = vec3(0.6, 0.6, 0.6);
-	vec3 v = vec4(0, 0, -10);
-	return position;
+	vec4 v = vec4(0, 0, -10, 1);
+
+	vec3 Ia = La * Ka;
+
+	return light_position;
 }

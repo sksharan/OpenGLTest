@@ -16,6 +16,7 @@
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 
 int main(int argc, char** argv) {
 
@@ -48,13 +49,14 @@ int main(int argc, char** argv) {
 	/* Set up perspective and modelview matrices. */
 	programState.perspectiveMatrix = glm::perspective(persp_fov, (float)mainWindow.width/(float)mainWindow.height, persp_z_near, persp_z_far);
 	programState.modelviewMatrix = glm::mat4();
+	programState.normalMatrix = glm::inverseTranspose(glm::mat3(programState.modelviewMatrix));
 	updateUniformModelview();
 	updateUniformPerspective();
+	updateUniformNormal();
 
 	/* Create the objects. */
 	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
-	/*HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg",
-		                     glm::vec3(0, 0, 0), 256, 0.5, 20.0);*/
+	//HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg", glm::vec3(0, 0, 0), 256, 0.5, 25.0);
 
 	/* Begin the main loop. */
 	programState.done = false;

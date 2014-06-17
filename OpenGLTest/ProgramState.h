@@ -20,6 +20,9 @@ struct ProgramState {
 
 	/* The modelview matrix being used in the shaders. */
 	glm::mat4 modelviewMatrix;
+
+	/* The normal matrix being used in the shaders. */
+	glm::mat3 normalMatrix;
 };
 
 extern ProgramState programState;

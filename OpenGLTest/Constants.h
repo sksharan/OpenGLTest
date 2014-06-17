@@ -12,6 +12,9 @@ be modifed in the program's lifetime. */
 /* Name of the uniform associated with the modelview matrix. */
 #define MODELVIEW_UNIFORM_STR "modelview"
 
+/* Name of the uniform associated with the normal matrix. */
+#define NORMAL_UNIFORM_STR "normalMatrix"
+
 /* Name of the uniform associated with the main texture for each RenderableObject. */
 #define TEXTURE_UNIFORM_STR "texture0"
 

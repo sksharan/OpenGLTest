@@ -9,4 +9,7 @@ void updateUniformPerspective();
 /* Sets up the modelview matrix for use in the current shaders. */
 void updateUniformModelview();
 
+/* Sets up the normal matrix for use in the current shaders. */
+void updateUniformNormal();
+
 #endif
