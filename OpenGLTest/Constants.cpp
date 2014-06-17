@@ -6,7 +6,7 @@ float persp_fov = 45.0f;
 
 float persp_z_near = 0.1f;
 
-float persp_z_far = 100.0f;
+float persp_z_far = 2000.0f;
 
 float movement_speed = 15.0f;
 
