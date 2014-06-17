@@ -1,4 +1,5 @@
 #include "HeightmapObject.h"
+#include <SOIL.h>
 
 void HeightmapObject::render() {
 	glBindVertexArray(vao);
@@ -8,7 +9,7 @@ void HeightmapObject::render() {
 }
 
 HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float stride) {
+	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float stride, float amplitude) {
 
 	objectName = name;
 	visible = isVisible;
@@ -22,6 +23,10 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 	start_position = start_pos;
 	heightmap_length = length;
 	heightmap_stride = stride;
+	heightmap_amplitude = amplitude;
+
+	int img_width, img_height;
+	heightmap_pixels = SOIL_load_image(heightmap_filename.c_str(), &img_width, &img_height, 0, SOIL_LOAD_RGBA); //load the pixels
 
 	generateHeightmap();  //initializes vertices, texcoords, normals, indices
 
@@ -42,7 +47,7 @@ void HeightmapObject::generateHeightmap() {
 		for (int x = 0; x < heightmap_length; x++, position += glm::vec3(heightmap_stride, 0, 0)) {
 			//add vertex
 			vertices.push_back(position.x);
-			vertices.push_back(position.y); // FIXME later
+			vertices.push_back(getY(x, z));
 			vertices.push_back(position.z);
 
 			//add texcoord
@@ -75,4 +80,11 @@ void HeightmapObject::generateHeightmap() {
 		    indices.push_back(GLuint((heightmap_length - 1) + ((z + 1) * heightmap_length)));
 		}
 	}
+}
+
+/* Because heightmaps are greyscale images, the red, green, and blue channels for a pixel are the same
+and we can pick any one of these channels to use for our height value. We consider a 0 to 1 scale instead
+of a 0 to 255 scale. */
+float HeightmapObject::getY(int x, int z) {
+	return heightmap_pixels[(x + z * heightmap_length) * HM_TEXTURE_NUM_CHANNELS] * heightmap_amplitude / 255.0f;
 }
