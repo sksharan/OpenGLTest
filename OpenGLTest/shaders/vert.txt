@@ -8,11 +8,15 @@ layout(location = 0) in vec3 v_vertex;
 layout(location = 1) in vec2 v_texcoord;
 layout(location = 2) in vec3 v_normal;
 
+out vec4 f_eye_position;
 out vec2 f_texcoord;
 out vec3 f_normal;
 
 void main() {
-    gl_Position = perspective * modelview * vec4(v_vertex, 1.0f);
+    f_eye_position = modelview * vec4(v_vertex, 1.0f);  //in eye space
+    gl_Position = perspective * f_eye_position;         //in clip space
+
 	f_texcoord = v_texcoord;
-	f_normal = normalMatrix * v_normal;
+
+	f_normal = normalize(normalMatrix * v_normal);     //in eye space
 }

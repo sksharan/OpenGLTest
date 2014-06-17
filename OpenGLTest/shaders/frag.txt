@@ -24,36 +24,53 @@ struct DirectionalLight {
 	vec3 Ls;
 };
 
-/* Lists of lights in use. */
+/* Arrays of lights. */
 uniform PointLight pLights[4];         //corresponds to MAX_POINT_LIGHTS in Constants.h
 uniform DirectionalLight dLights[2];   //corresponds to MAX_DIRECTIONAL_LIGHTS in Constants.h
+
+/* Number of lights currently in use. */
+uniform int numPLights;               //should not exceed length of pLights
+uniform int numDLights;               //should not exceed length of dLights
 
 /* Sampler for the object's base texture. */
 uniform sampler2D texture0;
 
 /* Input values. */
+in vec4 f_eye_position;
 in vec2 f_texcoord;
 in vec3 f_normal;
 
 /* Output values. */
 out vec4 frag_color;
 
-void main() {
-    frag_color = texture(texture0, f_texcoord) * vec4(0.7, 0.7, 0.7, 1.0);
-}
-
 /* Test for point light (WIP) */
-vec4 pointLightTestWithPhong() {
-    vec4 light_position = vec4(50, 0, 0, 1);
+vec3 pointLightTestWithPhong() {
+    // Light constants
+    vec4 light_position = vec4(150, 0, 0, 1);
 	vec3 La = vec3(0.5, 0.5, 0.5);
 	vec3 Ld = vec3(0.5, 0.5, 0.5);
     vec3 Ls = vec3(0.5, 0.5, 0.5);
+
+	//Object constants
 	vec3 Ka = vec3(0.6, 0.6, 0.6);
 	vec3 Kd = vec3(0.6, 0.6, 0.6);
 	vec3 Ks = vec3(0.6, 0.6, 0.6);
-	vec4 v = vec4(0, 0, -10, 1);
+	float shininess = 1.0f;
+
+	vec3 s = normalize(vec3(light_position) - vec3(f_eye_position));
+    vec3 v = normalize(-f_eye_position.xyz);   // in eye space the viewer is at the origin
+	vec3 r = reflect(-s, f_normal);
 
 	vec3 Ia = La * Ka;
 
-	return light_position;
+	vec3 Id = Ld * Kd * dot(s, f_normal);
+
+	vec3 Is = Ls * Ks * pow(dot(r, v), shininess);
+
+	return Ia + Id + Is;
+}
+
+void main() {
+    //frag_color = texture(texture0, f_texcoord) * vec4(0.7, 0.7, 0.7, 1.0);
+	frag_color = texture(texture0, f_texcoord) + vec4(pointLightTestWithPhong(), 1.0f);
 }
