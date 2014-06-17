@@ -52,9 +52,9 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 
 	/* Create the objects. */
-	//OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
-	HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg",
-		                     glm::vec3(0, 0, 0), 256, 0.5, 20.0);
+	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
+	/*HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg",
+		                     glm::vec3(0, 0, 0), 256, 0.5, 20.0);*/
 
 	/* Begin the main loop. */
 	programState.done = false;

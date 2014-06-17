@@ -21,7 +21,7 @@ void handleKeyInput() {
 		position += mainViewer.getDirection() * delta_time * movement_speed;
 		mainViewer.setPosition(position);
 		if (KEYHANDLER_DEBUG) {
-			printf("viewer postion: %f, %f, %f\n", position.x, position.y, position.z);
+			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
 	}
 
@@ -31,7 +31,7 @@ void handleKeyInput() {
 		position -= mainViewer.getRightVector() * delta_time * movement_speed;
 		mainViewer.setPosition(position);
 		if (KEYHANDLER_DEBUG) {
-			printf("viewer postion: %f, %f, %f\n", position.x, position.y, position.z);
+			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
 	}
 
@@ -41,7 +41,7 @@ void handleKeyInput() {
 		position -= mainViewer.getDirection() * delta_time * movement_speed;
 		mainViewer.setPosition(position);
 		if (KEYHANDLER_DEBUG) {
-			printf("viewer postion: %f, %f, %f\n", position.x, position.y, position.z);
+			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
 	}
 
@@ -51,7 +51,7 @@ void handleKeyInput() {
 		position += mainViewer.getRightVector() * delta_time * movement_speed;
 		mainViewer.setPosition(position);
 		if (KEYHANDLER_DEBUG) {
-			printf("viewer postion: %f, %f, %f\n", position.x, position.y, position.z);
+			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
 	}
 }
