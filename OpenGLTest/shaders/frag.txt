@@ -79,12 +79,15 @@ vec3 pointLightTestWithPhong() {
 	return Ia + Id + Is;
 }
 
-void phongLighting() {
-
-
+/* Test the value of the normals. Right-facing parts are red, upward-facing
+parts are green, and forward-facing parts are blue. Any negative values are
+clamped to 0. See http://antongerdelan.net/opengl/debugshaders.html for more details. */
+vec4 testNormals() {
+    return vec4(f_normal, 1.0); 
 }
 
 void main() {
     //frag_color = texture(texture0, f_texcoord) * vec4(0.7, 0.7, 0.7, 1.0);
-	frag_color = texture(texture0, f_texcoord) + vec4(pointLightTestWithPhong(), 1.0f);
+	//frag_color = texture(texture0, f_texcoord) + vec4(pointLightTestWithPhong(), 1.0f);
+	frag_color = testNormals();
 }
