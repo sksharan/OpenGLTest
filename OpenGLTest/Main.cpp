@@ -13,6 +13,7 @@
 #include "RenderableObject.h"
 #include "OBJObject.h"
 #include "HeightmapObject.h"
+#include "Test.h"
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -55,8 +56,9 @@ int main(int argc, char** argv) {
 	updateUniformNormal();
 
 	/* Create the objects. */
-	OBJObject object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
-	//HeightmapObject hmobject("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg", glm::vec3(0, 0, 0), 256, 0.5, 25.0);
+	//OBJObject obj_object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
+	//HeightmapObject hm_object("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg", glm::vec3(0, 0, 0), 256, 0.5, 25.0);
+	RenderableObject* object = genTestSquare();
 
 	/* Begin the main loop. */
 	programState.done = false;
@@ -75,6 +77,9 @@ int main(int argc, char** argv) {
 		handleMouseInput();
 		render();
 	}
+
+	/* Delete the objects (if needed). */
+	delete object;
 
 	/* Deinitialize SDL. */
 	deinitSDL();

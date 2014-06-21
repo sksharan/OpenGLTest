@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#define POINTLIGHT_DEBUG 0
+
 int PointLight::num_plights_created = 0;
 
 PointLight::PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float light_intensity) 

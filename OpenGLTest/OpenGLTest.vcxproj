@@ -25,6 +25,7 @@
     <ClInclude Include="ProgramState.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Viewer.h" />
     <ClInclude Include="Window.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="ProgramState.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Viewer.cpp" />
     <ClCompile Include="Window.cpp" />

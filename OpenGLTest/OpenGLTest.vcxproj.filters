@@ -37,6 +37,9 @@
     <Filter Include="src\light">
       <UniqueIdentifier>{87080235-9dc7-44fd-b2d2-337018d15ab8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\test">
+      <UniqueIdentifier>{b3ed91c8-b8f8-4319-bd40-238a59f4d287}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -89,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="PointLight.h">
       <Filter>src\light</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>src\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
       <Filter>src\light</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>src\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
