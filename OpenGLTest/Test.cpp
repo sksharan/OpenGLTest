@@ -41,7 +41,7 @@ RenderableObject* genTestSquare() {
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);  //white specular
 	float shininess = 2.0f;
 
-	std::string texture_filename = "checkerboard.jpg";
+	std::string texture_filename = "textures/checkerboard.jpg";
 
 	return new RenderableObject("_testTriangle", vertices, texcoords, normals, indices, true, true,
 		ambient, diffuse, specular, shininess, texture_filename);
