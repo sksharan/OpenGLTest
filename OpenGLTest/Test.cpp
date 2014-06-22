@@ -12,7 +12,7 @@ RenderableObject* genTestSquare() {
 		0.5, 0.5, 0.0  //top right
 	};
 
-	float scaling_factor = 3.0f;
+	float scaling_factor = 6.0f;
 	for (int i = 0; i < vertices.size(); i++) {
 		vertices[i] *= scaling_factor;
 	}

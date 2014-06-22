@@ -1,5 +1,6 @@
 #version 330
 
+/* Transformation matrices. */
 uniform mat4 perspective;
 uniform mat4 modelview;
 uniform mat3 normalMatrix;
@@ -10,7 +11,7 @@ layout(location = 2) in vec3 v_normal;
 
 out vec4 f_eye_position;
 out vec2 f_texcoord;
-out vec3 f_normal;
+out vec3 f_eye_normal;
 
 void main() {
     f_eye_position = modelview * vec4(v_vertex, 1.0f);  //in eye space
@@ -18,5 +19,5 @@ void main() {
 
 	f_texcoord = v_texcoord;
 
-	f_normal = normalize(normalMatrix * v_normal);     //in eye space
+	f_eye_normal = normalize(normalMatrix * v_normal);     //in eye space
 }

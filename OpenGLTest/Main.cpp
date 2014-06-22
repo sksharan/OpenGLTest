@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
 	}
 
 	/* Delete the objects (if needed). */
-	delete object;
+	//delete object;
 
 	/* Deinitialize SDL. */
 	deinitSDL();
