@@ -17,7 +17,6 @@
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/matrix_inverse.hpp>
 
 int main(int argc, char** argv) {
 
@@ -49,9 +48,11 @@ int main(int argc, char** argv) {
 
 	/* Set up perspective and modelview matrices. */
 	programState.perspectiveMatrix = glm::perspective(persp_fov, (float)mainWindow.width/(float)mainWindow.height, persp_z_near, persp_z_far);
-	programState.modelviewMatrix = glm::mat4();
-	programState.normalMatrix = glm::inverseTranspose(glm::mat3(programState.modelviewMatrix));
-	updateUniformModelview();
+	programState.modelMatrix = glm::mat4();
+	programState.viewMatrix = glm::mat4();
+	programState.normalMatrix = glm::mat3();
+	updateUniformModel();
+	updateUniformView();
 	updateUniformPerspective();
 	updateUniformNormal();
 

@@ -52,9 +52,9 @@ void handleMouseInput() {
 		printf("viewer direction: %f, %f, %f\n", newDirection.x, newDirection.y, newDirection.z);
 	}
 
-	// Update the modelview matrix
+	// Update the view matrix
 	glm::mat4 viewMatrix = glm::lookAt(mainViewer.getPosition(), mainViewer.getPosition() + mainViewer.getDirection(),
 		                               mainViewer.getUpVector());
-	programState.modelviewMatrix = viewMatrix;
-	updateUniformModelview();
+	programState.viewMatrix = viewMatrix;
+	updateUniformView();
 }

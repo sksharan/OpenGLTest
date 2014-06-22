@@ -7,10 +7,13 @@ be modifed in the program's lifetime. */
 #include <SDL.h>
 
 /* Name of the uniform associated with the perspective matrix. */
-#define PERSPECTIVE_UNIFORM_STR "perspective"
+#define PERSPECTIVE_UNIFORM_STR "perspectiveMatrix"
 
-/* Name of the uniform associated with the modelview matrix. */
-#define MODELVIEW_UNIFORM_STR "modelview"
+/* Name of the uniform associated with the view matrix. */
+#define MODEL_UNIFORM_STR "modelMatrix"
+
+/* Name of the uniform associated with the view matrix. */
+#define VIEW_UNIFORM_STR "viewMatrix"
 
 /* Name of the uniform associated with the normal matrix. */
 #define NORMAL_UNIFORM_STR "normalMatrix"

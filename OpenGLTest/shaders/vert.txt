@@ -1,8 +1,9 @@
 #version 330
 
 /* Transformation matrices. */
-uniform mat4 perspective;
-uniform mat4 modelview;
+uniform mat4 perspectiveMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
 uniform mat3 normalMatrix;
 
 layout(location = 0) in vec3 v_vertex;
@@ -14,8 +15,8 @@ out vec2 f_texcoord;
 out vec3 f_eye_normal;
 
 void main() {
-    f_eye_position = modelview * vec4(v_vertex, 1.0f);  //in eye space
-    gl_Position = perspective * f_eye_position;         //in clip space
+    f_eye_position = viewMatrix * modelMatrix * vec4(v_vertex, 1.0f);  //in eye space
+    gl_Position = perspectiveMatrix * f_eye_position;         //in clip space
 
 	f_texcoord = v_texcoord;
 

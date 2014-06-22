@@ -18,8 +18,11 @@ struct ProgramState {
 	/* The perspective matrix being used in the shaders. */
 	glm::mat4 perspectiveMatrix;
 
-	/* The modelview matrix being used in the shaders. */
-	glm::mat4 modelviewMatrix;
+	/* The model matrix being used in the shaders. */
+	glm::mat4 modelMatrix;
+
+	/* The view matrix being used in the shaders. */
+	glm::mat4 viewMatrix;
 
 	/* The normal matrix being used in the shaders. */
 	glm::mat3 normalMatrix;
