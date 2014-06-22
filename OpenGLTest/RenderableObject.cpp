@@ -104,7 +104,7 @@ void RenderableObject::initTexture() {
 	int img_width, img_height;
 	unsigned char* img_data = SOIL_load_image(texture_filename.c_str(), &img_width, &img_height, 0, SOIL_LOAD_RGBA);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
