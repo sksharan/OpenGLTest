@@ -2,7 +2,7 @@
 
 /* Represents a point light. */
 struct PointLight {
-	/* Position of this light */
+	/* Position of this light (in world coordinates). */
     vec4 position;
 	/* Ambient component */
 	vec3 La;
@@ -39,10 +39,16 @@ uniform int numDLights;               //should not exceed length of dLights
 /* Sampler for the object's base texture. */
 uniform sampler2D texture0;
 
+/* Transformation matrices. */
+uniform mat4 perspectiveMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat3 normalMatrix;
+
 /* Input values. */
 in vec4 f_eye_position;
 in vec2 f_texcoord;
-in vec3 f_normal;
+in vec3 f_eye_normal;
 
 /* Output values. */
 out vec4 frag_color;
@@ -50,45 +56,40 @@ out vec4 frag_color;
 /* Test for point light (WIP) */
 vec3 pointLightTestWithPhong() {
     // Light constants
-    vec4 light_position = vec4(0, 0, 15, 1);
-	vec3 La = vec3 (0.2, 0.2, 0.2);
-	vec3 Ld = vec3 (0.7, 0.7, 0.7);
-    vec3 Ls = vec3 (1.0, 1.0, 1.0);
+	vec4 light_pos_world = vec4(0, 0, 2, 1);
+    vec4 light_pos_eye = viewMatrix * light_pos_world;  //ok since model is just identity matrix for now
+	vec3 La = vec3(0.2, 0.2, 0.2);
+	vec3 Ld = vec3(0.7, 0.7, 0.7);
+    vec3 Ls = vec3(1.0, 1.0, 1.0);
 
 	//Object constants
-	vec3 Ka = vec3 (1.0, 1.0, 1.0);
-	vec3 Kd = vec3 (1.0, 0.5, 0.0);
-	vec3 Ks = vec3 (1.0, 1.0, 1.0);
-	float shininess = 5.0;
+	vec3 Ka = vec3(1.0, 1.0, 1.0);
+	vec3 Kd = vec3(1.0, 0.5, 0.0);
+	vec3 Ks = vec3(1.0, 1.0, 1.0);
+	float shininess = 10.0;
 
-	vec3 s = normalize(vec3(light_position) - vec3(f_eye_position));
-    vec3 v = normalize(-f_eye_position.xyz);   // in eye space the viewer is at the origin
-	vec3 r = reflect(-s, f_normal);
-	float sDotN = max(dot(s, f_normal), 0);
-
+	//ambient term
 	vec3 Ia = La * Ka;
 
-	vec3 Id = Ld * Kd * sDotN;
+	//diffuse term
+	vec3 direction_to_light_eye = normalize( vec3(light_pos_eye - f_eye_position) );
+	vec3 Id = Ld * Kd * max( dot(direction_to_light_eye, f_eye_normal), 0.0 );
 
-	vec3 Is = vec3(0, 0, 0);
-	if (sDotN > 0) {
-	    float rDotV = max(dot(r, v), 0); 
-	    Is = Ls * Ks * pow(rDotV, shininess);
-	}
+	//specular term
+	vec3 Is = vec3 (0.0, 0.0, 0.0);
 
-	return Ia;
+	return Ia + Id + Is;
 }
 
 /* Test the value of the normals. Right-facing parts are red, upward-facing
 parts are green, and forward-facing parts are blue. Any negative values are
 clamped to 0. See http://antongerdelan.net/opengl/debugshaders.html for more details. */
 vec4 testNormals() {
-    return vec4(f_normal, 1.0); 
+    return vec4(f_eye_normal, 1.0); 
 }
 
 void main() {
-    //frag_color = texture(texture0, f_texcoord) * vec4(0.7, 0.7, 0.7, 1.0);
-	//frag_color = texture(texture0, f_texcoord) + vec4(pointLightTestWithPhong(), 1.0f);
-	//frag_color = vec4(pointLightTestWithPhong(), 1.0f);
-	frag_color = testNormals();
+    //frag_color = testNormals();
+	//frag_color = texture(texture0, f_texcoord);
+	frag_color = vec4(pointLightTestWithPhong(), 1.0);
 }
