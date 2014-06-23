@@ -16,7 +16,7 @@ public:
 	has been created already. */
 	PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float light_intensity);
 
-	/* Returns the position of this light. */
+	/* Returns the position of this light (in world coordinates). */
 	glm::vec3 getPosition();
 
 private:
@@ -38,7 +38,7 @@ private:
 	/* Update uniform to indicate number of point lights active. */
 	void updateNumPLightsUniform();
 
-	/* Position of this light */
+	/* Position of this light (in world coordinates) */
 	glm::vec3 pos;
 
 	/* Name of the position uniform for this light. */
