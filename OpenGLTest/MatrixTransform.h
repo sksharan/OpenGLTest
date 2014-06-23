@@ -7,11 +7,11 @@
 void updateUniformPerspective();
 
 /* Sets up the model matrix for use in the current shaders. Updates the normal matrix
-as well. */
+in the CPU (ProgramState.h) and GPU as well. */
 void updateUniformModel();
 
 /* Sets up the view matrix for use in the current shaders. Updates the normal matrix
-as well. */
+in the CPU (ProgramState.h) and GPU as well. */
 void updateUniformView();
 
 /* Sets up the normal matrix for use in the current shaders. */

@@ -16,6 +16,7 @@ void updateUniformModel() {
 	glUseProgram(0);
 
 	updateNormalMatrix();
+	updateUniformNormal();
 }
 
 void updateUniformView() {
@@ -28,6 +29,7 @@ void updateUniformView() {
 	glUseProgram(0);
 
 	updateNormalMatrix();
+	updateUniformNormal();
 }
 
 void updateUniformPerspective() {
