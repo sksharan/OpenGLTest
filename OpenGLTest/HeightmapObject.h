@@ -29,11 +29,11 @@ public:
 	start_pos: position that generation of the heightmap will begin at. Heightmap grows in the positive x and
 	           negative z directions
     length: the generated heightmap will be length x length vertices in dimension
-	stride: spacing between vertices
+	spacing: spacing between vertices
 	amplitude: affects the height values of the generated mesh
 	*/
 	HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float stride, float amplitude);
+	                float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
 
 private:
 
@@ -58,7 +58,7 @@ private:
 	int heightmap_length;
 
 	/* Distance between vertices. */
-	float heightmap_stride;
+	float heightmap_spacing;
 
 	/* Affects the height values of the generated mesh. */
 	float heightmap_amplitude;
