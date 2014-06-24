@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 
 void render() {
-	glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+	glClearColor(0.46f, 0.53f, 0.6f, 1.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
