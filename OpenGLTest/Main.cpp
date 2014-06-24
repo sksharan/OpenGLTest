@@ -14,6 +14,7 @@
 #include "OBJObject.h"
 #include "HeightmapObject.h"
 #include "Test.h"
+#include "Util.h"
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -30,8 +31,8 @@ int main(int argc, char** argv) {
 		return -2;
 	}
 
-	/* Initialize depth buffering. */
-	initDepth();
+	/* Enables OpenGL features as needed (e.g. depth buffering, culling, etc.) */
+	setupGLEnables();
 
 	/* Hide the mouse cursor. */
 	SDL_ShowCursor(0);
@@ -56,10 +57,11 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 	updateUniformNormal();
 
-	/* Create the objects. */
-	//OBJObject obj_object("obj_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, TEST_TEXTURE_STR_24BIT, TEST_OBJECT_OBJ_STR);
-	//HeightmapObject hm_object("hm_object", true, true, glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), glm::vec4(.5, .5, .5, 1), 1, "textures/chadvernon.jpg", "heightmaps/chadvernon.jpg", glm::vec3(0, 0, 0), 256, 0.5, 25.0);
-	RenderableObject* object = genTestSquare();
+	/* Create the objects (comment all but one of the following). */
+	//RenderableObject* object = (RenderableObject*)genTestSquare();
+	RenderableObject* object = (RenderableObject*)genTower();
+	//RenderableObject* object = (RenderableObject*)genHeightmapObject();
+	PointLight* light = genPointLight();
 
 	/* Begin the main loop. */
 	programState.done = false;
@@ -80,7 +82,7 @@ int main(int argc, char** argv) {
 	}
 
 	/* Delete the objects (if needed). */
-	//delete object;
+	delete object;
 
 	/* Deinitialize SDL. */
 	deinitSDL();
