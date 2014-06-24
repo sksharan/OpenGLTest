@@ -9,4 +9,8 @@
  * string if 'filename' cannot be opened. */
 std::string readFile(std::string filename);
 
+/* Tests to see if an OpenGL related error has occured (using glGetError()) and
+prints an error message only if an error did occur and 'print' is true. */
+void checkGLError(bool print);
+
 #endif
