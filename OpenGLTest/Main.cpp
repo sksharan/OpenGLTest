@@ -57,10 +57,13 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 	updateUniformNormal();
 
-	/* Create the objects (comment all but one of the following). */
-	//RenderableObject* object = (RenderableObject*)genTestSquare();
+	/* Create the objects. */
+	//RenderableObject* object = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
 	RenderableObject* object = (RenderableObject*)genTower();
 	//RenderableObject* object = (RenderableObject*)genHeightmapObject();
+	genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
+
+	/* Create the lights. */
 	PointLight* light = genPointLight();
 
 	/* Begin the main loop. */
