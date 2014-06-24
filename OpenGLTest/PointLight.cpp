@@ -41,7 +41,7 @@ glm::vec3 PointLight::getPosition() {
 
 void PointLight::updatePositionUniform() {
 	GLuint pos_uni_loc = glGetUniformLocation(programState.program, positionUniformName.c_str());
-	if (pos_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && pos_uni_loc == -1) {
 		std::cout << "error in updating light position uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -51,7 +51,7 @@ void PointLight::updatePositionUniform() {
 
 void PointLight::updateAmbientUniform() {
 	GLuint ambient_uni_loc = glGetUniformLocation(programState.program, ambientUniformName.c_str());
-	if (ambient_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && ambient_uni_loc == -1) {
 		std::cout << "error in updating light ambient uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -61,7 +61,7 @@ void PointLight::updateAmbientUniform() {
 
 void PointLight::updateDiffuseUniform() {
 	GLuint diffuse_uni_loc = glGetUniformLocation(programState.program, diffuseUniformName.c_str());
-	if (diffuse_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && diffuse_uni_loc == -1) {
 		std::cout << "error in updating light diffuse uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -71,7 +71,7 @@ void PointLight::updateDiffuseUniform() {
 
 void PointLight::updateSpecularUniform() {
 	GLuint specular_uni_loc = glGetUniformLocation(programState.program, specularUniformName.c_str());
-	if (specular_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && specular_uni_loc == -1) {
 		std::cout << "error in updating light specular uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -81,7 +81,7 @@ void PointLight::updateSpecularUniform() {
 
 void PointLight::updateIntensityUniform() {
 	GLuint intensity_uni_loc = glGetUniformLocation(programState.program, intensityUniformName.c_str());
-	if (intensity_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && intensity_uni_loc == -1) {
 		std::cout << "error in updating light intensity uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -91,7 +91,7 @@ void PointLight::updateIntensityUniform() {
 
 void PointLight::updateNumPLightsUniform() {
 	GLuint plights_uni_loc = glGetUniformLocation(programState.program, "numPLights");
-	if (plights_uni_loc == -1) {
+	if (POINTLIGHT_DEBUG && plights_uni_loc == -1) {
 		std::cout << "error in updating num point lights uniform" << std::endl;
 	}
 	glUseProgram(programState.program);

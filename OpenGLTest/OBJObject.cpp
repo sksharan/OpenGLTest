@@ -7,6 +7,7 @@
 #include <map>
 
 void OBJObject::render() {
+	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());

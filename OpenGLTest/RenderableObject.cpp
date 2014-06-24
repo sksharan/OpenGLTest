@@ -1,11 +1,17 @@
 #include "RenderableObject.h"
+#include "ProgramState.h"
+#include <iostream>
 #include <SOIL.h>
+#include <glm/gtc/type_ptr.hpp>
+
+#define RENDERABLEOBJECT_DEBUG 0
 
 std::vector<RenderableObject*> RenderableObject::renderableObjects;
 
 RenderableObject::~RenderableObject() { }
 
 void RenderableObject::render() {
+	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
@@ -110,4 +116,43 @@ void RenderableObject::initTexture() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	SOIL_free_image_data(img_data);
+}
+
+void RenderableObject::setUniforms() {
+    updateAmbientUniform();
+    updateDiffuseUniform();
+	updateSpecularUniform();
+	updateShininessUniform();
+}
+
+void RenderableObject::updateAmbientUniform() {
+	GLuint ambient_uni_loc = glGetUniformLocation(programState.program, "object.Ka");
+	if (RENDERABLEOBJECT_DEBUG && ambient_uni_loc == -1) {
+		std::cout << "error in updating object ambient uniform" << std::endl;
+	}
+	glUniform3fv(ambient_uni_loc, 1, glm::value_ptr(glm::vec3(ambient_term)));
+}
+
+void RenderableObject::updateDiffuseUniform() {
+	GLuint diffuse_uni_loc = glGetUniformLocation(programState.program, "object.Kd");
+	if (RENDERABLEOBJECT_DEBUG && diffuse_uni_loc == -1) {
+		std::cout << "error in updating object diffuse uniform" << std::endl;
+	}
+	glUniform3fv(diffuse_uni_loc, 1, glm::value_ptr(glm::vec3(diffuse_term)));
+}
+
+void RenderableObject::updateSpecularUniform() {
+	GLuint specular_uni_loc = glGetUniformLocation(programState.program, "object.Ks");
+	if (RENDERABLEOBJECT_DEBUG && specular_uni_loc == -1) {
+		std::cout << "error in updating object specular uniform" << std::endl;
+	}
+	glUniform3fv(specular_uni_loc, 1, glm::value_ptr(glm::vec3(specular_term)));
+}
+
+void RenderableObject::updateShininessUniform() {
+	GLuint shininess_uni_loc = glGetUniformLocation(programState.program, "object.shininess");
+	if (RENDERABLEOBJECT_DEBUG && shininess_uni_loc == -1) {
+		std::cout << "error in updating object shininess uniform" << std::endl;
+	}
+	glUniform1f(shininess_uni_loc, shininess_term);
 }

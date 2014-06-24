@@ -2,6 +2,7 @@
 #include <SOIL.h>
 
 void HeightmapObject::render() {
+	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, 0);
@@ -9,7 +10,7 @@ void HeightmapObject::render() {
 }
 
 HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float stride, float amplitude) {
+	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude) {
 
 	objectName = name;
 	visible = isVisible;
@@ -22,7 +23,7 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 	heightmap_filename = hm_filename;
 	start_position = start_pos;
 	heightmap_length = length;
-	heightmap_stride = stride;
+	heightmap_spacing = spacing;
 	heightmap_amplitude = amplitude;
 
 	int img_width, img_height;
@@ -40,11 +41,11 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 void HeightmapObject::generateHeightmap() {
 	glm::vec3 position = start_position;
 
-	for (int z = 0; z < heightmap_length; z++, position += glm::vec3(0, 0, -heightmap_stride)) {
+	for (int z = 0; z < heightmap_length; z++, position += glm::vec3(0, 0, -heightmap_spacing)) {
 
 		position.x = start_position.x;
 
-		for (int x = 0; x < heightmap_length; x++, position += glm::vec3(heightmap_stride, 0, 0)) {
+		for (int x = 0; x < heightmap_length; x++, position += glm::vec3(heightmap_spacing, 0, 0)) {
 			//add vertex
 			vertices.push_back(position.x);
 			vertices.push_back(getY(x, z));

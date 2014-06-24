@@ -68,6 +68,21 @@ protected:
 	/* Initialize the texture for use with this object. */
 	virtual void initTexture();
 
+	/* Set up the uniforms for this object. */
+	virtual void setUniforms();
+
+	/* Update the ambient uniform for this object. */
+	virtual void updateAmbientUniform();
+
+	/* Update the diffuse uniform for this object. */
+	virtual void updateDiffuseUniform();
+
+	/* Update the specular uniform for this object. */
+	virtual void updateSpecularUniform();
+
+	/* Update the shininess uniform for this object. */
+	virtual void updateShininessUniform();
+
 	/* Name of this object. */
 	std::string objectName;
 
