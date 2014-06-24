@@ -6,10 +6,14 @@
 #include <string>
 #include <iostream>
 
-bool initDepth() {
+void setupGLEnables() {
+	//depth buffering
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	return true;
+
+	//backface culling
+	/*glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);*/
 }
 
 GLuint createShader(std::string shader_filename, GLenum shader_type) {

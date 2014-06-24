@@ -6,8 +6,8 @@
 #include <string>
 #include <GL/glew.h>
 
-/* Makes calls needed to enable z-buffering. Returns true iff successful. */
-bool initDepth();
+/* Enables OpenGL features as needed (e.g. depth buffering, culling, etc.) */
+void setupGLEnables();
 
 /* Creates a shader and returns a GLuint representing the shader. The shader code is
  * in 'shader_filename' and the type of shader created depends on 'shader_type'. Prints
