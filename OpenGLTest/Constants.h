@@ -21,12 +21,6 @@ be modifed in the program's lifetime. */
 /* Name of the uniform associated with the main texture for each RenderableObject. */
 #define TEXTURE_UNIFORM_STR "texture0"
 
-/* The .obj file used to the test object. */
-#define TEST_OBJECT_OBJ_STR "obj/tower.obj"
-
-/* The name of a 24-bit image used as a texture for test objects.  */
-#define TEST_TEXTURE_STR_24BIT "textures/tower.jpg"
-
 /* The maximum number of directional lights allowed (must correspond with the
 number in the fragment shader). */
 #define MAX_DIRECTIONAL_LIGHTS 2
