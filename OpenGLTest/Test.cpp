@@ -4,19 +4,24 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-RenderableObject* genTestSquare() {
+RenderableObject* genTestSquare(glm::vec3 center_location, float scaling_factor) {
+	/* Define vertices. */
+	float x = center_location.x;
+	float y = center_location.y;
+	float z = center_location.z;
+
 	std::vector<float> vertices = {
-		-0.5, 0.5, 0.0,  //top left
-		-0.5, -0.5, 0.0,  //bottom left
-		0.5, -0.5, 0.0,  //bottom right
-		0.5, 0.5, 0.0  //top right
+		x - 0.5f, y + 0.5f, z,  //top left
+		x - 0.5f, y - 0.5f, z,  //bottom left
+		x + 0.5f, y - 0.5f, z,  //bottom right
+		x + 0.5f, y + 0.5f, z  //top right
 	};
 
-	float scaling_factor = 6.0f;
 	for (int i = 0; i < vertices.size(); i++) {
 		vertices[i] *= scaling_factor;
 	}
 
+	/* Define texture coordinates. */
 	std::vector<float> texcoords = { 
 		0.0, 1.0,  //top left
 		0.0, 0.0,  //bottom left
@@ -24,6 +29,7 @@ RenderableObject* genTestSquare() {
 		1.0, 1.0  //top right
 	};
 
+	/* Define normals. */
 	std::vector<float> normals = {
 		0.0, 0.0, 1.0,  //top left
 		0.0, 0.0, 1.0,  //bottom left
@@ -31,6 +37,7 @@ RenderableObject* genTestSquare() {
 		0.0, 0.0, 1.0   //top right
 	};
 
+	/* Define indices.*/
 	std::vector<GLuint> indices = {
 		0, 1, 2,
 		0, 2, 3
