@@ -6,9 +6,11 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
+#define MATRIXTRANSFORM_DEBUG 0
+
 void updateUniformModel() {
 	GLuint model_uni_loc = glGetUniformLocation(programState.program, MODEL_UNIFORM_STR);
-	if (model_uni_loc == -1) {
+	if (MATRIXTRANSFORM_DEBUG && model_uni_loc == -1) {
 		std::cout << "error in updating model uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -21,7 +23,7 @@ void updateUniformModel() {
 
 void updateUniformView() {
 	GLuint view_uni_loc = glGetUniformLocation(programState.program, VIEW_UNIFORM_STR);
-	if (view_uni_loc == -1) {
+	if (MATRIXTRANSFORM_DEBUG && view_uni_loc == -1) {
 		std::cout << "error in updating model uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -34,7 +36,7 @@ void updateUniformView() {
 
 void updateUniformPerspective() {
 	GLuint persp_uni_loc = glGetUniformLocation(programState.program, PERSPECTIVE_UNIFORM_STR);
-	if (persp_uni_loc == -1) {
+	if (MATRIXTRANSFORM_DEBUG && persp_uni_loc == -1) {
 		std::cout << "error in updating perspective uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
@@ -44,7 +46,7 @@ void updateUniformPerspective() {
 
 void updateUniformNormal() {
 	GLuint normal_uni_loc = glGetUniformLocation(programState.program, NORMAL_UNIFORM_STR);
-	if (normal_uni_loc == -1) {
+	if (MATRIXTRANSFORM_DEBUG && normal_uni_loc == -1) {
 		std::cout << "error in updating normal uniform" << std::endl;
 	}
 	glUseProgram(programState.program);
