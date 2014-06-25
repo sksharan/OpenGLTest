@@ -123,6 +123,7 @@ void RenderableObject::setUniforms() {
     updateDiffuseUniform();
 	updateSpecularUniform();
 	updateShininessUniform();
+	updateLightEnabledUniform();
 }
 
 void RenderableObject::updateAmbientUniform() {
@@ -155,4 +156,16 @@ void RenderableObject::updateShininessUniform() {
 		std::cout << "error in updating object shininess uniform" << std::endl;
 	}
 	glUniform1f(shininess_uni_loc, shininess_term);
+}
+
+void RenderableObject::updateLightEnabledUniform() {
+	GLuint lightenabled_uni_loc = glGetUniformLocation(programState.program, "object.light_enabled");
+	if (RENDERABLEOBJECT_DEBUG && lightenabled_uni_loc == -1) {
+		std::cout << "error in updating object light-enabled uniform" << std::endl;
+	}
+	if (light_enabled) {
+		glUniform1i(lightenabled_uni_loc, 1);
+	} else {
+		glUniform1i(lightenabled_uni_loc, 0);
+	}
 }
