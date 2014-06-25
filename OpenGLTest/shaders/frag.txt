@@ -38,6 +38,8 @@ struct Object {
 	vec3 Ks;
 	/* Shininess factor */
 	float shininess;
+	/* Equal to 1 iff this object is affected by lighting calculations. */
+	int light_enabled;
 };
 
 /* The current object. */
@@ -131,7 +133,9 @@ vec3 phongForPointLight(int id) {
 void main() {
 	vec3 rgb_color = vec3(0, 0, 0);
 	for (int id = 0; id < numPLights; id++) {
-	    rgb_color += phongForPointLight(id);
+	    if (object.light_enabled == 1) {
+		    rgb_color += phongForPointLight(id);
+		}
 	}
 	frag_color = vec4(rgb_color, 1.0);
 	frag_color += texture(texture0, f_texcoord);
