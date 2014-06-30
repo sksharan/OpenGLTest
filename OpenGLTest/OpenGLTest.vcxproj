@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="EnumRenderMode.h" />
     <ClInclude Include="HeightmapObject.h" />
     <ClInclude Include="InitGL.h" />
     <ClInclude Include="InitGLEW.h" />

@@ -96,6 +96,9 @@
     <ClInclude Include="Test.h">
       <Filter>src\test</Filter>
     </ClInclude>
+    <ClInclude Include="EnumRenderMode.h">
+      <Filter>src\globals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
