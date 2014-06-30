@@ -59,12 +59,13 @@ int main(int argc, char** argv) {
 
 	/* Create the objects. */
 	//RenderableObject* object = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
-	RenderableObject* object = (RenderableObject*)genTower();
+	//RenderableObject* object = (RenderableObject*)genTower();
+	RenderableObject* object = (RenderableObject*)genSuzanne();
 	//RenderableObject* object = (RenderableObject*)genHeightmapObject();
-	genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
 
 	/* Create the lights. */
-	PointLight* light = genPointLight();
+	PointLight light1(glm::vec3(50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
+	//PointLight light2(glm::vec3(-50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Begin the main loop. */
 	programState.done = false;
