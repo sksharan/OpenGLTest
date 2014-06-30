@@ -12,13 +12,15 @@ layout(location = 2) in vec3 v_normal;
 
 out vec4 f_eye_position;
 out vec2 f_texcoord;
+out vec3 f_normal;
 out vec3 f_eye_normal;
 
 void main() {
     f_eye_position = viewMatrix * modelMatrix * vec4(v_vertex, 1.0f);  //in eye space
-    gl_Position = perspectiveMatrix * f_eye_position;         //in clip space
+    gl_Position = perspectiveMatrix * f_eye_position;                  //in clip space
 
 	f_texcoord = v_texcoord;
 
-	f_eye_normal = normalize(normalMatrix * v_normal);     //in eye space
+	f_normal = v_normal;
+	f_eye_normal = normalize(normalMatrix * v_normal);                 //in eye space
 }
