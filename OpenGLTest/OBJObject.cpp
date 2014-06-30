@@ -26,6 +26,7 @@ OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, gl
 	shininess_term = shininess;
 	texture_filename = tex_filename;
 	obj_file = obj_filename;
+	renderMode = RENDERMODE_TEXTURED;
 
 	parseOBJ();  //initializes vertices, texcoords, normals
 

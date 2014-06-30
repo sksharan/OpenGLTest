@@ -25,6 +25,7 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 	heightmap_length = length;
 	heightmap_spacing = spacing;
 	heightmap_amplitude = amplitude;
+	renderMode = RENDERMODE_TEXTURED;
 
 	int img_width, img_height;
 	heightmap_pixels = SOIL_load_image(heightmap_filename.c_str(), &img_width, &img_height, 0, SOIL_LOAD_RGBA); //load the pixels

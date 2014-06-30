@@ -38,6 +38,10 @@ const std::vector<GLuint>& RenderableObject::getIndices() {
 	return indices;
 }
 
+void RenderableObject::setRenderMode(RenderMode mode) {
+	renderMode = mode;
+}
+
 bool RenderableObject::isVisible() {
 	return visible;
 }
@@ -61,6 +65,7 @@ RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::
 	specular_term = specular;
 	shininess_term = shininess;
 	texture_filename = tex_filename;
+	renderMode = RENDERMODE_TEXTURED;
 
 	initVao();
 	initTexture();
@@ -124,6 +129,7 @@ void RenderableObject::setUniforms() {
 	updateSpecularUniform();
 	updateShininessUniform();
 	updateLightEnabledUniform();
+	updateRenderModeUniform();
 }
 
 void RenderableObject::updateAmbientUniform() {
@@ -167,5 +173,20 @@ void RenderableObject::updateLightEnabledUniform() {
 		glUniform1i(lightenabled_uni_loc, 1);
 	} else {
 		glUniform1i(lightenabled_uni_loc, 0);
+	}
+}
+
+void RenderableObject::updateRenderModeUniform() {
+	GLuint rendermode_uni_loc = glGetUniformLocation(programState.program, "object.renderMode");
+	if (RENDERABLEOBJECT_DEBUG && rendermode_uni_loc == -1) {
+		std::cout << "error in updating object render mode uniform" << std::endl;
+	}
+	switch (renderMode) {
+	case RENDERMODE_TEXTURED:
+		glUniform1i(rendermode_uni_loc, 0);
+		break;
+	case RENDERMODE_NORMALS:
+		glUniform1i(rendermode_uni_loc, 1);
+		break;
 	}
 }

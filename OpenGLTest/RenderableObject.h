@@ -7,6 +7,7 @@
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include "EnumRenderMode.h"
 
 /* Class which represents any object that can be rendered to the screen. */
 class RenderableObject {
@@ -51,12 +52,14 @@ public:
 	/* Returns a const reference to the list of indices. */
 	const std::vector<GLuint>& getIndices();
 
+	/* Sets the render mode of this object to 'mode'. */
+	void setRenderMode(RenderMode mode);
+
 	/* Returns true iff this object is visible and should be rendered to the screen. */
 	bool isVisible();
 
 	/* Toggles visibility of this object on/off. */
 	void toggleVisibilty();
-
 
 protected:
 	/* A constructor that does nothing. */
@@ -85,6 +88,9 @@ protected:
 
 	/* Update the light-enabled uniform for this object. */
 	void updateLightEnabledUniform();
+
+	/* Update the render mode uniform of this object.*/
+	void updateRenderModeUniform();
 
 	/* Name of this object. */
 	std::string objectName;
@@ -139,6 +145,9 @@ protected:
 
 	/* Vertex array object associated with this RenderableObject. */
 	GLuint vao;
+
+	/* The type of rendering to use with this object. */
+	RenderMode renderMode;
 };
 
 #endif
