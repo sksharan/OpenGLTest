@@ -16,10 +16,11 @@ RenderableObject* genTestSquare(glm::vec3 center_location, float scaling_factor)
 /* Generates a tower loaded from an obj file that needs to be deleted by the user. */
 OBJObject* genTower();
 
+/* Generates the Blender Suzanne model from an obj dile tht needs to be deleted by the user.
+Source file comes from https://github.com/OpenGLInsights/OpenGLInsightsCode/blob/master/Chapter%2026%20Indexing%20Multiple%20Vertex%20Arrays/article/suzanne.obj */
+OBJObject* genSuzanne();
+
 /* Generates a heightmap object that needs to be deleted by the user. */
 HeightmapObject* genHeightmapObject();
-
-/* Generates a PointLight object that needs to be deleted by the user. */
-PointLight* genPointLight();
 
 #endif

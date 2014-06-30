@@ -50,21 +50,34 @@ RenderableObject* genTestSquare(glm::vec3 center_location, float scaling_factor)
 
 	std::string texture_filename = "textures/checkerboard.jpg";
 
-	return new RenderableObject("_testSquare", vertices, texcoords, normals, indices, true, true,
+	return new RenderableObject("test_square", vertices, texcoords, normals, indices, true, true,
 		ambient, diffuse, specular, shininess, texture_filename);
 }
 
 OBJObject* genTower() {
 	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
-	glm::vec4 diffuse(1.0, 0.5, 0.0, 1.0);
+	glm::vec4 diffuse(0.5, 0.5, 0.5, 1.0);
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
-	float shininess = 50.0f;
+	float shininess = 15.0f;
 
 	std::string texture_filename = "textures/tower.jpg";
 
 	std::string obj_filename = "obj/tower.obj";
 
-	return new OBJObject("_testOBJ", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+	return new OBJObject("tower_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+}
+
+OBJObject* genSuzanne() {
+	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 diffuse(0.5, 0.5, 0.5, 1.0);
+	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
+	float shininess = 15.0f;
+
+	std::string texture_filename = "textures/red.jpg";
+
+	std::string obj_filename = "obj/suzanne.obj";
+
+	return new OBJObject("suzanne_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
 }
 
 HeightmapObject* genHeightmapObject() {
@@ -83,16 +96,6 @@ HeightmapObject* genHeightmapObject() {
 	float spacing = 0.5;
 	float amplitude = 25.0;
 
-	return new HeightmapObject("_testHeightmap", true, true, ambient, diffuse, specular, shininess, texture_filename,
+	return new HeightmapObject("heightmap", true, true, ambient, diffuse, specular, shininess, texture_filename,
 		heightmap_filename, start_position, length, spacing, amplitude);
-}
-
-PointLight* genPointLight() {
-	glm::vec3 position(0, 0, 50);
-	glm::vec3 ambient(0.2, 0.2, 0.2);
-	glm::vec3 diffuse(0.7, 0.7, 0.7);
-	glm::vec3 specular(1.0, 1.0, 1.0);
-	float intensity = 1.0;
-
-	return new PointLight(position, ambient, diffuse, specular, intensity);
 }
