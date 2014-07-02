@@ -12,8 +12,10 @@
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
+/* True iff wireframe mode is enabled. */
 bool wireframeEnabled = false;
 
+/* Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/ */
 void handleKeyInput() {
 	/* W : move forward */
 	if (keystate[SDL_SCANCODE_W]) {
