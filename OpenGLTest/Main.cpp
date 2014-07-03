@@ -58,10 +58,10 @@ int main(int argc, char** argv) {
 	updateUniformNormal();
 
 	/* Create the objects. */
-	//RenderableObject* object = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
-	//RenderableObject* object = (RenderableObject*)genTower();
-	RenderableObject* object = (RenderableObject*)genSuzanne();
-	//RenderableObject* object = (RenderableObject*)genHeightmapObject();
+	RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
+	RenderableObject* object2 = (RenderableObject*)genTower();
+	RenderableObject* object3 = (RenderableObject*)genSuzanne();
+	RenderableObject* object4 = (RenderableObject*)genHeightmapObject();
 
 	/* Create the lights. */
 	PointLight light1(glm::vec3(50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
 	}
 
 	/* Delete the objects (if needed). */
-	delete object;
+	delete object1, object2, object3, object4;
 
 	/* Deinitialize SDL. */
 	deinitSDL();

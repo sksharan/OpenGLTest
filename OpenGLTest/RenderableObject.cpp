@@ -22,6 +22,10 @@ std::string RenderableObject::getName() {
 	return objectName;
 }
 
+const std::vector<RenderableObject*>& RenderableObject::getRenderableObjects() {
+	return renderableObjects;
+}
+
 const std::vector<float>& RenderableObject::getVertices() {
 	return vertices;
 }
@@ -38,12 +42,16 @@ const std::vector<GLuint>& RenderableObject::getIndices() {
 	return indices;
 }
 
-void RenderableObject::setRenderMode(RenderMode mode) {
-	renderMode = mode;
+RenderMode RenderableObject::getRenderMode() {
+	return renderMode;
 }
 
 bool RenderableObject::isVisible() {
 	return visible;
+}
+
+void RenderableObject::setRenderMode(RenderMode mode) {
+	renderMode = mode;
 }
 
 void RenderableObject::toggleVisibilty() {

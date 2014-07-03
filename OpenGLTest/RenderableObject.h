@@ -13,8 +13,6 @@
 class RenderableObject {
 
 public:
-	/* A vector of all the RenderableObjects that have been instantiated so far. */
-	static std::vector<RenderableObject*> renderableObjects;
 
 	/* name: name of this object
 	   v: vertices of this object
@@ -37,6 +35,9 @@ public:
 	/* Render this object to the screen. */
 	virtual void render();
 
+	/* Returns a const reference to a vector of all RenderableObjects created. */
+	static const std::vector<RenderableObject*>& getRenderableObjects();
+
 	/* Returns the name of this object. */
 	std::string getName();
 
@@ -52,11 +53,14 @@ public:
 	/* Returns a const reference to the list of indices. */
 	const std::vector<GLuint>& getIndices();
 
-	/* Sets the render mode of this object to 'mode'. */
-	void setRenderMode(RenderMode mode);
-
 	/* Returns true iff this object is visible and should be rendered to the screen. */
 	bool isVisible();
+
+	/* Returns the render mode of this object. */
+	RenderMode getRenderMode();
+
+	/* Sets the render mode of this object to 'mode'. */
+	void setRenderMode(RenderMode mode);
 
 	/* Toggles visibility of this object on/off. */
 	void toggleVisibilty();
@@ -91,6 +95,9 @@ protected:
 
 	/* Update the render mode uniform of this object.*/
 	void updateRenderModeUniform();
+
+	/* A vector of all the RenderableObjects that have been instantiated so far. */
+	static std::vector<RenderableObject*> renderableObjects;
 
 	/* Name of this object. */
 	std::string objectName;
