@@ -40,6 +40,15 @@ extern float movement_speed;
 /* Speed of the mouse. */
 extern float mouse_speed;
 
+/* Controls the rate of translation for objects. */
+extern float translation_factor;
+
+/* Controls the rate of scaling for objects. */
+extern float scaling_factor;
+
+/* Controls the rate of rotation for objects. */
+extern float rotation_factor;
+
 /* Time at last update. */
 extern Uint32 old_time;
 
