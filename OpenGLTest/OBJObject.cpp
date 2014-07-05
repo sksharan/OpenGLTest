@@ -27,6 +27,8 @@ OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, gl
 	texture_filename = tex_filename;
 	obj_file = obj_filename;
 	renderMode = RENDERMODE_TEXTURED;
+	modelMatrix = glm::mat4();
+	programState.modelMatrix = modelMatrix;
 
 	parseOBJ();  //initializes vertices, texcoords, normals
 

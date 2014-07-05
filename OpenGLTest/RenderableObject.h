@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "EnumRenderMode.h"
+#include "ProgramState.h"
 
 /* Class which represents any object that can be rendered to the screen. */
 class RenderableObject {
@@ -56,14 +57,20 @@ public:
 	/* Returns true iff this object is visible and should be rendered to the screen. */
 	bool isVisible();
 
+	/* Toggles visibility of this object on/off. */
+	void toggleVisibilty();
+
 	/* Returns the render mode of this object. */
 	RenderMode getRenderMode();
 
 	/* Sets the render mode of this object to 'mode'. */
 	void setRenderMode(RenderMode mode);
 
-	/* Toggles visibility of this object on/off. */
-	void toggleVisibilty();
+	/* Returns the model matrix of this object. */
+	glm::mat4 getModelMatrix();
+
+	/* Set the new model matrix of this object to 'newModelMatrix.' */
+	void setModelMatrix(glm::mat4 newModelMatrix);
 
 protected:
 	/* A constructor that does nothing. */
@@ -155,6 +162,9 @@ protected:
 
 	/* The type of rendering to use with this object. */
 	RenderMode renderMode;
+
+	/* The model matrix of this object. */
+	glm::mat4 modelMatrix;
 };
 
 #endif

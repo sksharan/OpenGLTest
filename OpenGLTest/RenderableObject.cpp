@@ -1,5 +1,5 @@
 #include "RenderableObject.h"
-#include "ProgramState.h"
+#include "MatrixTransform.h"
 #include <iostream>
 #include <SOIL.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -7,6 +7,30 @@
 #define RENDERABLEOBJECT_DEBUG 0
 
 std::vector<RenderableObject*> RenderableObject::renderableObjects;
+
+RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::vector<float> t, std::vector<float> n, std::vector<GLuint> i, bool isVisible,
+	bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename) {
+	objectName = name;
+	vertices = v;
+	texcoords = t;
+	normals = n;
+	indices = i;
+	visible = isVisible;
+	light_enabled = lighting_enabled;
+	ambient_term = ambient;
+	diffuse_term = diffuse;
+	specular_term = specular;
+	shininess_term = shininess;
+	texture_filename = tex_filename;
+	renderMode = RENDERMODE_TEXTURED;
+	modelMatrix = glm::mat4();
+	programState.modelMatrix = modelMatrix;
+
+	initVao();
+	initTexture();
+
+	renderableObjects.push_back(this);
+}
 
 RenderableObject::~RenderableObject() { }
 
@@ -18,12 +42,12 @@ void RenderableObject::render() {
 	glBindVertexArray(0);
 }
 
-std::string RenderableObject::getName() {
-	return objectName;
-}
-
 const std::vector<RenderableObject*>& RenderableObject::getRenderableObjects() {
 	return renderableObjects;
+}
+
+std::string RenderableObject::getName() {
+	return objectName;
 }
 
 const std::vector<float>& RenderableObject::getVertices() {
@@ -42,43 +66,28 @@ const std::vector<GLuint>& RenderableObject::getIndices() {
 	return indices;
 }
 
-RenderMode RenderableObject::getRenderMode() {
-	return renderMode;
-}
-
 bool RenderableObject::isVisible() {
 	return visible;
-}
-
-void RenderableObject::setRenderMode(RenderMode mode) {
-	renderMode = mode;
 }
 
 void RenderableObject::toggleVisibilty() {
 	visible = !visible;
 }
 
+RenderMode RenderableObject::getRenderMode() {
+	return renderMode;
+}
 
-RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::vector<float> t, std::vector<float> n, std::vector<GLuint> i, bool isVisible,
-	                               bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename) {
-	objectName = name;
-	vertices = v;
-	texcoords = t;
-	normals = n;
-	indices = i;
-	visible = isVisible;
-	light_enabled = lighting_enabled;
-	ambient_term = ambient;
-	diffuse_term = diffuse;
-	specular_term = specular;
-	shininess_term = shininess;
-	texture_filename = tex_filename;
-	renderMode = RENDERMODE_TEXTURED;
+void RenderableObject::setRenderMode(RenderMode mode) {
+	renderMode = mode;
+}
 
-	initVao();
-	initTexture();
+glm::mat4 RenderableObject::getModelMatrix() {
+	return modelMatrix;
+}
 
-	renderableObjects.push_back(this);
+void RenderableObject::setModelMatrix(glm::mat4 newModelMatrix) {
+	modelMatrix = newModelMatrix;
 }
 
 RenderableObject::RenderableObject() {
@@ -138,6 +147,12 @@ void RenderableObject::setUniforms() {
 	updateShininessUniform();
 	updateLightEnabledUniform();
 	updateRenderModeUniform();
+
+	programState.modelMatrix = modelMatrix;
+	glUseProgram(0);
+	updateUniformModel();  //we need to make the glUseProgram calls because all functions in MatrixTransform.h enable the current program
+	                       //update the uniforms, then disable the current program
+	glUseProgram(programState.program);
 }
 
 void RenderableObject::updateAmbientUniform() {

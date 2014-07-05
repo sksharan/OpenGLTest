@@ -18,7 +18,8 @@ struct ProgramState {
 	/* The perspective matrix being used in the shaders. */
 	glm::mat4 perspectiveMatrix;
 
-	/* The model matrix being used in the shaders. */
+	/* The model matrix being used in the shaders (this is the modelview matrix of the current
+	RenderableObject to be rendered). */
 	glm::mat4 modelMatrix;
 
 	/* The view matrix being used in the shaders. */
