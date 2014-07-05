@@ -9,3 +9,8 @@ http://antongerdelan.net/opengl/
 https://github.com/OpenGLInsights/OpenGLInsightsCode/blob/master/Chapter%2026%20Indexing%20Multiple%20Vertex%20Arrays/article/suzanne.obj
 
 http://insanecoding.blogspot.com/2011/11/how-to-read-in-file-in-c.html
+
+TODO:
+
+- Will add suzanne.obj to obj folder
+- Will implement correct normals for heightmaps
