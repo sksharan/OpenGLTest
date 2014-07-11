@@ -147,7 +147,7 @@ void main() {
 			for (int id = 0; id < numPLights; id++) {
 				rgb_color += phongForPointLight(id);
 			}
-			frag_color = vec4(rgb_color, 1.0);
+			frag_color = vec4(rgb_color, texture(texture0, f_texcoord).a);
 
 	    } else {
 			frag_color = texture(texture0, f_texcoord);
