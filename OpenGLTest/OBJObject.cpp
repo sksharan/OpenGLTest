@@ -29,6 +29,7 @@ OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, gl
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;
+	aabb = NULL;
 
 	parseOBJ();  //initializes vertices, texcoords, normals
 
@@ -134,23 +135,9 @@ void OBJObject::initVao() {
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	glGenBuffers(1, &vbo_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(float), &vertices[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glGenBuffers(1, &vbo_texcoords);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_texcoords);
-	glBufferData(GL_ARRAY_BUFFER, texcoords.size()*sizeof(float), &texcoords[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glGenBuffers(1, &vbo_normals);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
-	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(float), &normals[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	initVboVertices();
+	initVboTexcoords();
+	initVboNormals();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

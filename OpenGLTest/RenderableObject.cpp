@@ -1,8 +1,9 @@
 #include "RenderableObject.h"
 #include "MatrixTransform.h"
-#include <iostream>
 #include <SOIL.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
+#include <limits>
 
 #define RENDERABLEOBJECT_DEBUG 0
 
@@ -25,6 +26,7 @@ RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;
+	aabb = NULL;
 
 	initVao();
 	initTexture();
@@ -32,7 +34,11 @@ RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::
 	renderableObjects.push_back(this);
 }
 
-RenderableObject::~RenderableObject() { }
+RenderableObject::~RenderableObject() {
+	if (aabb != NULL) {
+		delete aabb;
+	}
+}
 
 void RenderableObject::render() {
 	setUniforms();
@@ -54,16 +60,52 @@ const std::vector<float>& RenderableObject::getVertices() {
 	return vertices;
 }
 
+void RenderableObject::setVertices(std::vector<float>& newVertices) {
+	vertices = newVertices;
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo_vertices);
+	initVboVertices();
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
 const std::vector<float>& RenderableObject::getTexcoords() {
 	return texcoords;
+}
+
+void RenderableObject::setTexcoords(std::vector<float>& newTexcoords) {
+	texcoords = newTexcoords;
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo_texcoords);
+	initVboTexcoords();
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 const std::vector<float>& RenderableObject::getNormals() {
 	return normals;
 }
 
+void RenderableObject::setNormals(std::vector<float>& newNormals) {
+	normals = newNormals;
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo_normals);
+	initVboNormals();
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
 const std::vector<GLuint>& RenderableObject::getIndices() {
 	return indices;
+}
+
+void RenderableObject::setIndices(std::vector<GLuint>& newIndices) {
+	indices = newIndices;
+	glBindVertexArray(vao);
+	glDeleteBuffers(1, &vbo_indices);
+	initVboIndices();
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 bool RenderableObject::isVisible() {
@@ -72,6 +114,14 @@ bool RenderableObject::isVisible() {
 
 void RenderableObject::toggleVisibilty() {
 	visible = !visible;
+}
+
+bool RenderableObject::getLightEnabledStatus() {
+	return light_enabled;
+}
+
+void RenderableObject::toggleLightEnabledStatus() {
+	light_enabled = !light_enabled;
 }
 
 RenderMode RenderableObject::getRenderMode() {
@@ -88,6 +138,19 @@ glm::mat4 RenderableObject::getModelMatrix() {
 
 void RenderableObject::setModelMatrix(glm::mat4 newModelMatrix) {
 	modelMatrix = newModelMatrix;
+	calculateAABB();
+}
+
+void RenderableObject::enableAABB() {
+	if (aabb == NULL) {
+		aabb = new RenderableObject(objectName + "_AABB", std::vector<float>(1), std::vector<float>(1), std::vector<float>(1), std::vector<GLuint>(1),
+			                        true, false, ambient_term, diffuse_term, specular_term, shininess_term, "textures/red.jpg");
+		calculateAABB();
+	}
+}
+
+RenderableObject* RenderableObject::getAABB() {
+	return aabb;
 }
 
 RenderableObject::RenderableObject() {
@@ -98,30 +161,43 @@ void RenderableObject::initVao() {
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	glGenBuffers(1, &vbo_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(float), &vertices[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glGenBuffers(1, &vbo_texcoords);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_texcoords);
-	glBufferData(GL_ARRAY_BUFFER, texcoords.size()*sizeof(float), &texcoords[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glGenBuffers(1, &vbo_normals);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
-	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(float), &normals[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glGenBuffers(1, &vbo_indices);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
+	initVboVertices();
+	initVboTexcoords();
+	initVboNormals();
+	initVboIndices();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+}
+
+void RenderableObject::initVboVertices() {
+	glGenBuffers(1, &vbo_vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(float), &vertices[0], GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+}
+
+void RenderableObject::initVboTexcoords() {
+	glGenBuffers(1, &vbo_texcoords);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_texcoords);
+	glBufferData(GL_ARRAY_BUFFER, texcoords.size()*sizeof(float), &texcoords[0], GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+}
+
+void RenderableObject::initVboNormals() {
+	glGenBuffers(1, &vbo_normals);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_normals);
+	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(float), &normals[0], GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+}
+
+void RenderableObject::initVboIndices() {
+	glGenBuffers(1, &vbo_indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLuint), &indices[0], GL_DYNAMIC_DRAW);
 }
 
 void RenderableObject::initTexture() {
@@ -212,4 +288,101 @@ void RenderableObject::updateRenderModeUniform() {
 		glUniform1i(rendermode_uni_loc, 1);
 		break;
 	}
+}
+
+void RenderableObject::calculateAABB() {
+	//do nothing if the AABB is not enabled
+	if (aabb == NULL) {
+		return;
+	}
+
+	//check that this object has the correct number of vertices
+	if (vertices.size() % 3 != 0) {
+		printf("error: number of vertices in %s is not a multiple of 3", objectName.c_str());
+		return;
+	}
+
+	//record minimum and maximum x, y,and z values for vertices
+	float min_x = std::numeric_limits<float>::max();
+	float max_x = std::numeric_limits<float>::min();
+	float min_y = std::numeric_limits<float>::max();
+	float max_y = std::numeric_limits<float>::min();
+	float min_z = std::numeric_limits<float>::max();
+	float max_z = std::numeric_limits<float>::min();
+	for (int i = 0; i < vertices.size(); i += 3) {
+		glm::vec4 vertex_pos = glm::vec4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
+		vertex_pos = modelMatrix * vertex_pos;
+
+		if (vertex_pos.x < min_x) {
+			min_x = vertex_pos.x;
+		}
+		if (vertex_pos.x > max_x) {
+			max_x = vertex_pos.x;
+		}
+
+		if (vertex_pos.y < min_y) {
+			min_y = vertex_pos.y;
+		}
+		if (vertex_pos.y > max_y) {
+			max_y = vertex_pos.y;
+		}
+
+		if (vertex_pos.z < min_z) {
+			min_z = vertex_pos.z;
+		}
+		if (vertex_pos.z > max_z) {
+			max_z = vertex_pos.z;
+		}
+	}
+
+	//create the vertices
+	std::vector<float> aabb_vertices = {
+		min_x, max_y, min_z, //back top left
+		min_x, min_y, min_z, //back bottom left
+		max_x, max_y, min_z, //back top right
+		max_x, min_y, min_z, //back bottom right
+		min_x, max_y, max_z, //front top left
+		min_x, min_y, max_z, //front bottom left
+		max_x, max_y, max_z, //front top right
+		max_x, min_y, max_z //front bottom right
+	};
+
+	//create the texcoords (these could be anything for now)
+	std::vector<float> aabb_texcoords = {
+		0.0f, 0.0f, //back top left
+		0.0f, 0.0f, //back bottom left
+		0.0f, 0.0f, //back top right
+		0.0f, 0.0f, //back bottom right
+		0.0f, 0.0f, //front top left
+		0.0f, 0.0f, //front bottom left
+		0.0f, 0.0f, //front top right
+		0.0f, 0.0f //front bottom right
+	};
+
+	//create the normals (these could be anything for now)
+	std::vector<float> aabb_normals = {
+		1.0f, 0.0f, 0.0f, //back top left
+		1.0f, 0.0f, 0.0f, //back bottom left
+		1.0f, 0.0f, 0.0f, //back top right
+		1.0f, 0.0f, 0.0f, //back bottom right
+		1.0f, 0.0f, 0.0f, //front top left
+		1.0f, 0.0f, 0.0f, //front bottom left
+		1.0f, 0.0f, 0.0f, //front top right
+		1.0f, 0.0f, 0.0f //front bottom right
+	};
+
+	//create the indices
+	std::vector<GLuint> aabb_indices = {
+		0, 1, 2, 2, 1, 3, //back face
+		0, 4, 2, 2, 4, 6, //top face
+		0, 1, 4, 4, 1, 5, //left face
+		6, 7, 2, 2, 7, 3, //right face
+		5, 7, 3, 5, 3, 1, //bottom face
+		4, 5, 6, 6, 5, 7 //front face
+	};
+
+	aabb->setVertices(aabb_vertices);
+	aabb->setTexcoords(aabb_texcoords);
+	aabb->setNormals(aabb_normals);
+	aabb->setIndices(aabb_indices);
 }

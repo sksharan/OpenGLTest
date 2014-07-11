@@ -45,20 +45,38 @@ public:
 	/* Returns a const reference to the list of vertices. */
 	const std::vector<float>& getVertices();
 
+	/* Sets the vertices of this object to 'newVertices.'*/
+	void setVertices(std::vector<float>& newVertices);
+
 	/* Returns a const reference to the list of texcoords. */
 	const std::vector<float>& getTexcoords();
+
+	/* Sets the texcoords of this object to 'newTexcoords.' */
+	void setTexcoords(std::vector<float>& newTexcoords);
 
 	/* Returns a const reference to the list of normals. */
 	const std::vector<float>& getNormals();
 
+	/* Sets the normals of this object to 'newNormals.' */
+	void setNormals(std::vector<float>& newNormals);
+
 	/* Returns a const reference to the list of indices. */
 	const std::vector<GLuint>& getIndices();
+
+	/* Sets the indices of this object to 'newIndices.' */
+	void setIndices(std::vector<GLuint>& newIndices);
 
 	/* Returns true iff this object is visible and should be rendered to the screen. */
 	bool isVisible();
 
 	/* Toggles visibility of this object on/off. */
 	void toggleVisibilty();
+
+	/* Returns true iff this object is influenced by lighting calculations. */
+	bool getLightEnabledStatus();
+
+	/* Toggle whether or not this object is influenced by lighting calculations. */
+	void toggleLightEnabledStatus();
 
 	/* Returns the render mode of this object. */
 	RenderMode getRenderMode();
@@ -69,18 +87,38 @@ public:
 	/* Returns the model matrix of this object. */
 	glm::mat4 getModelMatrix();
 
-	/* Set the new model matrix of this object to 'newModelMatrix.' */
+	/* Set the new model matrix of this object to 'newModelMatrix.' Updates the AABB if one is enabled for
+	this object. */
 	void setModelMatrix(glm::mat4 newModelMatrix);
+
+	/* Creates a AABB (axis-aligned bounding box) RenderableObject for this object. It is automatically updated
+	whenever this object is transformed. Does nothing if the AABB is already enabled. */
+	void enableAABB();
+
+	/* Returns the AABB for this object, or NULL if the AABB is not enabled. */
+	RenderableObject* getAABB();
 
 protected:
 	/* A constructor that does nothing. */
 	RenderableObject();
 
-	/* Sets up the vertex array object. Called in the constructor. */
+	/* Sets up the vertex array object. Called in the constructor. Will also initialize the vertex buffer objects. */
 	virtual void initVao();
 
+	/* Initializes the vertex buffer object for vertices. */
+	void initVboVertices();
+
+	/* Initializes the vertex buffer object for texcoords. */
+	void initVboTexcoords();
+
+	/* Initializes the vertex buffer object for normals. */
+	void initVboNormals();
+
+	/* Initializes the vertex buffer object for indices. */
+	void initVboIndices();
+
 	/* Initialize the texture for use with this object. */
-	virtual void initTexture();
+	void initTexture();
 
 	/* Set up the uniforms for this object. */
 	void setUniforms();
@@ -102,6 +140,9 @@ protected:
 
 	/* Update the render mode uniform of this object.*/
 	void updateRenderModeUniform();
+
+	/* Recalulates the AABB for this object, or does nothing if the AABB is not enabled. */
+	void calculateAABB();
 
 	/* A vector of all the RenderableObjects that have been instantiated so far. */
 	static std::vector<RenderableObject*> renderableObjects;
@@ -165,6 +206,9 @@ protected:
 
 	/* The model matrix of this object. */
 	glm::mat4 modelMatrix;
+
+	/* The axis-aligned bounding box of this object. */
+	RenderableObject* aabb;
 };
 
 #endif
