@@ -16,7 +16,10 @@
 	Q : select previous object
 	E : select next object
 	R : switching rendering mode of the currently selected object
+	H : toggle visibility of the currently selected object
+	L : toggle whether or not the currently selected object is affected by lighting calculations
 	T : toggle wireframe mode on/off
+	Y : enable an AABB for the currently selected object
 	Z : change to translate mode (then manipulate object with ALL ARROW KEYS, LSHIFT, SPACEBAR)
 	X : change to scale mode (then manipulate object with LEFT AND RIGHT ARROW KEYS)
 	C : change to rotate mode (then manipulate object with ALL ARROW KEYS)
@@ -37,7 +40,8 @@ unsigned int objectIndex = 0;
 /* An enum for the different transformations that a user can make to an object. */
 enum Transformation {
 	TRANSLATE, SCALE, ROTATE
-} transformationMode;
+};
+Transformation transformationMode = TRANSLATE;
 
 /* Function protoypes. */
 void handleObjects(SDL_Event event);
@@ -161,6 +165,21 @@ void handleObjects(SDL_Event event) {
 			currObject->setRenderMode(RENDERMODE_NORMALS);
 			printf("changing render mode of %s to RENDERMODE_NORMALS\n", currObject->getName().c_str());
 		}
+		break;
+
+	/* H: toggle visibility of the currently selected object. */
+	case SDLK_h:
+		currObject->toggleVisibilty();
+		break;
+
+	/* L : toggle whether or not the currently selected object is affected by lighting calculations. */
+	case SDLK_l:
+		currObject->toggleLightEnabledStatus();
+		break;
+
+	/* Y : enable an AABB for the currently selected object */
+	case SDLK_y:
+		currObject->enableAABB();
 		break;
 
 	/* Z: switch to translate mode .*/
