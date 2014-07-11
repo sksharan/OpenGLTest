@@ -12,33 +12,20 @@ void HeightmapObject::render() {
 HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude) {
 
-	objectName = name;
-	visible = isVisible;
-	light_enabled = lighting_enabled;
-	ambient_term = ambient;
-	diffuse_term = diffuse;
-	specular_term = specular;
-	shininess_term = shininess;
-	texture_filename = tex_filename;
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
+	
 	heightmap_filename = hm_filename;
 	start_position = start_pos;
 	heightmap_length = length;
 	heightmap_spacing = spacing;
 	heightmap_amplitude = amplitude;
-	renderMode = RENDERMODE_TEXTURED;
-	modelMatrix = glm::mat4();
-	programState.modelMatrix = modelMatrix;
-	aabb = NULL;
 
 	int img_width, img_height;
 	heightmap_pixels = SOIL_load_image(heightmap_filename.c_str(), &img_width, &img_height, 0, SOIL_LOAD_RGBA); //load the pixels
 
 	generateHeightmap();  //initializes vertices, texcoords, normals, indices
 
-	initVao();
-	initTexture();
-
-	renderableObjects.push_back(this);
+	initRenderableObjectEnd();
 }
 
 /* Implementation partially adapted from  http://www.learnopengles.com/android-lesson-eight-an-introduction-to-index-buffer-objects-ibos/ . */

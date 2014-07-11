@@ -28,7 +28,7 @@ public:
 	   shininess: shininess term of this object
 	   tex_filename: filename of the texture associated with this object
 	*/
-	RenderableObject(std::string name, std::vector<float> v, std::vector<float> t, std::vector<float> n, std::vector<GLuint> i, bool isVisible,
+	RenderableObject(std::string name, std::vector<float>& v, std::vector<float>& t, std::vector<float>& n, std::vector<GLuint>& i, bool isVisible,
 		             bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename);
 
 	~RenderableObject();
@@ -101,6 +101,15 @@ public:
 protected:
 	/* A constructor that does nothing. */
 	RenderableObject();
+
+	/* Every child of RenableObject should call this method at the start of its constructor. This handles initialization of all
+	RenderableObject fields except 'vertices', 'texcoords', 'normals', and 'indices', which must be handled by the child class. */
+	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
+		                           glm::vec4 specular, float shininess, std::string tex_filename);
+
+	/* Every child of RenableObject should call this method at the end of it's constructor. This handles the creation of VAOs and VBOs,
+	binds the texture, and adds the object to the static list of all RenderableObjects. */
+	void initRenderableObjectEnd();
 
 	/* Sets up the vertex array object. Called in the constructor. Will also initialize the vertex buffer objects. */
 	virtual void initVao();

@@ -17,26 +17,12 @@ void OBJObject::render() {
 OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 	                 float shininess, std::string tex_filename, std::string obj_filename) {
 
-	objectName = name;
-	visible = isVisible;
-	light_enabled = lighting_enabled;
-	ambient_term = ambient;
-	diffuse_term = diffuse;
-	specular_term = specular;
-	shininess_term = shininess;
-	texture_filename = tex_filename;
-	obj_file = obj_filename;
-	renderMode = RENDERMODE_TEXTURED;
-	modelMatrix = glm::mat4();
-	programState.modelMatrix = modelMatrix;
-	aabb = NULL;
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
 
+	obj_file = obj_filename;
 	parseOBJ();  //initializes vertices, texcoords, normals
 
-	initVao();
-	initTexture();
-
-	renderableObjects.push_back(this);
+	initRenderableObjectEnd();
 }
 
 void OBJObject::parseOBJ() {

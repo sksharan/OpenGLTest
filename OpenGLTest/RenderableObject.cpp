@@ -9,29 +9,17 @@
 
 std::vector<RenderableObject*> RenderableObject::renderableObjects;
 
-RenderableObject::RenderableObject(std::string name, std::vector<float> v, std::vector<float> t, std::vector<float> n, std::vector<GLuint> i, bool isVisible,
+RenderableObject::RenderableObject(std::string name, std::vector<float>& v, std::vector<float>& t, std::vector<float>& n, std::vector<GLuint>& i, bool isVisible,
 	bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename) {
-	objectName = name;
+
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
+
 	vertices = v;
 	texcoords = t;
 	normals = n;
 	indices = i;
-	visible = isVisible;
-	light_enabled = lighting_enabled;
-	ambient_term = ambient;
-	diffuse_term = diffuse;
-	specular_term = specular;
-	shininess_term = shininess;
-	texture_filename = tex_filename;
-	renderMode = RENDERMODE_TEXTURED;
-	modelMatrix = glm::mat4();
-	programState.modelMatrix = modelMatrix;
-	aabb = NULL;
 
-	initVao();
-	initTexture();
-
-	renderableObjects.push_back(this);
+	initRenderableObjectEnd();
 }
 
 RenderableObject::~RenderableObject() {
@@ -144,7 +132,7 @@ void RenderableObject::setModelMatrix(glm::mat4 newModelMatrix) {
 void RenderableObject::enableAABB() {
 	if (aabb == NULL) {
 		aabb = new RenderableObject(objectName + "_AABB", std::vector<float>(1), std::vector<float>(1), std::vector<float>(1), std::vector<GLuint>(1),
-			                        true, false, ambient_term, diffuse_term, specular_term, shininess_term, "textures/red.jpg");
+			                        true, false, ambient_term, diffuse_term, specular_term, shininess_term, "textures/AABB.png");
 		calculateAABB();
 	}
 }
@@ -155,6 +143,30 @@ RenderableObject* RenderableObject::getAABB() {
 
 RenderableObject::RenderableObject() {
 
+}
+
+void RenderableObject::initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
+	glm::vec4 specular, float shininess, std::string tex_filename) {
+
+	objectName = name;
+	visible = isVisible;
+	light_enabled = lighting_enabled;
+	ambient_term = ambient;
+	diffuse_term = diffuse;
+	specular_term = specular;
+	shininess_term = shininess;
+	texture_filename = tex_filename;
+	renderMode = RENDERMODE_TEXTURED;
+	modelMatrix = glm::mat4();
+	programState.modelMatrix = modelMatrix;
+	aabb = NULL;
+}
+
+void RenderableObject::initRenderableObjectEnd() {
+	initVao();
+	initTexture();
+
+	renderableObjects.push_back(this);
 }
 
 void RenderableObject::initVao() {
@@ -347,7 +359,7 @@ void RenderableObject::calculateAABB() {
 		max_x, min_y, max_z //front bottom right
 	};
 
-	//create the texcoords (these could be anything for now)
+	//create the texcoords (these could be anything)
 	std::vector<float> aabb_texcoords = {
 		0.0f, 0.0f, //back top left
 		0.0f, 0.0f, //back bottom left
@@ -359,7 +371,7 @@ void RenderableObject::calculateAABB() {
 		0.0f, 0.0f //front bottom right
 	};
 
-	//create the normals (these could be anything for now)
+	//create the normals (these could be anything)
 	std::vector<float> aabb_normals = {
 		1.0f, 0.0f, 0.0f, //back top left
 		1.0f, 0.0f, 0.0f, //back bottom left
@@ -373,12 +385,12 @@ void RenderableObject::calculateAABB() {
 
 	//create the indices
 	std::vector<GLuint> aabb_indices = {
-		0, 1, 2, 2, 1, 3, //back face
+		0, 2, 1, 2, 3, 1, //back face
 		0, 4, 2, 2, 4, 6, //top face
 		0, 1, 4, 4, 1, 5, //left face
 		6, 7, 2, 2, 7, 3, //right face
-		5, 7, 3, 5, 3, 1, //bottom face
-		4, 5, 6, 6, 5, 7 //front face
+		5, 3, 7, 5, 1, 3, //bottom face
+		6, 4, 7, 4, 5, 7 //front face
 	};
 
 	aabb->setVertices(aabb_vertices);
