@@ -28,6 +28,7 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;
+	aabb = NULL;
 
 	int img_width, img_height;
 	heightmap_pixels = SOIL_load_image(heightmap_filename.c_str(), &img_width, &img_height, 0, SOIL_LOAD_RGBA); //load the pixels
@@ -61,9 +62,7 @@ void HeightmapObject::generateHeightmap() {
 			texcoords.push_back(v);
 
 			//add normal (FIXME later)
-			normals.push_back(0);
-			normals.push_back(1);
-			normals.push_back(0);
+			addNormals(x, z);
 		}
 	}
 
@@ -86,9 +85,23 @@ void HeightmapObject::generateHeightmap() {
 	}
 }
 
-/* Because heightmaps are greyscale images, the red, green, and blue channels for a pixel are the same
-and we can pick any one of these channels to use for our height value. We consider a 0 to 1 scale instead
-of a 0 to 255 scale. */
+/* Remember that we need to treat colors on a 0 to 1 scale. */
 float HeightmapObject::getY(int x, int z) {
-	return heightmap_pixels[(x + z * heightmap_length) * HM_TEXTURE_NUM_CHANNELS] * heightmap_amplitude / 255.0f;
+	int index = (x + z * heightmap_length) * HM_TEXTURE_NUM_CHANNELS;
+	float red_value = (float)heightmap_pixels[index] * heightmap_amplitude / 255.0f;
+	float blue_value = (float)heightmap_pixels[index + 1] * heightmap_amplitude / 255.0f;
+	float green_value = (float)heightmap_pixels[index + 2] * heightmap_amplitude / 255.0f;
+	return red_value;
+}
+
+
+void HeightmapObject::addNormals(int x, int z) {
+	/* The vector representing the normal. */
+	glm::vec3 normal = glm::vec3(0, 1, 0);
+
+	//FIXME
+
+	normals.push_back(normal.x);
+	normals.push_back(normal.y);
+	normals.push_back(normal.z);
 }

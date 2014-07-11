@@ -41,12 +41,15 @@ private:
 	virtual void render();
 
 	/* Get the height value at a given position (x, z). We use this coordinate to represent the vertices rather than the world position,
-	so (0, 0) is the start position and (heightmap_length, heightmap_length) is the end position of the heightmap. The returned value
+	so (0, 0) is the start position and (heightmap_length - 1, heightmap_length - 1) is the end position of the heightmap. The returned value
 	is in terms of world coordinates. */
 	float getY(int x, int z);
 
 	/* Generates the heightmap and adds the data to 'vertices, 'texcoords, 'normals', and 'indices'. */
 	void generateHeightmap();
+
+	/* Adds normals given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
+	void addNormals(int x, int z);
 
 	/* Name of the heightmap that will determine height values for this object. */
 	std::string heightmap_filename;
