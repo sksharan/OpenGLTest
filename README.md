@@ -10,6 +10,8 @@ https://github.com/OpenGLInsights/OpenGLInsightsCode/blob/master/Chapter%2026%20
 
 http://insanecoding.blogspot.com/2011/11/how-to-read-in-file-in-c.html
 
+http://www.chadvernon.com/blog/resources/directx9/terrain-generation-with-a-heightmap/
+
 TODO:
 
 - Will add suzanne.obj to obj folder
