@@ -5,7 +5,7 @@
 #include <iostream>
 #include <limits>
 
-#define RENDERABLEOBJECT_DEBUG 0
+#define RENDERABLEOBJECT_DEBUG 1
 
 std::vector<RenderableObject*> RenderableObject::renderableObjects;
 
@@ -315,12 +315,12 @@ void RenderableObject::calculateAABB() {
 	}
 
 	//record minimum and maximum x, y,and z values for vertices
-	float min_x = std::numeric_limits<float>::max();
-	float max_x = std::numeric_limits<float>::min();
-	float min_y = std::numeric_limits<float>::max();
-	float max_y = std::numeric_limits<float>::min();
-	float min_z = std::numeric_limits<float>::max();
-	float max_z = std::numeric_limits<float>::min();
+	float min_x = std::numeric_limits<float>::infinity();
+	float max_x = -std::numeric_limits<float>::infinity();
+	float min_y = std::numeric_limits<float>::infinity();
+	float max_y = -std::numeric_limits<float>::infinity();
+	float min_z = std::numeric_limits<float>::infinity();
+	float max_z = -std::numeric_limits<float>::infinity();
 	for (int i = 0; i < vertices.size(); i += 3) {
 		glm::vec4 vertex_pos = glm::vec4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
 		vertex_pos = modelMatrix * vertex_pos;
@@ -345,6 +345,10 @@ void RenderableObject::calculateAABB() {
 		if (vertex_pos.z > max_z) {
 			max_z = vertex_pos.z;
 		}
+	}
+
+	if (RENDERABLEOBJECT_DEBUG) {
+		printf("AABB: %f, %f, %f, %f, %f, %f\n", min_x, max_x, min_y, max_y, min_z, max_z);
 	}
 
 	//create the vertices
