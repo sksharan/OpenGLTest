@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABBObject.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="EnumRenderMode.h" />
     <ClInclude Include="HeightmapObject.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABBObject.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="HeightmapObject.cpp" />
     <ClCompile Include="InitGL.cpp" />

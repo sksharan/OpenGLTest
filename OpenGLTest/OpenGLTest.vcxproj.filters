@@ -99,6 +99,9 @@
     <ClInclude Include="EnumRenderMode.h">
       <Filter>src\globals</Filter>
     </ClInclude>
+    <ClInclude Include="AABBObject.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="Test.cpp">
       <Filter>src\test</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBObject.cpp">
+      <Filter>src\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ float persp_z_near = 0.1f;
 
 float persp_z_far = 2000.0f;
 
-float movement_speed = 15.0f;
+float movement_speed = 25.0f;
 
 float mouse_speed = 0.07f;
 

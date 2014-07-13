@@ -86,7 +86,9 @@ int main(int argc, char** argv) {
 	}
 
 	/* Delete the objects (if needed). */
-	delete object1, object2, object3, object4;
+	for (int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
+		delete RenderableObject::getRenderableObjects()[i];
+	}
 
 	/* Deinitialize SDL. */
 	deinitSDL();

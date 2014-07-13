@@ -91,23 +91,16 @@ public:
 	this object. */
 	void setModelMatrix(glm::mat4 newModelMatrix);
 
-	/* Creates a AABB (axis-aligned bounding box) RenderableObject for this object. It is automatically updated
-	whenever this object is transformed. Does nothing if the AABB is already enabled. */
-	void enableAABB();
-
-	/* Returns the AABB for this object, or NULL if the AABB is not enabled. */
-	RenderableObject* getAABB();
-
 protected:
 	/* A constructor that does nothing. */
 	RenderableObject();
 
-	/* Every child of RenableObject should call this method at the start of its constructor. This handles initialization of all
+	/* Children of RenderableObject may call this method at the start of their constructors. This handles initialization of all
 	RenderableObject fields except 'vertices', 'texcoords', 'normals', and 'indices', which must be handled by the child class. */
 	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
 		                           glm::vec4 specular, float shininess, std::string tex_filename);
 
-	/* Every child of RenableObject should call this method at the end of it's constructor. This handles the creation of VAOs and VBOs,
+	/* Children of RenderableObject may call this method at the end of their constructors. This handles the creation of VAOs and VBOs,
 	binds the texture, and adds the object to the static list of all RenderableObjects. */
 	void initRenderableObjectEnd();
 
@@ -149,9 +142,6 @@ protected:
 
 	/* Update the render mode uniform of this object.*/
 	void updateRenderModeUniform();
-
-	/* Recalulates the AABB for this object, or does nothing if the AABB is not enabled. */
-	void calculateAABB();
 
 	/* A vector of all the RenderableObjects that have been instantiated so far. */
 	static std::vector<RenderableObject*> renderableObjects;
@@ -215,9 +205,6 @@ protected:
 
 	/* The model matrix of this object. */
 	glm::mat4 modelMatrix;
-
-	/* The axis-aligned bounding box of this object. */
-	RenderableObject* aabb;
 };
 
 #endif

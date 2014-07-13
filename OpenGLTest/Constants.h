@@ -25,6 +25,9 @@ be modifed in the program's lifetime. */
 number in the fragment shader). */
 #define MAX_DIRECTIONAL_LIGHTS 2
 
+/* An AABB around an object named 'obj' will have the name 'obj_AABB'. */
+#define AABB_SUFFIX "_AABB"
+
 /* The field of view used when creating the perspective matrix. */
 extern float persp_fov;
 

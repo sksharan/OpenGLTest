@@ -5,6 +5,7 @@
 #include "MatrixTransform.h"
 #include "Viewer.h"
 #include "RenderableObject.h"
+#include "AABBObject.h"
 #include "EnumRenderMode.h"
 #include <SDL.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -36,6 +37,8 @@ bool wireframeEnabled = false;
 RenderableObject* currObject;
 /* 'currObject' is RenderableObject::getRenderableObjects()[objectIndex]. */
 unsigned int objectIndex = 0;
+/* The AABB for the currently selected object. */
+AABBObject* currAABB;
 
 /* An enum for the different transformations that a user can make to an object. */
 enum Transformation {
@@ -115,6 +118,16 @@ void handleKeyInputNC(SDL_Event event) {
 	handleObjects(event);
 }
 
+/* Sets the current AABB given the name of the current object (assume all objects have unique names). */
+void setAABB(std::string currObjName) {
+	for (int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
+		std::string objName = RenderableObject::getRenderableObjects()[i]->getName();
+		if (objName == currObjName + AABB_SUFFIX) {
+			currAABB = (AABBObject*)RenderableObject::getRenderableObjects()[i];
+		}
+	}
+}
+
 /* Function that specifically handles selection and manipulation of objects, given
 an SDL_Event. */
 void handleObjects(SDL_Event event) {
@@ -142,6 +155,7 @@ void handleObjects(SDL_Event event) {
 		}
 		currObject = RenderableObject::getRenderableObjects()[objectIndex];
 		printf("%s now selected\n", currObject->getName().c_str());
+		setAABB(currObject->getName());
 		break;
 
 	/* Q: go to previous object. */
@@ -154,6 +168,7 @@ void handleObjects(SDL_Event event) {
 		}
 		currObject = RenderableObject::getRenderableObjects()[objectIndex];
 		printf("%s now selected\n", currObject->getName().c_str());
+		setAABB(currObject->getName());
 		break;
 
 	/* R: change the rendering mode of the currently selected object. */
@@ -179,7 +194,7 @@ void handleObjects(SDL_Event event) {
 
 	/* Y : enable an AABB for the currently selected object */
 	case SDLK_y:
-		currObject->enableAABB();
+		currAABB = new AABBObject(currObject);
 		break;
 
 	/* Z: switch to translate mode .*/
@@ -204,10 +219,12 @@ void handleObjects(SDL_Event event) {
 	case SDLK_UP:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, -translation_factor)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
+			currAABB->calculateAABB();
 		}
 		break;
 
@@ -215,10 +232,12 @@ void handleObjects(SDL_Event event) {
 	case SDLK_DOWN:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, translation_factor)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
+			currAABB->calculateAABB();
 		}
 		break;
 
@@ -226,10 +245,13 @@ void handleObjects(SDL_Event event) {
 	case SDLK_LEFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(-translation_factor, 0.0f, 0.0f)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(1.0/scaling_factor, 1.0/scaling_factor, 1.0/scaling_factor)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
+			currAABB->calculateAABB();
 		}
 		break;
 
@@ -237,10 +259,13 @@ void handleObjects(SDL_Event event) {
 	case SDLK_RIGHT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(translation_factor, 0.0f, 0.0f)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(scaling_factor, scaling_factor, scaling_factor)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
+			currAABB->calculateAABB();
 		}
 		break;
 
@@ -248,6 +273,7 @@ void handleObjects(SDL_Event event) {
 	case SDLK_LSHIFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, -translation_factor, 0.0f)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
@@ -259,6 +285,7 @@ void handleObjects(SDL_Event event) {
 	case SDLK_SPACE:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, translation_factor, 0.0f)));
+			currAABB->calculateAABB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
