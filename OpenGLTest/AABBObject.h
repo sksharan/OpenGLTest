@@ -7,7 +7,7 @@
 /* Class representing an Axis-Aligned Bounding Box. */
 class AABBObject : public RenderableObject {
 public:
-	/* Creates an AABB around 'object.' */
+	/* Creates an AABB around 'obj.' */
 	AABBObject(RenderableObject* obj);
 
 	/* Calulates the vertices, texcoords, normals, and indices of the AABB. Should be called whenever the object

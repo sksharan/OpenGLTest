@@ -102,6 +102,9 @@
     <ClInclude Include="AABBObject.h">
       <Filter>src\object</Filter>
     </ClInclude>
+    <ClInclude Include="OBBObject.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
@@ -162,6 +165,9 @@
       <Filter>src\test</Filter>
     </ClCompile>
     <ClCompile Include="AABBObject.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
+    <ClCompile Include="OBBObject.cpp">
       <Filter>src\object</Filter>
     </ClCompile>
   </ItemGroup>

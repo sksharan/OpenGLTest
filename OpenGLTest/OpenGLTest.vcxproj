@@ -22,6 +22,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="MouseHandler.h" />
+    <ClInclude Include="OBBObject.h" />
     <ClInclude Include="OBJObject.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ProgramState.h" />
@@ -44,6 +45,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="OBBObject.cpp" />
     <ClCompile Include="OBJObject.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="ProgramState.cpp" />

@@ -28,6 +28,9 @@ number in the fragment shader). */
 /* An AABB around an object named 'obj' will have the name 'obj_AABB'. */
 #define AABB_SUFFIX "_AABB"
 
+/* An OBB around an object named 'obj' will have the name 'obj_OBB'. */
+#define OBB_SUFFIX "_OBB"
+
 /* The field of view used when creating the perspective matrix. */
 extern float persp_fov;
 
