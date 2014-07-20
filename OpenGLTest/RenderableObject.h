@@ -89,7 +89,7 @@ public:
 
 	/* Set the new model matrix of this object to 'newModelMatrix.' Updates the AABB if one is enabled for
 	this object. */
-	void setModelMatrix(glm::mat4 newModelMatrix);
+	virtual void setModelMatrix(glm::mat4 newModelMatrix);
 
 protected:
 	/* A constructor that does nothing. */
@@ -101,7 +101,7 @@ protected:
 		                           glm::vec4 specular, float shininess, std::string tex_filename);
 
 	/* Children of RenderableObject may call this method at the end of their constructors. This handles the creation of VAOs and VBOs,
-	binds the texture, and adds the object to the static list of all RenderableObjects. */
+	and binds the texture. */
 	void initRenderableObjectEnd();
 
 	/* Sets up the vertex array object. Called in the constructor. Will also initialize the vertex buffer objects. */
@@ -143,7 +143,7 @@ protected:
 	/* Update the render mode uniform of this object.*/
 	void updateRenderModeUniform();
 
-	/* A vector of all the RenderableObjects that have been instantiated so far. */
+	/* A vector of all the RenderableObjects that have been instantiated so far (does not include children of RenderableObject). */
 	static std::vector<RenderableObject*> renderableObjects;
 
 	/* Name of this object. */

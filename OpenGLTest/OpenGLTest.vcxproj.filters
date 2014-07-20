@@ -105,6 +105,12 @@
     <ClInclude Include="OBBObject.h">
       <Filter>src\object</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumTransformation.h">
+      <Filter>src\globals</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
@@ -169,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="OBBObject.cpp">
       <Filter>src\object</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>src\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

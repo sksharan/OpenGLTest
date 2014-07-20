@@ -14,6 +14,15 @@ public:
 	that this AABB contains is transformed. */
 	void calculateAABB();
 
+	/* Calling this function has no effect, as AABB's move with the object that they surround. */
+	virtual void setModelMatrix(glm::mat4 newModelMatrix);
+
+	/* Renders this object with GL_LINES as the drawing mode. */
+	void render();
+
+	/* Returns reference to all AABBObjects that have been created. */
+	static std::vector<AABBObject*>& getAABBObjects();
+
 private:
 	/* The object that this AABB surrounds. */
 	RenderableObject* object;

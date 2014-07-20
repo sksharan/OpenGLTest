@@ -14,6 +14,7 @@
     <ClInclude Include="AABBObject.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="EnumRenderMode.h" />
+    <ClInclude Include="EnumTransformation.h" />
     <ClInclude Include="HeightmapObject.h" />
     <ClInclude Include="InitGL.h" />
     <ClInclude Include="InitGLEW.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="ProgramState.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="RenderableObject.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Viewer.h" />
@@ -51,6 +53,7 @@
     <ClCompile Include="ProgramState.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Viewer.cpp" />

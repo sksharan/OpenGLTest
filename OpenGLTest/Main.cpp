@@ -13,6 +13,7 @@
 #include "RenderableObject.h"
 #include "OBJObject.h"
 #include "HeightmapObject.h"
+#include "Scene.h"
 #include "Test.h"
 #include "Util.h"
 #include <SDL.h>
@@ -57,15 +58,23 @@ int main(int argc, char** argv) {
 	updateUniformPerspective();
 	updateUniformNormal();
 
+	/* Create a new Scene. */
+	Scene scene(glm::vec4(0.0, 0.0, 0.0, 1.0), 1.0);
+
 	/* Create the objects. */
 	RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
 	RenderableObject* object2 = (RenderableObject*)genTower();
 	RenderableObject* object3 = (RenderableObject*)genSuzanne();
 	RenderableObject* object4 = (RenderableObject*)genHeightmapObject();
 
+	/* Add the objects to the Scene. */
+	scene.addObject(object1);
+	scene.addObject(object2);
+	scene.addObject(object3);
+	scene.addObject(object4);
+
 	/* Create the lights. */
 	PointLight light1(glm::vec3(50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
-	//PointLight light2(glm::vec3(-50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Begin the main loop. */
 	programState.done = false;
@@ -74,20 +83,32 @@ int main(int argc, char** argv) {
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_KEYDOWN:
-				handleKeyInputNC(event);
+				handleKeyInputNC(event, scene);
 				break;
 			default:
 				break;
 			}
 		}
-		handleKeyInput();
-		handleMouseInput();
-		render();
+		handleKeyInput(scene);
+		handleMouseInput(scene);
+		render(scene);
 	}
 
-	/* Delete the objects (if needed). */
+	/* Delete all objects. */
 	for (int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
 		delete RenderableObject::getRenderableObjects()[i];
+	}
+	for (int i = 0; i < OBJObject::getOBJObjects().size(); i++) {
+		delete OBJObject::getOBJObjects()[i];
+	}
+	for (int i = 0; i < HeightmapObject::getHeightmapObjects().size(); i++) {
+		delete HeightmapObject::getHeightmapObjects()[i];
+	}
+	for (int i = 0; i < AABBObject::getAABBObjects().size(); i++) {
+		delete AABBObject::getAABBObjects()[i];
+	}
+	for (int i = 0; i < OBBObject::getOBBObjects().size(); i++) {
+		delete OBBObject::getOBBObjects()[i];
 	}
 
 	/* Deinitialize SDL. */

@@ -12,7 +12,7 @@
 
 /* Implementation adapted from 
 http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/ */
-void handleMouseInput() {
+void handleMouseInput(Scene& scene) {
 	old_time = current_time;
 	current_time = SDL_GetTicks();
 	delta_time = float(current_time - old_time) / 1000.0f;

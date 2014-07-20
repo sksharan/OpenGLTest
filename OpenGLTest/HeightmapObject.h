@@ -35,6 +35,9 @@ public:
 	HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 	                float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
 
+	/* Returns all HeightmapObjects that have been created. */
+	static std::vector<HeightmapObject*>& getHeightmapObjects();
+
 private:
 
 	/* Uses GL_TRIANGLE_STRIP for rendering. */
@@ -69,6 +72,9 @@ private:
 	/* The pixels that make up the heightmap image (the one used to determine height values, not the texture
 	applied to the object. */
 	unsigned char* heightmap_pixels;
+
+	/* All HeightmapObjects that have been created. */
+	static std::vector<HeightmapObject*> heightmapObjects;
 };
 
 #endif

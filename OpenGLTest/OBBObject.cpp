@@ -113,14 +113,26 @@ void OBBObject::calculateOBB() {
 		1.0f, 0.0f, 0.0f //front bottom right
 	};
 
-	//create the indices
-	std::vector<GLuint> obb_indices = {
+	//create the indices (uncomment one of the two below):
+
+	//use these indices if rendering as GL_TRIANGLES
+	/*std::vector<GLuint> obb_indices = {
 		0, 2, 1, 2, 3, 1, //back face
 		0, 4, 2, 2, 4, 6, //top face
 		0, 1, 4, 4, 1, 5, //left face
 		6, 7, 2, 2, 7, 3, //right face
 		5, 3, 7, 5, 1, 3, //bottom face
 		6, 4, 7, 4, 5, 7 //front face
+	};*/
+
+	//use these indices if rendering as GL_LINES
+	std::vector<GLuint> obb_indices = {
+		0, 2, 2, 3, 3, 1, 1, 0, //back face
+		0, 4, 4, 6, 6, 2, 2, 0, //top face
+		0, 1, 1, 5, 5, 4, 4, 0, //left face
+		6, 7, 7, 3, 3, 2, 2, 6, //right face
+		5, 7, 7, 3, 3, 1, 1, 5, //bottom face
+		6, 4, 4, 5, 5, 7, 7, 6 //front face
 	};
 
 	//change this obb
@@ -128,4 +140,19 @@ void OBBObject::calculateOBB() {
 	setTexcoords(obb_texcoords);
 	setNormals(obb_normals);
 	setIndices(obb_indices);
+}
+
+void OBBObject::setModelMatrix(glm::mat4 newModelMatrix) {
+}
+
+void OBBObject::render() {
+	setUniforms();
+	glBindVertexArray(vao);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
+std::vector<OBBObject*>& OBBObject::getOBBObjects() {
+	return obbObjects;
 }

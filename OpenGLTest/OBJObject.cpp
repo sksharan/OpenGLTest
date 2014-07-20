@@ -6,6 +6,8 @@
 #include <fstream>
 #include <map>
 
+std::vector<OBJObject*> OBJObject::objObjects;
+
 void OBJObject::render() {
 	setUniforms();
 	glBindVertexArray(vao);
@@ -22,6 +24,7 @@ OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, gl
 	obj_file = obj_filename;
 	parseOBJ();  //initializes vertices, texcoords, normals
 
+	objObjects.push_back(this);
 	initRenderableObjectEnd();
 }
 
@@ -127,5 +130,9 @@ void OBJObject::initVao() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+}
+
+std::vector<OBJObject*>& OBJObject::getOBJObjects() {
+	return objObjects;
 }
 

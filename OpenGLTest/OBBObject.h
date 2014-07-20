@@ -13,6 +13,15 @@ public:
 	that this OBB contains is transformed. */
 	void calculateOBB();
 
+	/* Calling this function has no effect, as OBB's move with the object that they surround. */
+	virtual void setModelMatrix(glm::mat4 newModelMatrix);
+
+	/* Renders this object with GL_LINES as the drawing mode. */
+	void render();
+
+	/* Returns all OBBObjects that have been created. */
+	static std::vector<OBBObject*>& getOBBObjects();
+
 private:
 	/* The object that this OBB surrounds. */
 	RenderableObject* object;

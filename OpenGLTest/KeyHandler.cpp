@@ -21,8 +21,6 @@
 	H : toggle visibility of the currently selected object
 	L : toggle whether or not the currently selected object is affected by lighting calculations
 	T : toggle wireframe mode on/off
-	Y : enable an AABB for the currently selected object
-	U : enable an OBB for the currently selected object
 	Z : change to translate mode (then manipulate object with ALL ARROW KEYS, LSHIFT, SPACEBAR)
 	X : change to scale mode (then manipulate object with LEFT AND RIGHT ARROW KEYS)
 	C : change to rotate mode (then manipulate object with ALL ARROW KEYS)
@@ -35,15 +33,6 @@ const Uint8* keystate = SDL_GetKeyboardState(NULL);
 /* True iff wireframe mode is enabled. */
 bool wireframeEnabled = false;
 
-/* The currently selected object. */
-RenderableObject* currObject;
-/* 'currObject' is RenderableObject::getRenderableObjects()[objectIndex]. */
-unsigned int objectIndex = 0;
-/* The AABB for the currently selected object. */
-AABBObject* currAABB;
-/* The OBB for the currently selected object. */
-OBBObject* currOBB;
-
 /* An enum for the different transformations that a user can make to an object. */
 enum Transformation {
 	TRANSLATE, SCALE, ROTATE
@@ -51,12 +40,12 @@ enum Transformation {
 Transformation transformationMode = TRANSLATE;
 
 /* Function protoypes. */
-void handleObjects(SDL_Event event);
+void handleObjects(SDL_Event event, Scene& scene);
 void setAABB(std::string currObjName);
 void setOBB(std::string currObjName);
 
 /* Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/ */
-void handleKeyInput() {
+void handleKeyInput(Scene& scene) {
 	/* W : move forward */
 	if (keystate[SDL_SCANCODE_W]) {
 		glm::vec3 position = mainViewer.getPosition();
@@ -98,7 +87,7 @@ void handleKeyInput() {
 	}
 }
 
-void handleKeyInputNC(SDL_Event event) {
+void handleKeyInputNC(SDL_Event event, Scene& scene) {
 	switch (event.key.keysym.sym) {
 
     /* ESC: exit program */
@@ -121,82 +110,39 @@ void handleKeyInputNC(SDL_Event event) {
 		break;
 	}
 
-	handleObjects(event);
-}
-
-/* Sets the current AABB, given the name of the current object (assume all objects have unique names). */
-void setAABB(std::string currObjName) {
-	for (int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
-		std::string objName = RenderableObject::getRenderableObjects()[i]->getName();
-		if (objName == currObjName + AABB_SUFFIX) {
-			currAABB = (AABBObject*)RenderableObject::getRenderableObjects()[i];
-		}
-	}
-}
-
-/* Sets the current OBB, given the name of the current object (assume all objects have unique names). */
-void setOBB(std::string currObjName) {
-	for (int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
-		std::string objName = RenderableObject::getRenderableObjects()[i]->getName();
-		if (objName == currObjName + OBB_SUFFIX) {
-			currOBB = (OBBObject*)RenderableObject::getRenderableObjects()[i];
-		}
-	}
+	handleObjects(event, scene);
 }
 
 /* Function that specifically handles selection and manipulation of objects, given
 an SDL_Event. */
-void handleObjects(SDL_Event event) {
-	int numRenderableObjects = RenderableObject::getRenderableObjects().size();
+void handleObjects(SDL_Event event, Scene& scene) {
+	RenderableObject* currObject = scene.getCurrObject();
 
-	/* Do nothing if there are no objects to work with. */
-	if (numRenderableObjects == 0) {
-		return;
-	}
-
-	/* If we have no current object, select the first object as the current object. */
+	//return if there are no objects to manipulate
 	if (currObject == NULL) {
-		currObject = RenderableObject::getRenderableObjects()[0];
-		printf("%s now selected\n", currObject->getName().c_str());
+		return;
 	}
 
 	switch (event.key.keysym.sym) {
 
 	/* E: go to next object. */
 	case SDLK_e:
-		if (objectIndex == numRenderableObjects - 1) {
-			objectIndex = 0;
-		} else {
-			objectIndex++;
-		}
-		currObject = RenderableObject::getRenderableObjects()[objectIndex];
-		printf("%s now selected\n", currObject->getName().c_str());
-		setAABB(currObject->getName());
-		setOBB(currObject->getName());
+		scene.changeToNextObject();
 		break;
 
 	/* Q: go to previous object. */
 	case SDLK_q:
-		if (objectIndex == 0) {
-			objectIndex = numRenderableObjects - 1;
-		}
-		else {
-			objectIndex--;
-		}
-		currObject = RenderableObject::getRenderableObjects()[objectIndex];
-		printf("%s now selected\n", currObject->getName().c_str());
-		setAABB(currObject->getName());
-		setOBB(currObject->getName());
+		scene.changeToPrevObject();
 		break;
 
 	/* R: change the rendering mode of the currently selected object. */
 	case SDLK_r:
 		if (currObject->getRenderMode() == RENDERMODE_NORMALS) {
 			currObject->setRenderMode(RENDERMODE_TEXTURED);
-			printf("changing render mode of %s to RENDERMODE_TEXTURED\n", currObject->getName().c_str());
+			printf("changing render mode of %s to RENDERMODE_TEXTURED\n", scene.getCurrObject()->getName().c_str());
 		} else {
 			currObject->setRenderMode(RENDERMODE_NORMALS);
-			printf("changing render mode of %s to RENDERMODE_NORMALS\n", currObject->getName().c_str());
+			printf("changing render mode of %s to RENDERMODE_NORMALS\n", scene.getCurrObject()->getName().c_str());
 		}
 		break;
 
@@ -208,16 +154,6 @@ void handleObjects(SDL_Event event) {
 	/* L : toggle whether or not the currently selected object is affected by lighting calculations. */
 	case SDLK_l:
 		currObject->toggleLightEnabledStatus();
-		break;
-
-	/* Y : enable an AABB for the currently selected object */
-	case SDLK_y:
-		currAABB = new AABBObject(currObject);
-		break;
-
-	/* U : enable an OBB for the currently selected object */
-	case SDLK_u:
-		currOBB = new OBBObject(currObject);
 		break;
 
 	/* Z: switch to translate mode .*/
@@ -242,22 +178,14 @@ void handleObjects(SDL_Event event) {
 	case SDLK_UP:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, -translation_factor)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -265,22 +193,14 @@ void handleObjects(SDL_Event event) {
 	case SDLK_DOWN:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, translation_factor)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -288,28 +208,16 @@ void handleObjects(SDL_Event event) {
 	case SDLK_LEFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(-translation_factor, 0.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(1.0/scaling_factor, 1.0/scaling_factor, 1.0/scaling_factor)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -317,28 +225,16 @@ void handleObjects(SDL_Event event) {
 	case SDLK_RIGHT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(translation_factor, 0.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(scaling_factor, scaling_factor, scaling_factor)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -346,12 +242,8 @@ void handleObjects(SDL_Event event) {
 	case SDLK_LSHIFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, -translation_factor, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
@@ -363,12 +255,8 @@ void handleObjects(SDL_Event event) {
 	case SDLK_SPACE:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, translation_factor, 0.0f)));
-			if (currAABB != NULL) {
-				currAABB->calculateAABB();
-			}
-			if (currOBB != NULL) {
-				currOBB->calculateOBB();
-			}
+			scene.getCurrAABB()->calculateAABB();
+			scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {

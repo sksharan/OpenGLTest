@@ -28,12 +28,18 @@ public:
 	virtual void render();
 	virtual void initVao();
 
+	/* Returns all OBJOBjects created. */
+	static std::vector<OBJObject*>& getOBJObjects();
+
 private:
 	/* The filename of the Wavefront OBJ associated with this object */
 	std::string obj_file;
 
 	/* Parses the OBJ and loads the data into 'vertices', 'normals', 'texcoords', and 'indices' */
 	void parseOBJ();
+
+	/* All OBJObjects that have been created. */
+	static std::vector<OBJObject*> objObjects;
 };
 
 #endif

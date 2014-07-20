@@ -19,6 +19,7 @@ RenderableObject::RenderableObject(std::string name, std::vector<float>& v, std:
 	normals = n;
 	indices = i;
 
+	renderableObjects.push_back(this);
 	initRenderableObjectEnd();
 }
 
@@ -148,8 +149,6 @@ void RenderableObject::initRenderableObjectStart(std::string name, bool isVisibl
 void RenderableObject::initRenderableObjectEnd() {
 	initVao();
 	initTexture();
-
-	renderableObjects.push_back(this);
 }
 
 void RenderableObject::initVao() {

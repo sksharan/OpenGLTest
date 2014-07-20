@@ -1,6 +1,8 @@
 #include "HeightmapObject.h"
 #include <SOIL.h>
 
+std::vector<HeightmapObject*> HeightmapObject::heightmapObjects;
+
 void HeightmapObject::render() {
 	setUniforms();
 	glBindVertexArray(vao);
@@ -25,6 +27,7 @@ HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting
 
 	generateHeightmap();  //initializes vertices, texcoords, normals, indices
 
+	heightmapObjects.push_back(this);
 	initRenderableObjectEnd();
 }
 
@@ -91,4 +94,8 @@ void HeightmapObject::addNormals(int x, int z) {
 	normals.push_back(normal.x);
 	normals.push_back(normal.y);
 	normals.push_back(normal.z);
+}
+
+std::vector<HeightmapObject*>& HeightmapObject::getHeightmapObjects() {
+	return heightmapObjects;
 }
