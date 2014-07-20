@@ -1,6 +1,7 @@
 #include "Scene.h"
 
-Scene::Scene(glm::vec4 clearing_color, float clearing_depth) {
+Scene::Scene(std::string scene_name, glm::vec4 clearing_color, float clearing_depth) {
+	name = scene_name;
 	clear_color = clearing_color;
 	clear_depth = clearing_depth;
 	curr_object = NULL;
@@ -17,7 +18,7 @@ void Scene::addObject(RenderableObject* object) {
 	//if this is the first object we added, make this object the current current object
 	if (scene_objects.size() == 1) {
 		curr_object = object;
-		printf("%s now selected\n", curr_object->getName().c_str());
+		printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 	}
 
 	AABBObject* aabb_object = new AABBObject(object);
@@ -81,7 +82,7 @@ void Scene::changeToNextObject() {
 	}
 
 	curr_object = scene_objects[objectIndex];
-	printf("%s now selected\n", curr_object->getName().c_str());
+	printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 }
 
 void Scene::changeToPrevObject() {
@@ -98,5 +99,5 @@ void Scene::changeToPrevObject() {
 	}
 
 	curr_object = scene_objects[objectIndex];
-	printf("%s now selected\n", curr_object->getName().c_str());
+	printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 }

@@ -5,13 +5,14 @@
 #include "AABBObject.h"
 #include "OBBObject.h"
 #include <vector>
+#include <string>
 
 
 /* Class representing a scene with objects in it that can be manipulated. */
 class Scene {
 public:
 	/* Creates a new scene with the designated 'clearing_color' and 'clearing_depth' (used by glClearColr() and glClearDepth()). */
-	Scene(glm::vec4 clearing_color, float clearing_depth);
+	Scene(std::string scene_name, glm::vec4 clearing_color, float clearing_depth);
 
 	/* Returns reference to all the objects in this scene that are to be rendered. */
 	const std::vector<RenderableObject*>& getSceneObjects();
@@ -65,6 +66,9 @@ private:
 
 	/* 'curr_object' is in scene_objects[objectIndex]. */
 	unsigned int objectIndex;
+
+	/* Name of the scene. */
+	std::string name;
 
 	/* The clear color (background color) for this scene (used by glClearColor()). */
 	glm::vec4 clear_color;
