@@ -2,6 +2,7 @@
 #define AABBOBJECT_H
 
 #include "RenderableObject.h"
+#include "Ray.h"
 #include <vector>
 
 /* Class representing an Axis-Aligned Bounding Box. */
@@ -20,12 +21,27 @@ public:
 	/* Renders this object with GL_LINES as the drawing mode. */
 	void render();
 
+	/* Returns the minimum corner of this box. */
+	glm::vec3 getMinCorner();
+
+	/* Returns the maximum corner of this box. */
+	glm::vec3 getMaxCorner();
+
+	/* Returns true iff 'ray' intersects this box. */
+	bool rayIntersects(Ray& ray);
+
 	/* Returns reference to all AABBObjects that have been created. */
 	static std::vector<AABBObject*>& getAABBObjects();
 
 private:
 	/* The object that this AABB surrounds. */
 	RenderableObject* object;
+
+	/* The minimum corner of this box. */
+	glm::vec3 min_extent;
+
+	/* The maximum corner of this box. */
+	glm::vec3 max_extent;
 
 	/* A vector of all AABBObjects that have been instantiated so far. */
 	static std::vector<AABBObject*> aabbObjects;

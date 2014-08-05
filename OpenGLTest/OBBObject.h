@@ -2,6 +2,7 @@
 #define OBBOBJECT_H
 
 #include "RenderableObject.h"
+#include "Ray.h"
 
 /* Class representing an Oriented Bounding Box. */
 class OBBObject : public RenderableObject {
@@ -19,12 +20,27 @@ public:
 	/* Renders this object with GL_LINES as the drawing mode. */
 	void render();
 
+	/* Returns the minimum corner of this box. */
+	glm::vec3 getMinCorner();
+
+	/* Returns the maximum corner of this box. */
+	glm::vec3 getMaxCorner();
+
+	/* Returns true iff 'ray' intersects this box. */
+	bool rayIntersects(Ray& ray);
+
 	/* Returns all OBBObjects that have been created. */
 	static std::vector<OBBObject*>& getOBBObjects();
 
 private:
 	/* The object that this OBB surrounds. */
 	RenderableObject* object;
+
+	/* The minimum corner of this box. */
+	glm::vec3 min_extent;
+
+	/* The maximum corner of this box. */
+	glm::vec3 max_extent;
 
 	/* A vector of all OBBObjects that have been instantiated so far. */
 	static std::vector<OBBObject*> obbObjects;

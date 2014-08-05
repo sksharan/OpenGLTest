@@ -70,7 +70,7 @@ void AABBObject::calculateAABB() {
 		printf("AABB: %f, %f, %f, %f, %f, %f\n", min_x, max_x, min_y, max_y, min_z, max_z);
 	}
 
-	//create the vertices
+	//create the vertices (and update min_extent and max_entent)
 	std::vector<float> aabb_vertices = {
 		min_x, max_y, min_z, //back top left
 		min_x, min_y, min_z, //back bottom left
@@ -81,6 +81,9 @@ void AABBObject::calculateAABB() {
 		max_x, max_y, max_z, //front top right
 		max_x, min_y, max_z //front bottom right
 	};
+
+	min_extent = glm::vec3(min_x, min_y, min_z);
+	max_extent = glm::vec3(max_x, max_y, max_z);
 
 	//create the texcoords (these could be anything)
 	std::vector<float> aabb_texcoords = {
@@ -144,6 +147,18 @@ void AABBObject::render() {
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+}
+
+glm::vec3 AABBObject::getMinCorner() {
+	return min_extent;
+}
+
+glm::vec3 AABBObject::getMaxCorner() {
+	return max_extent;
+}
+
+bool AABBObject::rayIntersects(Ray& ray) {
+	return false;
 }
 
 std::vector<AABBObject*>& AABBObject::getAABBObjects() {

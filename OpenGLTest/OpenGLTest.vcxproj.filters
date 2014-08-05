@@ -40,6 +40,9 @@
     <Filter Include="src\test">
       <UniqueIdentifier>{b3ed91c8-b8f8-4319-bd40-238a59f4d287}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ray">
+      <UniqueIdentifier>{3fe94a74-1730-4b26-a526-c1754edd379e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -111,6 +114,9 @@
     <ClInclude Include="EnumTransformation.h">
       <Filter>src\globals</Filter>
     </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>src\ray</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">
@@ -178,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>src\ray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

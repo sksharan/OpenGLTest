@@ -20,6 +20,9 @@ OBJObject* genTower();
 Source file comes from https://github.com/OpenGLInsights/OpenGLInsightsCode/blob/master/Chapter%2026%20Indexing%20Multiple%20Vertex%20Arrays/article/suzanne.obj */
 OBJObject* genSuzanne();
 
+/* Generates the Stanford dragon model from an obj dile tht needs to be deleted by the user. */
+OBJObject* genDragon();
+
 /* Generates a heightmap object that needs to be deleted by the user. */
 HeightmapObject* genHeightmapObject();
 

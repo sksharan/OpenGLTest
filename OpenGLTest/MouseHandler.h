@@ -4,8 +4,12 @@
 #define MOUSEHANDLER_H
 
 #include "Scene.h"
+#include <SDL.h>
 
-/* Handles mouse input by the user. Uses 'mainViewer' from Viewer.h */
-void handleMouseInput(Scene& scene);
+/* Handles mouse movement by the user. Uses 'mainViewer' from Viewer.h */
+void handleMouseMovement(Scene& scene);
+
+/* Handles mouse clicking by the user. Uses 'mainViewer' from Viewer.h */
+void handleMouseClick(SDL_Event event, Scene& scene);
 
 #endif

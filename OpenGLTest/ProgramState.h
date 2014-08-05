@@ -15,6 +15,9 @@ struct ProgramState {
 	/* The GL program used for rendering. */
 	GLuint program;
 
+	/* True if the user uses the mouse to look around. If so, then SDL forces the cursor to stay at the center of the screen. */
+	bool mouseLookModeEnabled;
+
 	/* The perspective matrix being used in the shaders. */
 	glm::mat4 perspectiveMatrix;
 

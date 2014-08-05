@@ -69,7 +69,7 @@ void OBBObject::calculateOBB() {
 		printf("OBB: %f, %f, %f, %f, %f, %f\n", min_x, max_x, min_y, max_y, min_z, max_z);
 	}
 
-	//create the vertices
+	//create the vertices (and update min_extent and max_entent)
 	std::vector<float> obb_vertices = {
 		min_x, max_y, min_z, //back top left
 		min_x, min_y, min_z, //back bottom left
@@ -80,6 +80,7 @@ void OBBObject::calculateOBB() {
 		max_x, max_y, max_z, //front top right
 		max_x, min_y, max_z //front bottom right
 	};
+
 	for (int i = 0; i < obb_vertices.size(); i+=3) {
 		glm::vec4 vertex_pos = glm::vec4(obb_vertices[i], obb_vertices[i + 1], obb_vertices[i + 2], 1.0f);
 		vertex_pos = object->getModelMatrix() * vertex_pos;
@@ -88,6 +89,9 @@ void OBBObject::calculateOBB() {
 		obb_vertices[i + 1] = vertex_pos.y;
 		obb_vertices[i + 2] = vertex_pos.z;
 	}
+
+	min_extent = glm::vec3(obb_vertices[3], obb_vertices[4], obb_vertices[5]);
+	max_extent = glm::vec3(obb_vertices[18], obb_vertices[19], obb_vertices[20]);
 
 	//create the texcoords (these could be anything)
 	std::vector<float> obb_texcoords = {
@@ -151,6 +155,18 @@ void OBBObject::render() {
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+}
+
+glm::vec3 OBBObject::getMinCorner() {
+	return min_extent;
+}
+
+glm::vec3 OBBObject::getMaxCorner() {
+	return max_extent;
+}
+
+bool OBBObject::rayIntersects(Ray& ray) {
+	return false;
 }
 
 std::vector<OBBObject*>& OBBObject::getOBBObjects() {

@@ -50,6 +50,12 @@ public:
 	the start of the list is reached). */
 	void changeToPrevObject();
 
+	/* Sets the current object of this scene to be the object that getOBBObjects()[obb_index] surrounds. */
+	void setCurrObjectWithOBBIndex(int obb_index);
+
+	/* Sets the current object of this scene to be the object that getAABBObjects()[aabb_index] surrounds. */
+	void setCurrObjectWithAABBIndex(int aabb_index);
+
 private:
 	/* Pointers to the objects in this scene that are to be rendered. Implementation note: each object is followed by its
 	corresponding AABBObject and OBBOBject in the list. */

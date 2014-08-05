@@ -1,5 +1,6 @@
 #include "KeyHandler.h"
 #include "ProgramState.h"
+#include "Window.h"
 #include "MatrixTransform.h"
 #include "Constants.h"
 #include "MatrixTransform.h"
@@ -14,11 +15,14 @@
 
 /* Keyboard-related controls:
 	ESC : end program
+	M : toggle mouse-look mode on/off
 	W, A, S, D : move the viewer
 	Q : select previous object
 	E : select next object
 	R : switching rendering mode of the currently selected object
 	H : toggle visibility of the currently selected object
+	J : hide AABB of the currently selected object
+	K : hide OBB of the currently selected object
 	L : toggle whether or not the currently selected object is affected by lighting calculations
 	T : toggle wireframe mode on/off
 	Z : change to translate mode (then manipulate object with ALL ARROW KEYS, LSHIFT, SPACEBAR)
@@ -106,6 +110,17 @@ void handleKeyInputNC(SDL_Event event, Scene& scene) {
 		wireframeEnabled = !wireframeEnabled;
 		break;
 
+	/* M: toggle mouse-look mode on/off */
+	case SDLK_m:
+		SDL_WarpMouseInWindow(mainWindow.window, mainWindow.width / 2, mainWindow.height / 2); //force mouse to center of screen
+		programState.mouseLookModeEnabled = !programState.mouseLookModeEnabled;
+		if (programState.mouseLookModeEnabled) {
+			SDL_ShowCursor(0);
+		} else {
+			SDL_ShowCursor(1);
+		}
+		break;
+
 	default:
 		break;
 	}
@@ -149,6 +164,23 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	/* H: toggle visibility of the currently selected object. */
 	case SDLK_h:
 		currObject->toggleVisibilty();
+		scene.getCurrOBB()->calculateOBB();
+		break;
+
+	/* J : hide AABB of the currently selected object */
+	case SDLK_j:
+		scene.getCurrAABB()->toggleVisibilty();
+		if (scene.getCurrAABB()->isVisible()) {
+			scene.getCurrAABB()->calculateAABB();
+		}
+		break;
+
+	/* K: hide OBB of the currently selected object */
+	case SDLK_k:
+		scene.getCurrOBB()->toggleVisibilty();
+		if (scene.getCurrOBB()->isVisible()) {
+			scene.getCurrOBB()->calculateOBB();
+		}
 		break;
 
 	/* L : toggle whether or not the currently selected object is affected by lighting calculations. */
@@ -178,14 +210,14 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_UP:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, -translation_factor)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -193,14 +225,14 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_DOWN:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, translation_factor)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -208,16 +240,16 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_LEFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(-translation_factor, 0.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(1.0/scaling_factor, 1.0/scaling_factor, 1.0/scaling_factor)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -225,16 +257,16 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_RIGHT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(translation_factor, 0.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(scaling_factor, scaling_factor, scaling_factor)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
@@ -242,8 +274,8 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_LSHIFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, -translation_factor, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {
@@ -255,8 +287,8 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	case SDLK_SPACE:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, translation_factor, 0.0f)));
-			scene.getCurrAABB()->calculateAABB();
-			scene.getCurrOBB()->calculateOBB();
+			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
+			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		} else if (transformationMode == SCALE) {
 			//does nothing
 		} else if (transformationMode == ROTATE) {

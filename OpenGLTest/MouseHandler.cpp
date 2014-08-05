@@ -4,15 +4,24 @@
 #include "ProgramState.h"
 #include "Constants.h"
 #include "MatrixTransform.h"
+#include "Viewer.h"
+#include "Ray.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
 
-#define MOUSEHANDLER_DEBUG 0
+#define MOUSEHANDLER_MOVEMENT_DEBUG 0
+#define MOUSEHANDLER_RAYWORLD_DEBUG 0
+#define MOUSEHANDLER_VIEWERPOS_DEBUG 0
 
 /* Implementation adapted from 
 http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/ */
-void handleMouseInput(Scene& scene) {
+void handleMouseMovement(Scene& scene) {
+	//if the user does not want to use the mouse to look around, skip the mouse-look calculations
+	if (!programState.mouseLookModeEnabled) {
+		return;
+	}
+
 	old_time = current_time;
 	current_time = SDL_GetTicks();
 	delta_time = float(current_time - old_time) / 1000.0f;
@@ -48,7 +57,7 @@ void handleMouseInput(Scene& scene) {
 	mainViewer.setRightVector(newRightVector);
 	mainViewer.setUpVector(newUpVector);
 
-	if (MOUSEHANDLER_DEBUG) {
+	if (MOUSEHANDLER_MOVEMENT_DEBUG) {
 		printf("viewer direction: %f, %f, %f\n", newDirection.x, newDirection.y, newDirection.z);
 	}
 
@@ -57,4 +66,53 @@ void handleMouseInput(Scene& scene) {
 		                               mainViewer.getUpVector());
 	programState.viewMatrix = viewMatrix;
 	updateUniformView();
+}
+
+
+void handleMouseClick(SDL_Event event, Scene& scene) {
+	//handle left click (see: http://antongerdelan.net/opengl/raycasting.html)
+	if (event.button.button == SDL_BUTTON_LEFT) {
+
+		//get the viewport coordinates
+		int screen_x = event.button.x;
+		int screen_y = event.button.y;
+
+		//transform to normalized device coordinates
+		float ndc_x = 2.0f * (float)screen_x / (float)mainWindow.width - 1.0f;
+		float ndc_y = 1.0f - (2.0f * (float)screen_y) / (float)mainWindow.height;
+		glm::vec3 ray_ndc = glm::vec3(ndc_x, ndc_y, 1.0f);
+
+		//transform to homogeneous clip coordinates (ray has no depth so no need to reverse the perspective divide)
+		glm::vec4 ray_clip = glm::vec4(ray_ndc.x, ray_ndc.y, -1.0f, 1.0f);
+
+		//transform to eye scape
+		glm::vec4 ray_eye = glm::inverse(programState.perspectiveMatrix) * ray_clip;
+		ray_eye = glm::vec4(ray_eye.x, ray_eye.y, -1.0f, 0.0f);
+
+		//transform to world space
+		glm::vec3 ray_world = glm::vec3(glm::inverse(programState.viewMatrix) * ray_eye);
+		ray_world = glm::normalize(ray_world);
+
+		if (MOUSEHANDLER_RAYWORLD_DEBUG) {
+			printf("ray_world: %f %f %f\n", ray_world.x, ray_world.y, ray_world.z);
+		}
+
+		if (MOUSEHANDLER_VIEWERPOS_DEBUG) {
+			glm::vec3 p = mainViewer.getPosition();
+			printf("viewer direction: %f, %f, %f\n", p.x, p.y, p.z);
+		}
+
+		//create a ray object whose origin is at the viewer's current location.
+		Ray ray(mainViewer.getPosition(), ray_world);
+
+
+		//perform ray-AABB intesection tests
+		for (int i = 0; i < scene.getAABBObjects().size(); i++) {
+			AABBObject* aabb = scene.getAABBObjects()[i];
+
+			if (aabb->rayIntersects(ray)) {
+				scene.setCurrObjectWithAABBIndex(i);
+			}
+		}
+	}
 }

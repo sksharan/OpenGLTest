@@ -80,6 +80,19 @@ OBJObject* genSuzanne() {
 	return new OBJObject("suzanne_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
 }
 
+OBJObject* genDragon() {
+	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 diffuse(0.5, 0.5, 0.5, 1.0);
+	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
+	float shininess = 15.0f;
+
+	std::string texture_filename = "textures/black.jpg";
+
+	std::string obj_filename = "obj/dragon.obj";
+
+	return new OBJObject("dragon_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+}
+
 HeightmapObject* genHeightmapObject() {
 	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
 	glm::vec4 diffuse(1.0, 0.5, 0.0, 1.0);

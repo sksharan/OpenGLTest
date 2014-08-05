@@ -27,6 +27,7 @@
     <ClInclude Include="OBJObject.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ProgramState.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="RenderableObject.h" />
     <ClInclude Include="Scene.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="OBJObject.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="ProgramState.cpp" />
+    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="RenderableObject.cpp" />
     <ClCompile Include="Scene.cpp" />
