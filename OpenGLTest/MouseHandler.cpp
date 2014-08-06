@@ -9,10 +9,16 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
+#include <limits>
+#include <iostream>
 
 #define MOUSEHANDLER_MOVEMENT_DEBUG 0
 #define MOUSEHANDLER_RAYWORLD_DEBUG 0
 #define MOUSEHANDLER_VIEWERPOS_DEBUG 0
+#define MOUSEHANDLER_AABB_INTERSECTION_DEBUG 0
+
+//Function prototypes
+void selectObjWithAABBIntersection(Scene& scene, Ray& ray);
 
 /* Implementation adapted from 
 http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/ */
@@ -105,14 +111,32 @@ void handleMouseClick(SDL_Event event, Scene& scene) {
 		//create a ray object whose origin is at the viewer's current location.
 		Ray ray(mainViewer.getPosition(), ray_world);
 
+		selectObjWithAABBIntersection(scene, ray);
+	}
+}
 
-		//perform ray-AABB intesection tests
-		for (int i = 0; i < scene.getAABBObjects().size(); i++) {
-			AABBObject* aabb = scene.getAABBObjects()[i];
+/* Select the closest object in the 'scene' that the 'ray' intersects. Uses ray-AABB intersection. */
+void selectObjWithAABBIntersection(Scene& scene, Ray& ray) {
+	int index = -1;  //the index of the closest AABB that the ray intersects 
+	int tmin = 100000;  //the time at which the ray intersects the closest AABB
 
-			if (aabb->rayIntersects(ray)) {
-				scene.setCurrObjectWithAABBIndex(i);
+	for (int i = 0; i < scene.getAABBObjects().size(); i++) {
+		AABBObject* aabb = scene.getAABBObjects()[i];
+
+		int t;
+		if (aabb->rayIntersects(ray, t) && t < tmin) {
+			tmin = t;
+			index = i;
+
+			if (MOUSEHANDLER_AABB_INTERSECTION_DEBUG) {
+				std::cout << tmin << " " << aabb->getName() << std::endl;
 			}
 		}
+	}
+
+	if (index == -1) {
+		return;  //no intersection occured, so return
+	} else {
+		scene.setCurrObjectWithAABBIndex(index);
 	}
 }

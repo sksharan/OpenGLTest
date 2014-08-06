@@ -1,5 +1,6 @@
 #include "AABBObject.h"
 #include "Constants.h"
+#include <algorithm>
 
 #define AABBOBJECT_DEBUG 0
 
@@ -157,8 +158,38 @@ glm::vec3 AABBObject::getMaxCorner() {
 	return max_extent;
 }
 
-bool AABBObject::rayIntersects(Ray& ray) {
-	return false;
+/* Implementation by zacharmarz from 
+http://gamedev.stackexchange.com/questions/18436/most-efficient-aabb-vs-ray-collision-algorithms */
+bool AABBObject::rayIntersects(Ray& ray, int& t) {
+	glm::vec3 dirfrac;
+	dirfrac.x = 1.0f / ray.d.x;
+	dirfrac.y = 1.0f / ray.d.y;
+	dirfrac.z = 1.0f / ray.d.z;
+
+	float t1 = (min_extent.x - ray.o.x) * dirfrac.x;
+	float t2 = (max_extent.x - ray.o.x) * dirfrac.x;
+	float t3 = (min_extent.y - ray.o.y) * dirfrac.y;
+	float t4 = (max_extent.y - ray.o.y) * dirfrac.y;
+	float t5 = (min_extent.z - ray.o.z) * dirfrac.z;
+	float t6 = (max_extent.z - ray.o.z) * dirfrac.z;
+
+	using std::max;
+	using std::min;
+	float tmin = max(max(min(t1, t2), min(t3, t4)), min(t5, t6));
+	float tmax = min(min(max(t1, t2), max(t3, t4)), max(t5, t6));
+
+	if (tmax < 0) {
+		t = tmax;
+		return false;
+	}
+
+	if (tmin > tmax) {
+		t = tmax;
+		return false;
+	}
+
+	t = tmin;
+	return true;
 }
 
 std::vector<AABBObject*>& AABBObject::getAABBObjects() {

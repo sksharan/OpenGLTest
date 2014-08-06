@@ -27,8 +27,9 @@ public:
 	/* Returns the maximum corner of this box. */
 	glm::vec3 getMaxCorner();
 
-	/* Returns true iff 'ray' intersects this box. */
-	bool rayIntersects(Ray& ray);
+	/* Returns true iff 'ray' intersects this box. When true, returns the t value at which the ray intersects the box
+	(the ray equation is r(t) = origin + t * direction). */
+	bool rayIntersects(Ray& ray, int& t);
 
 	/* Returns reference to all AABBObjects that have been created. */
 	static std::vector<AABBObject*>& getAABBObjects();
