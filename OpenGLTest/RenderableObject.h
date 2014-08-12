@@ -100,6 +100,10 @@ protected:
 	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
 		                           glm::vec4 specular, float shininess, std::string tex_filename);
 
+	/* Same as previous method but with texture filename initialization. */
+	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
+		                           glm::vec4 specular, float shininess);
+
 	/* Children of RenderableObject may call this method at the end of their constructors. This handles the creation of VAOs and VBOs,
 	and binds the texture. */
 	void initRenderableObjectEnd();

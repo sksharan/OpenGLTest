@@ -133,6 +133,13 @@ RenderableObject::RenderableObject() {
 void RenderableObject::initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
 	glm::vec4 specular, float shininess, std::string tex_filename) {
 
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess);
+	texture_filename = tex_filename;
+}
+
+void RenderableObject::initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
+	                                             glm::vec4 specular, float shininess) {
+
 	objectName = name;
 	visible = isVisible;
 	light_enabled = lighting_enabled;
@@ -140,7 +147,6 @@ void RenderableObject::initRenderableObjectStart(std::string name, bool isVisibl
 	diffuse_term = diffuse;
 	specular_term = specular;
 	shininess_term = shininess;
-	texture_filename = tex_filename;
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;

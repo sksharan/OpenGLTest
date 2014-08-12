@@ -63,18 +63,21 @@ int main(int argc, char** argv) {
 	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
 	/* Create the objects. */
-	RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
-	RenderableObject* object2 = (RenderableObject*)genTower();
-	RenderableObject* object3 = (RenderableObject*)genSuzanne();
+	//RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
+	//RenderableObject* object2 = (RenderableObject*)genTower();
+	//RenderableObject* object3 = (RenderableObject*)genSuzanne();
 	//RenderableObject* object4 = (RenderableObject*)genDragon();
-	RenderableObject* object5 = (RenderableObject*)genHeightmapObject();
+	//RenderableObject* object5 = (RenderableObject*)genHeightmapObject(glm::vec3(0, 0, 50));
+	RenderableObject* object6 = (RenderableObject*)genPerlinHeightmapObject(glm::vec3(0, 0, 50));
+
 
 	/* Add the objects to the Scene. */
-	scene.addObject(object1);
-	scene.addObject(object2);
-	scene.addObject(object3);
+	//scene.addObject(object1);
+	//scene.addObject(object2);
+	//scene.addObject(object3);
 	//scene.addObject(object4);
-	scene.addObject(object5);
+	//scene.addObject(object5);
+	scene.addObject(object6);
 
 	/* Create the lights. */
 	PointLight light1(glm::vec3(50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
@@ -114,6 +117,9 @@ int main(int argc, char** argv) {
 	}
 	for (unsigned int i = 0; i < OBBObject::getOBBObjects().size(); i++) {
 		delete OBBObject::getOBBObjects()[i];
+	}
+	for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
+		delete PerlinHeightmapObject::getPerlinHeightmapObjects()[i];
 	}
 
 	/* Deinitialize SDL. */

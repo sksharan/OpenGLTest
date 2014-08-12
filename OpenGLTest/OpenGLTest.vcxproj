@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABBObject.h" />
+    <ClInclude Include="ChunkManager.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="EnumRenderMode.h" />
     <ClInclude Include="EnumTransformation.h" />
@@ -23,8 +24,10 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="MouseHandler.h" />
+    <ClInclude Include="noiseutils\noiseutils.h" />
     <ClInclude Include="OBBObject.h" />
     <ClInclude Include="OBJObject.h" />
+    <ClInclude Include="PerlinHeightmapObject.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ProgramState.h" />
     <ClInclude Include="Ray.h" />
@@ -48,8 +51,10 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="noiseutils\noiseutils.cpp" />
     <ClCompile Include="OBBObject.cpp" />
     <ClCompile Include="OBJObject.cpp" />
+    <ClCompile Include="PerlinHeightmapObject.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="ProgramState.cpp" />
     <ClCompile Include="Ray.cpp" />
@@ -94,8 +99,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\Simple OpenGL Image Library\src;$(ProjectDir)\glew-1.10.0\include;$(ProjectDir)\SDL2-2.0.3\include;$(ProjectDir)\glm;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\Simple OpenGL Image Library\lib;$(ProjectDir)\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libnoise\include;$(ProjectDir)\Simple OpenGL Image Library\src;$(ProjectDir)\glew-1.10.0\include;$(ProjectDir)\SDL2-2.0.3\include;$(ProjectDir)\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libnoise\bin;$(ProjectDir)\Simple OpenGL Image Library\lib;$(ProjectDir)\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,7 +110,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SOIL.lib;libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

@@ -93,7 +93,7 @@ OBJObject* genDragon() {
 	return new OBJObject("dragon_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
 }
 
-HeightmapObject* genHeightmapObject() {
+HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
 	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
 	glm::vec4 diffuse(1.0, 0.5, 0.0, 1.0);
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
@@ -103,12 +103,23 @@ HeightmapObject* genHeightmapObject() {
 
 	std::string heightmap_filename = "heightmaps/chadvernon.jpg";
 
-	glm::vec3 start_position(0, 0, 0);
-
 	int length = 256;  //since texture and heightmap images are 256 x 256 pixels
 	float spacing = 0.5;
 	float amplitude = 25.0;
 
 	return new HeightmapObject("heightmap", true, true, ambient, diffuse, specular, shininess, texture_filename,
-		heightmap_filename, start_position, length, spacing, amplitude);
+		heightmap_filename, start_loc, length, spacing, amplitude);
+}
+
+PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc) {
+	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 diffuse(1.0, 0.5, 0.0, 1.0);
+	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
+	float shininess = 50.0f;
+
+	int length = 512;
+	float spacing = 0.5;
+	float amplitude = 25.0;
+
+	return new PerlinHeightmapObject("perlin_hm", true, false, ambient, diffuse, specular, shininess, start_loc, length, spacing, amplitude);
 }

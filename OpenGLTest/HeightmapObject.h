@@ -38,7 +38,9 @@ public:
 	/* Returns all HeightmapObjects that have been created. */
 	static std::vector<HeightmapObject*>& getHeightmapObjects();
 
-private:
+protected:
+	/* A constructor that does nothing. */
+	HeightmapObject();
 
 	/* Uses GL_TRIANGLE_STRIP for rendering. */
 	virtual void render();
@@ -46,7 +48,7 @@ private:
 	/* Get the height value at a given position (x, z). We use this coordinate to represent the vertices rather than the world position,
 	so (0, 0) is the start position and (heightmap_length - 1, heightmap_length - 1) is the end position of the heightmap. The returned value
 	is in terms of world coordinates. */
-	float getY(int x, int z);
+	virtual float getY(int x, int z);
 
 	/* Generates the heightmap and adds the data to 'vertices, 'texcoords, 'normals', and 'indices'. */
 	void generateHeightmap();

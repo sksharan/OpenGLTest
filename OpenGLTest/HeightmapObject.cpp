@@ -11,6 +11,10 @@ void HeightmapObject::render() {
 	glBindVertexArray(0);
 }
 
+HeightmapObject::HeightmapObject() {
+
+}
+
 HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
 	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude) {
 
