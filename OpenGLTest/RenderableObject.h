@@ -27,6 +27,9 @@ public:
 	   specular: specular term of this object
 	   shininess: shininess term of this object
 	   tex_filename: filename of the texture associated with this object
+
+	   Each RenderableObject uses the current OpenGL program (see ProgramState.program). To use a different program with this object,
+	   call the method setProgram().
 	*/
 	RenderableObject(std::string name, std::vector<float>& v, std::vector<float>& t, std::vector<float>& n, std::vector<GLuint>& i, bool isVisible,
 		             bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename);
@@ -90,6 +93,9 @@ public:
 	/* Set the new model matrix of this object to 'newModelMatrix.' Updates the AABB if one is enabled for
 	this object. */
 	virtual void setModelMatrix(glm::mat4 newModelMatrix);
+
+	/* Render this object using 'opengl_program'. */
+	void setProgram(GLuint opengl_program);
 
 protected:
 	/* A constructor that does nothing. */
@@ -185,6 +191,9 @@ protected:
 
 	/* Filename of the texture for this object. */
 	std::string texture_filename;
+
+	/* The OpenGL program being used with this object. */
+	GLuint program;
 
 	/* The vertex buffer object for vertices. */
 	GLuint vbo_vertices;

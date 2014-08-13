@@ -9,11 +9,13 @@
 std::vector<OBJObject*> OBJObject::objObjects;
 
 void OBJObject::render() {
+	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,

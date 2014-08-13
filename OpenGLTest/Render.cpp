@@ -12,16 +12,12 @@ void render(Scene& scene) {
 	glClearDepth(clear_depth);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(programState.program);
-
 	for (int i = 0; i < scene.getSceneObjects().size(); i++) {
 		RenderableObject* object = scene.getSceneObjects()[i];
 		if (object->isVisible()) {
 			object->render();
 		}
 	}
-
-	glUseProgram(0);
 
 	SDL_GL_SwapWindow(mainWindow.window);
 }

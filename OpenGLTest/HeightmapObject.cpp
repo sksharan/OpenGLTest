@@ -4,11 +4,13 @@
 std::vector<HeightmapObject*> HeightmapObject::heightmapObjects;
 
 void HeightmapObject::render() {
+	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 HeightmapObject::HeightmapObject() {

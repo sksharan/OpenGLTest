@@ -12,7 +12,7 @@ struct ProgramState {
 	/* False while program is to continue running. */
 	bool done;
 
-	/* The GL program used for rendering. */
+	/* The current GL program used for rendering. */
 	GLuint program;
 
 	/* True if the user uses the mouse to look around. If so, then SDL forces the cursor to stay at the center of the screen. */

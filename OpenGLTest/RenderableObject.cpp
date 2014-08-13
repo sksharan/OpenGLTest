@@ -27,11 +27,13 @@ RenderableObject::~RenderableObject() {
 }
 
 void RenderableObject::render() {
+	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 const std::vector<RenderableObject*>& RenderableObject::getRenderableObjects() {
@@ -126,6 +128,10 @@ void RenderableObject::setModelMatrix(glm::mat4 newModelMatrix) {
 	modelMatrix = newModelMatrix;
 }
 
+void RenderableObject::setProgram(GLuint opengl_program) {
+	program = opengl_program;
+}
+
 RenderableObject::RenderableObject() {
 
 }
@@ -150,6 +156,7 @@ void RenderableObject::initRenderableObjectStart(std::string name, bool isVisibl
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;
+	program = programState.program;
 }
 
 void RenderableObject::initRenderableObjectEnd() {
