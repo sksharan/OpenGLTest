@@ -65,6 +65,7 @@ uniform mat4 viewMatrix;
 uniform mat3 normalMatrix;
 
 /* Input values. */
+in vec4 f_world_position;
 in vec4 f_eye_position;
 in vec2 f_texcoord;
 in vec3 f_normal;

@@ -19,10 +19,11 @@ public:
 	specular: specular term of this object
 	shininess: shininess term of this object
 	tex_filename: filename of the texture associated with this object
+	program_object: the program used to render this object
 	obj_filename: filename of the Wavefront OBJ associated with this object
 	*/
 	OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-		      float shininess, std::string tex_filename, std::string obj_filename);
+		float shininess, std::string tex_filename, GLuint program_object, std::string obj_filename);
 
 	/* Overrides of RenderableObject methods that don't use indexed rendering. */
 	virtual void render();

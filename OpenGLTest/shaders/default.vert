@@ -10,13 +10,15 @@ layout(location = 0) in vec3 v_vertex;
 layout(location = 1) in vec2 v_texcoord;
 layout(location = 2) in vec3 v_normal;
 
+out vec4 f_world_position;
 out vec4 f_eye_position;
 out vec2 f_texcoord;
 out vec3 f_normal;
 out vec3 f_eye_normal;
 
 void main() {
-    f_eye_position = viewMatrix * modelMatrix * vec4(v_vertex, 1.0f);  //in eye space
+	f_world_position = modelMatrix * vec4(v_vertex, 1.0f);             //in world space
+    f_eye_position = viewMatrix * f_world_position;                    //in eye space
     gl_Position = perspectiveMatrix * f_eye_position;                  //in clip space
 
 	f_texcoord = v_texcoord;

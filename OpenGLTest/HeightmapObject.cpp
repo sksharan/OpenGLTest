@@ -7,6 +7,7 @@ void HeightmapObject::render() {
 	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -18,9 +19,9 @@ HeightmapObject::HeightmapObject() {
 }
 
 HeightmapObject::HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                             float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude) {
+	                             float shininess, std::string tex_filename, GLuint program_object, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude) {
 
-	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename, program_object);
 	
 	heightmap_filename = hm_filename;
 	start_position = start_pos;
@@ -52,10 +53,7 @@ void HeightmapObject::generateHeightmap() {
 			vertices.push_back(position.z);
 
 			//add texcoord
-			float u = 1 / float(heightmap_length) * x;
-			float v = 1 / float(heightmap_length) * z;
-			texcoords.push_back(u);
-			texcoords.push_back(v);
+			addTexcoords(x, z);
 
 			//add normal (FIXME later)
 			addNormals(x, z);
@@ -92,14 +90,41 @@ float HeightmapObject::getY(int x, int z) {
 
 
 void HeightmapObject::addNormals(int x, int z) {
+	/* Assume that 'heightmap_length' is even. */
+
 	/* The vector representing the normal. */
 	glm::vec3 normal = glm::vec3(0, 1, 0);
 
-	//FIXME
+	/* Variable shorthand. */
+	glm::vec3 pos = start_position;
+	float spacing = heightmap_spacing;
 
+	/* Calculate the normal. */
+	glm::vec3 v1, v2, v3;
+	if (x % 2 == 0) {
+		v1 = glm::vec3(pos.x + spacing * x, getY(x, z), pos.z - spacing * z);
+		v2 = glm::vec3(pos.x + spacing * (x + 1), getY((x + 1), z), pos.z - spacing * z);
+		v3 = glm::vec3(pos.x + spacing * x, getY(x, (z + 1)), pos.z - spacing * (z + 1));
+		normal = glm::cross(v2 - v1, v3 - v1);
+	} else {
+		v1 = glm::vec3(pos.x + spacing * x, getY(x, z), pos.z - spacing * z);
+		v2 = glm::vec3(pos.x + spacing * (x - 1), getY((x - 1), (z + 1)), pos.z - spacing * (z + 1));
+		v3 = glm::vec3(pos.x + spacing * x, getY(x, (z + 1)), pos.z - spacing * (z + 1));
+		normal = glm::cross(v3 - v1, v2 - v1);
+	}
+
+	/* Add the normal. */
+	normal = glm::normalize(normal);
 	normals.push_back(normal.x);
 	normals.push_back(normal.y);
 	normals.push_back(normal.z);
+}
+
+void HeightmapObject::addTexcoords(int x, int z) {
+	float u = 1 / float(heightmap_length) * x;
+	float v = 1 / float(heightmap_length) * z;
+	texcoords.push_back(u);
+	texcoords.push_back(v);
 }
 
 std::vector<HeightmapObject*>& HeightmapObject::getHeightmapObjects() {

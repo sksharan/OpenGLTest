@@ -10,9 +10,9 @@
 std::vector<RenderableObject*> RenderableObject::renderableObjects;
 
 RenderableObject::RenderableObject(std::string name, std::vector<float>& v, std::vector<float>& t, std::vector<float>& n, std::vector<GLuint>& i, bool isVisible,
-	bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename) {
+	bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename, GLuint program_object) {
 
-	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename, program_object);
 
 	vertices = v;
 	texcoords = t;
@@ -30,6 +30,7 @@ void RenderableObject::render() {
 	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -137,14 +138,14 @@ RenderableObject::RenderableObject() {
 }
 
 void RenderableObject::initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
-	glm::vec4 specular, float shininess, std::string tex_filename) {
+	glm::vec4 specular, float shininess, std::string tex_filename, GLuint program_object) {
 
-	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess);
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, program_object);
 	texture_filename = tex_filename;
 }
 
 void RenderableObject::initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
-	                                             glm::vec4 specular, float shininess) {
+	                                             glm::vec4 specular, float shininess, GLuint program_object) {
 
 	objectName = name;
 	visible = isVisible;
@@ -156,7 +157,7 @@ void RenderableObject::initRenderableObjectStart(std::string name, bool isVisibl
 	renderMode = RENDERMODE_TEXTURED;
 	modelMatrix = glm::mat4();
 	programState.modelMatrix = modelMatrix;
-	program = programState.program;
+	program = program_object;
 }
 
 void RenderableObject::initRenderableObjectEnd() {
@@ -208,6 +209,7 @@ void RenderableObject::initVboIndices() {
 }
 
 void RenderableObject::initTexture() {
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -233,13 +235,13 @@ void RenderableObject::setUniforms() {
 
 	programState.modelMatrix = modelMatrix;
 	glUseProgram(0);
-	updateUniformModel();  //we need to make the glUseProgram calls because all functions in MatrixTransform.h enable the current program
+	updateUniformModel(program);  //we need to make the glUseProgram calls because all functions in MatrixTransform.h enable the current program
 	                       //update the uniforms, then disable the current program
-	glUseProgram(programState.program);
+	glUseProgram(program);
 }
 
 void RenderableObject::updateAmbientUniform() {
-	GLuint ambient_uni_loc = glGetUniformLocation(programState.program, "object.Ka");
+	GLuint ambient_uni_loc = glGetUniformLocation(program, "object.Ka");
 	if (RENDERABLEOBJECT_DEBUG && ambient_uni_loc == -1) {
 		std::cout << "error in updating object ambient uniform" << std::endl;
 	}
@@ -247,7 +249,7 @@ void RenderableObject::updateAmbientUniform() {
 }
 
 void RenderableObject::updateDiffuseUniform() {
-	GLuint diffuse_uni_loc = glGetUniformLocation(programState.program, "object.Kd");
+	GLuint diffuse_uni_loc = glGetUniformLocation(program, "object.Kd");
 	if (RENDERABLEOBJECT_DEBUG && diffuse_uni_loc == -1) {
 		std::cout << "error in updating object diffuse uniform" << std::endl;
 	}
@@ -255,7 +257,7 @@ void RenderableObject::updateDiffuseUniform() {
 }
 
 void RenderableObject::updateSpecularUniform() {
-	GLuint specular_uni_loc = glGetUniformLocation(programState.program, "object.Ks");
+	GLuint specular_uni_loc = glGetUniformLocation(program, "object.Ks");
 	if (RENDERABLEOBJECT_DEBUG && specular_uni_loc == -1) {
 		std::cout << "error in updating object specular uniform" << std::endl;
 	}
@@ -263,7 +265,7 @@ void RenderableObject::updateSpecularUniform() {
 }
 
 void RenderableObject::updateShininessUniform() {
-	GLuint shininess_uni_loc = glGetUniformLocation(programState.program, "object.shininess");
+	GLuint shininess_uni_loc = glGetUniformLocation(program, "object.shininess");
 	if (RENDERABLEOBJECT_DEBUG && shininess_uni_loc == -1) {
 		std::cout << "error in updating object shininess uniform" << std::endl;
 	}
@@ -271,7 +273,7 @@ void RenderableObject::updateShininessUniform() {
 }
 
 void RenderableObject::updateLightEnabledUniform() {
-	GLuint lightenabled_uni_loc = glGetUniformLocation(programState.program, "object.light_enabled");
+	GLuint lightenabled_uni_loc = glGetUniformLocation(program, "object.light_enabled");
 	if (RENDERABLEOBJECT_DEBUG && lightenabled_uni_loc == -1) {
 		std::cout << "error in updating object light-enabled uniform" << std::endl;
 	}
@@ -283,7 +285,7 @@ void RenderableObject::updateLightEnabledUniform() {
 }
 
 void RenderableObject::updateRenderModeUniform() {
-	GLuint rendermode_uni_loc = glGetUniformLocation(programState.program, "object.renderMode");
+	GLuint rendermode_uni_loc = glGetUniformLocation(program, "object.renderMode");
 	if (RENDERABLEOBJECT_DEBUG && rendermode_uni_loc == -1) {
 		std::cout << "error in updating object render mode uniform" << std::endl;
 	}

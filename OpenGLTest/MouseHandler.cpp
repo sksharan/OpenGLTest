@@ -71,7 +71,9 @@ void handleMouseMovement(Scene& scene) {
 	glm::mat4 viewMatrix = glm::lookAt(mainViewer.getPosition(), mainViewer.getPosition() + mainViewer.getDirection(),
 		                               mainViewer.getUpVector());
 	programState.viewMatrix = viewMatrix;
-	updateUniformView();
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		updateUniformView(programState.allPrograms[i]);
+	}
 }
 
 

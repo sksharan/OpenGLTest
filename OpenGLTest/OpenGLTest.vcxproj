@@ -67,8 +67,11 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="shaders\frag.txt" />
-    <Text Include="shaders\vert.txt" />
+    <Text Include="shaders\default.frag" />
+    <Text Include="shaders\default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\landscape.frag" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B97D0D68-C5E2-47BD-96A7-5B06B30F3F7D}</ProjectGuid>

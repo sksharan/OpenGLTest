@@ -4,13 +4,31 @@
 
 std::vector<PerlinHeightmapObject*> PerlinHeightmapObject::perlinHeightmapObjects;
 
+void PerlinHeightmapObject::render() {
+	glUseProgram(program);
+	setUniforms();
+	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glActiveTexture(GL_TEXTURE0 + 1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	glActiveTexture(GL_TEXTURE0 + 2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	glActiveTexture(GL_TEXTURE0 + 3);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	glActiveTexture(GL_TEXTURE0 + 4);
+	glBindTexture(GL_TEXTURE_2D, texture4);
+	glDrawElements(GL_TRIANGLE_STRIP, indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
 PerlinHeightmapObject::PerlinHeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                                         float shininess, glm::vec3 start_pos, int length, float spacing, float amplitude) {
+	float shininess, GLuint program_object, glm::vec3 start_pos, int length, float spacing, float amplitude) {
 
-	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess);
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, program_object);
 
-	texture_filename = "textures/perlin/" + std::to_string(start_pos.x) + " " + std::to_string(start_pos.y) + " " + std::to_string(start_pos.z) + ".bmp";
-
+	texture_filename = "unused -- the multiple textures are defined in the initTexture() method";
 	heightmap_filename = "unused";
 	start_position = start_pos;
 	heightmap_length = length;
@@ -22,7 +40,6 @@ PerlinHeightmapObject::PerlinHeightmapObject(std::string name, bool isVisible, b
 	perlin_module.SetFrequency(1.0);
 	perlin_module.SetPersistence(0.5);
 
-	genTexture();
 	generateHeightmap();  //initializes vertices, texcoords, normals, indices
 
 	perlinHeightmapObjects.push_back(this);
@@ -40,38 +57,70 @@ float PerlinHeightmapObject::getY(int x, int z) {
 	return heightmap_amplitude * value;
 }
 
-/* Some code adapted from http://libnoise.sourceforge.net/tutorials/tutorial3.html */
-void PerlinHeightmapObject::genTexture() {
-	utils::NoiseMap noise_map;
-	utils::NoiseMapBuilderPlane noise_map_builder;
-	noise_map_builder.SetSourceModule(perlin_module);
-	noise_map_builder.SetDestNoiseMap(noise_map);
-	noise_map_builder.SetDestSize(heightmap_length, heightmap_length);
-	float lower_x = (0 + start_position.x) / heightmap_amplitude * 0.15;
-	float upper_x = (heightmap_length - 1 + start_position.x) / heightmap_amplitude * 0.15;
-	float lower_z = -((heightmap_length - 1 + start_position.z) / heightmap_amplitude * 0.15);
-	float upper_z = -((0 + start_position.z) / heightmap_amplitude * 0.15);
-	noise_map_builder.SetBounds(lower_x, upper_x, lower_z, upper_z);
-	noise_map_builder.Build();
+void PerlinHeightmapObject::addTexcoords(int x, int z) {
+	float u, v;
+	u = (float)x / 8.0f;
+	v = (float)z / 8.0f;
+	texcoords.push_back(u);
+	texcoords.push_back(v);
+}
 
-	utils::RendererImage renderer;
-	utils::Image image;
-	renderer.SetSourceNoiseMap(noise_map);
-	renderer.SetDestImage(image);
-	renderer.ClearGradient();
-	renderer.AddGradientPoint(-1.00, utils::Color(154, 205, 50, 255));
-	renderer.AddGradientPoint(-0.75, utils::Color(40, 188, 40, 255));
-	renderer.AddGradientPoint(-0.50, utils::Color(0, 128, 64, 255));
-	renderer.AddGradientPoint(-0.25, utils::Color(154, 205, 50, 255));
-	renderer.AddGradientPoint(0.00, utils::Color(0, 128, 64, 255));
-	renderer.AddGradientPoint(0.25, utils::Color(40, 188, 40, 255));
-	renderer.AddGradientPoint(0.50, utils::Color(154, 205, 50, 255));
-	renderer.AddGradientPoint(0.75, utils::Color(20, 148, 20, 255));
-	renderer.AddGradientPoint(0.90, utils::Color(154, 205, 50, 255));
-	renderer.Render();
+void PerlinHeightmapObject::initTexture() {
+	int img_width, img_height;
+	unsigned char* img_data;
 
-	utils::WriterBMP writer;
-	writer.SetSourceImage(image);
-	writer.SetDestFilename(texture_filename);
-	writer.WriteDestFile();
+	glActiveTexture(GL_TEXTURE0 + 0);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	img_data = SOIL_load_image("textures/landscape/moss1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SOIL_free_image_data(img_data);
+
+	glActiveTexture(GL_TEXTURE0 + 1);
+	glGenTextures(1, &texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+	img_data = SOIL_load_image("textures/landscape/rock1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SOIL_free_image_data(img_data);
+
+	glActiveTexture(GL_TEXTURE0 + 2);
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	img_data = SOIL_load_image("textures/landscape/grass1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SOIL_free_image_data(img_data);
+
+	glActiveTexture(GL_TEXTURE0 + 3);
+	glGenTextures(1, &texture3);
+	glBindTexture(GL_TEXTURE_2D, texture3);
+	img_data = SOIL_load_image("textures/landscape/dirt1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SOIL_free_image_data(img_data);
+
+	glActiveTexture(GL_TEXTURE0 + 4);
+	glGenTextures(1, &texture4);
+	glBindTexture(GL_TEXTURE_2D, texture4);
+	img_data = SOIL_load_image("textures/landscape/ice1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SOIL_free_image_data(img_data);
 }

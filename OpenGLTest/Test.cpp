@@ -51,7 +51,7 @@ RenderableObject* genTestSquare(glm::vec3 center_location, float scaling_factor)
 	std::string texture_filename = "textures/checkerboard.jpg";
 
 	return new RenderableObject("test_square", vertices, texcoords, normals, indices, true, true,
-		ambient, diffuse, specular, shininess, texture_filename);
+		ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0]);
 }
 
 OBJObject* genTower() {
@@ -64,7 +64,7 @@ OBJObject* genTower() {
 
 	std::string obj_filename = "obj/tower.obj";
 
-	return new OBJObject("tower_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+	return new OBJObject("tower_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
 }
 
 OBJObject* genSuzanne() {
@@ -77,7 +77,7 @@ OBJObject* genSuzanne() {
 
 	std::string obj_filename = "obj/suzanne.obj";
 
-	return new OBJObject("suzanne_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+	return new OBJObject("suzanne_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
 }
 
 OBJObject* genDragon() {
@@ -90,7 +90,7 @@ OBJObject* genDragon() {
 
 	std::string obj_filename = "obj/dragon.obj";
 
-	return new OBJObject("dragon_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, obj_filename);
+	return new OBJObject("dragon_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
 }
 
 HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
@@ -107,7 +107,7 @@ HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
 	float spacing = 0.5;
 	float amplitude = 25.0;
 
-	return new HeightmapObject("heightmap", true, true, ambient, diffuse, specular, shininess, texture_filename,
+	return new HeightmapObject("heightmap", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0],
 		heightmap_filename, start_loc, length, spacing, amplitude);
 }
 
@@ -117,9 +117,10 @@ PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc) {
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
 	float shininess = 50.0f;
 
-	int length = 256;
+	int length = 512;
 	float spacing = 0.6;
-	float amplitude = 35.0;
+	float amplitude = 50.0;
 
-	return new PerlinHeightmapObject("perlin_hm", true, false, ambient, diffuse, specular, shininess, start_loc, length, spacing, amplitude);
+	return new PerlinHeightmapObject("perlin_hm", true, false, ambient, diffuse, specular, shininess, programState.allPrograms[1],
+		                             start_loc, length, spacing, amplitude);
 }

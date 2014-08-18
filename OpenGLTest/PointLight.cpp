@@ -40,61 +40,85 @@ glm::vec3 PointLight::getPosition() {
 }
 
 void PointLight::updatePositionUniform() {
-	GLuint pos_uni_loc = glGetUniformLocation(programState.program, positionUniformName.c_str());
-	if (POINTLIGHT_DEBUG && pos_uni_loc == -1) {
-		std::cout << "error in updating light position uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint pos_uni_loc = glGetUniformLocation(program, positionUniformName.c_str());
+		if (POINTLIGHT_DEBUG && pos_uni_loc == -1) {
+			std::cout << "error in updating light position uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform3fv(pos_uni_loc, 1, glm::value_ptr(pos));
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform3fv(pos_uni_loc, 1, glm::value_ptr(pos));
-	glUseProgram(0);
 }
 
 void PointLight::updateAmbientUniform() {
-	GLuint ambient_uni_loc = glGetUniformLocation(programState.program, ambientUniformName.c_str());
-	if (POINTLIGHT_DEBUG && ambient_uni_loc == -1) {
-		std::cout << "error in updating light ambient uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint ambient_uni_loc = glGetUniformLocation(program, ambientUniformName.c_str());
+		if (POINTLIGHT_DEBUG && ambient_uni_loc == -1) {
+			std::cout << "error in updating light ambient uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform3fv(ambient_uni_loc, 1, glm::value_ptr(La));
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform3fv(ambient_uni_loc, 1, glm::value_ptr(La));
-	glUseProgram(0);
 }
 
 void PointLight::updateDiffuseUniform() {
-	GLuint diffuse_uni_loc = glGetUniformLocation(programState.program, diffuseUniformName.c_str());
-	if (POINTLIGHT_DEBUG && diffuse_uni_loc == -1) {
-		std::cout << "error in updating light diffuse uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint diffuse_uni_loc = glGetUniformLocation(program, diffuseUniformName.c_str());
+		if (POINTLIGHT_DEBUG && diffuse_uni_loc == -1) {
+			std::cout << "error in updating light diffuse uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform3fv(diffuse_uni_loc, 1, glm::value_ptr(Ld));
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform3fv(diffuse_uni_loc, 1, glm::value_ptr(Ld));
-	glUseProgram(0);
 }
 
 void PointLight::updateSpecularUniform() {
-	GLuint specular_uni_loc = glGetUniformLocation(programState.program, specularUniformName.c_str());
-	if (POINTLIGHT_DEBUG && specular_uni_loc == -1) {
-		std::cout << "error in updating light specular uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint specular_uni_loc = glGetUniformLocation(program, specularUniformName.c_str());
+		if (POINTLIGHT_DEBUG && specular_uni_loc == -1) {
+			std::cout << "error in updating light specular uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform3fv(specular_uni_loc, 1, glm::value_ptr(Ls));
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform3fv(specular_uni_loc, 1, glm::value_ptr(Ls));
-	glUseProgram(0);
 }
 
 void PointLight::updateIntensityUniform() {
-	GLuint intensity_uni_loc = glGetUniformLocation(programState.program, intensityUniformName.c_str());
-	if (POINTLIGHT_DEBUG && intensity_uni_loc == -1) {
-		std::cout << "error in updating light intensity uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint intensity_uni_loc = glGetUniformLocation(program, intensityUniformName.c_str());
+		if (POINTLIGHT_DEBUG && intensity_uni_loc == -1) {
+			std::cout << "error in updating light intensity uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform1f(intensity_uni_loc, intensity);
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform1f(intensity_uni_loc, intensity);
-	glUseProgram(0);
 }
 
 void PointLight::updateNumPLightsUniform() {
-	GLuint plights_uni_loc = glGetUniformLocation(programState.program, "numPLights");
-	if (POINTLIGHT_DEBUG && plights_uni_loc == -1) {
-		std::cout << "error in updating num point lights uniform" << std::endl;
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+
+		GLuint plights_uni_loc = glGetUniformLocation(program, "numPLights");
+		if (POINTLIGHT_DEBUG && plights_uni_loc == -1) {
+			std::cout << "error in updating num point lights uniform" << std::endl;
+		}
+		glUseProgram(program);
+		glUniform1i(plights_uni_loc, num_plights_created);
+		glUseProgram(0);
 	}
-	glUseProgram(programState.program);
-	glUniform1i(plights_uni_loc, num_plights_created);
-	glUseProgram(0);
 }

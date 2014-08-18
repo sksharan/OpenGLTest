@@ -8,52 +8,52 @@
 
 #define MATRIXTRANSFORM_DEBUG 0
 
-void updateUniformModel() {
-	GLuint model_uni_loc = glGetUniformLocation(programState.program, MODEL_UNIFORM_STR);
+void updateUniformModel(GLuint program) {
+	GLuint model_uni_loc = glGetUniformLocation(program, MODEL_UNIFORM_STR);
 	if (MATRIXTRANSFORM_DEBUG && model_uni_loc == -1) {
 		std::cout << "error in updating model uniform" << std::endl;
 	}
-	glUseProgram(programState.program);
+	glUseProgram(program);
 	glUniformMatrix4fv(model_uni_loc, 1, GL_FALSE, glm::value_ptr(programState.modelMatrix));
 	glUseProgram(0);
 
-	updateNormalMatrix();
-	updateUniformNormal();
+	updateNormalMatrix(program);
+	updateUniformNormal(program);
 }
 
-void updateUniformView() {
-	GLuint view_uni_loc = glGetUniformLocation(programState.program, VIEW_UNIFORM_STR);
+void updateUniformView(GLuint program) {
+	GLuint view_uni_loc = glGetUniformLocation(program, VIEW_UNIFORM_STR);
 	if (MATRIXTRANSFORM_DEBUG && view_uni_loc == -1) {
 		std::cout << "error in updating model uniform" << std::endl;
 	}
-	glUseProgram(programState.program);
+	glUseProgram(program);
 	glUniformMatrix4fv(view_uni_loc, 1, GL_FALSE, glm::value_ptr(programState.viewMatrix));
 	glUseProgram(0);
 
-	updateNormalMatrix();
-	updateUniformNormal();
+	updateNormalMatrix(program);
+	updateUniformNormal(program);
 }
 
-void updateUniformPerspective() {
-	GLuint persp_uni_loc = glGetUniformLocation(programState.program, PERSPECTIVE_UNIFORM_STR);
+void updateUniformPerspective(GLuint program) {
+	GLuint persp_uni_loc = glGetUniformLocation(program, PERSPECTIVE_UNIFORM_STR);
 	if (MATRIXTRANSFORM_DEBUG && persp_uni_loc == -1) {
 		std::cout << "error in updating perspective uniform" << std::endl;
 	}
-	glUseProgram(programState.program);
+	glUseProgram(program);
 	glUniformMatrix4fv(persp_uni_loc, 1, GL_FALSE, glm::value_ptr(programState.perspectiveMatrix));
 	glUseProgram(0);
 }
 
-void updateUniformNormal() {
-	GLuint normal_uni_loc = glGetUniformLocation(programState.program, NORMAL_UNIFORM_STR);
+void updateUniformNormal(GLuint program) {
+	GLuint normal_uni_loc = glGetUniformLocation(program, NORMAL_UNIFORM_STR);
 	if (MATRIXTRANSFORM_DEBUG && normal_uni_loc == -1) {
 		std::cout << "error in updating normal uniform" << std::endl;
 	}
-	glUseProgram(programState.program);
+	glUseProgram(program);
 	glUniformMatrix3fv(normal_uni_loc, 1, GL_FALSE, glm::value_ptr(programState.normalMatrix));
 	glUseProgram(0);
 }
 
-void updateNormalMatrix() {
+void updateNormalMatrix(GLuint program) {
 	programState.normalMatrix = glm::inverseTranspose(glm::mat3(programState.viewMatrix * programState.modelMatrix));
 }

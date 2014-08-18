@@ -6,7 +6,7 @@
 
 std::vector<AABBObject*> AABBObject::aabbObjects;
 
-AABBObject::AABBObject(RenderableObject* obj) {
+AABBObject::AABBObject(RenderableObject* obj, GLuint program_object) {
 	objectName = obj->getName() + AABB_SUFFIX;
 
 	//empty vectors would cause an error
@@ -24,6 +24,8 @@ AABBObject::AABBObject(RenderableObject* obj) {
 	shininess_term = 2.0f;
 
 	texture_filename = "textures/AABB.png";
+
+	program = program_object;
 
 	object = obj;
 
@@ -143,11 +145,14 @@ void AABBObject::setModelMatrix(glm::mat4 newModelMatrix) {
 }
 
 void AABBObject::render() {
+	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 glm::vec3 AABBObject::getMinCorner() {

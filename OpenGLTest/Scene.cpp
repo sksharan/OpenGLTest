@@ -21,11 +21,11 @@ void Scene::addObject(RenderableObject* object) {
 		printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 	}
 
-	AABBObject* aabb_object = new AABBObject(object);
+	AABBObject* aabb_object = new AABBObject(object, programState.allPrograms[0]);
 	scene_objects.push_back(aabb_object); //we'll render the AABB to the screen
 	aabb_objects.push_back(aabb_object);
 
-	OBBObject* obb_object = new OBBObject(object);
+	OBBObject* obb_object = new OBBObject(object, programState.allPrograms[0]);
 	scene_objects.push_back(obb_object); //we'll render the OBB to the screen
 	obb_objects.push_back(obb_object);
 }

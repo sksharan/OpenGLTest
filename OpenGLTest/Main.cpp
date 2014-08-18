@@ -44,20 +44,40 @@ int main(int argc, char** argv) {
 	int half_height = mainWindow.height / 2;
 	SDL_WarpMouseInWindow(mainWindow.window, half_width, half_height);
 
-	/* Set up the GL program. */
-	GLuint vert_shader = createShader("shaders/vert.txt", GL_VERTEX_SHADER);
-	GLuint frag_shader = createShader("shaders/frag.txt", GL_FRAGMENT_SHADER);
-	programState.program = createProgram(vert_shader, frag_shader);
+	/* Set up the OpenGL program objects. */
+	GLuint default_vert_shader = createShader("shaders/default.vert", GL_VERTEX_SHADER);
+	GLuint default_frag_shader = createShader("shaders/default.frag", GL_FRAGMENT_SHADER);
+	GLuint landscape_frag_shader = createShader("shaders/landscape.frag", GL_FRAGMENT_SHADER);
+	GLuint default_program = createProgram(default_vert_shader, default_frag_shader);
+	GLuint landscape_program = createProgram(default_vert_shader, landscape_frag_shader);
+	programState.allPrograms.push_back(default_program);
+	programState.allPrograms.push_back(landscape_program);
 
-	/* Set up perspective and modelview matrices. */
+	/* Setup for textures. */
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+		glUseProgram(program);
+		glUniform1i(glGetUniformLocation(program, "texture0"), 0);
+		glUniform1i(glGetUniformLocation(program, "texture1"), 1);
+		glUniform1i(glGetUniformLocation(program, "texture2"), 2);
+		glUniform1i(glGetUniformLocation(program, "texture3"), 3);
+		glUniform1i(glGetUniformLocation(program, "texture4"), 4);
+		glUseProgram(0);
+	}
+
+	/* Initialize the perspective, model, view, and normal matrices. We would like to use this in all of the current programs, so
+	we update uniforms in all the programs. */
 	programState.perspectiveMatrix = glm::perspective(persp_fov, (float)mainWindow.width/(float)mainWindow.height, persp_z_near, persp_z_far);
 	programState.modelMatrix = glm::mat4();
 	programState.viewMatrix = glm::mat4();
 	programState.normalMatrix = glm::mat3();
-	updateUniformModel();
-	updateUniformView();
-	updateUniformPerspective();
-	updateUniformNormal();
+	for (int i = 0; i < programState.allPrograms.size(); i++) {
+		GLuint program = programState.allPrograms[i];
+		updateUniformModel(program);
+		updateUniformView(program);
+		updateUniformPerspective(program);
+		updateUniformNormal(program);
+	}
 
 	/* Create a new Scene. */
 	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
@@ -68,8 +88,7 @@ int main(int argc, char** argv) {
 	//RenderableObject* object3 = (RenderableObject*)genSuzanne();
 	//RenderableObject* object4 = (RenderableObject*)genDragon();
 	//RenderableObject* object5 = (RenderableObject*)genHeightmapObject(glm::vec3(0, 0, 50));
-	RenderableObject* object6 = (RenderableObject*)genPerlinHeightmapObject(glm::vec3(0, 0, 50));
-
+	RenderableObject* object6 = (RenderableObject*)genPerlinHeightmapObject(glm::vec3(0, 0, 0));
 
 	/* Add the objects to the Scene. */
 	//scene.addObject(object1);

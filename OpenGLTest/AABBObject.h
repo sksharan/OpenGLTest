@@ -9,7 +9,7 @@
 class AABBObject : public RenderableObject {
 public:
 	/* Creates an AABB around 'obj.' */
-	AABBObject(RenderableObject* obj);
+	AABBObject(RenderableObject* obj, GLuint program_object);
 
 	/* Calulates the vertices, texcoords, normals, and indices of the AABB. Should be called whenever the object
 	that this AABB contains is transformed. */

@@ -211,11 +211,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="shaders\frag.txt">
+    <Text Include="shaders\default.frag">
       <Filter>src\shaders</Filter>
     </Text>
-    <Text Include="shaders\vert.txt">
+    <Text Include="shaders\default.vert">
       <Filter>src\shaders</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\landscape.frag">
+      <Filter>src\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

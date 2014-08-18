@@ -12,6 +12,7 @@ void OBJObject::render() {
 	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glBindVertexArray(0);
@@ -19,9 +20,9 @@ void OBJObject::render() {
 }
 
 OBJObject::OBJObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                 float shininess, std::string tex_filename, std::string obj_filename) {
+	                 float shininess, std::string tex_filename, GLuint program_object, std::string obj_filename) {
 
-	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename);
+	initRenderableObjectStart(name, isVisible, lighting_enabled, ambient, diffuse, specular, shininess, tex_filename, program_object);
 
 	obj_file = obj_filename;
 	parseOBJ();  //initializes vertices, texcoords, normals

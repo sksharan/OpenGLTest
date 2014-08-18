@@ -8,7 +8,7 @@
 class OBBObject : public RenderableObject {
 public:
 	/* Creates an OBB around 'obj.' */
-	OBBObject(RenderableObject* obj);
+	OBBObject(RenderableObject* obj, GLuint program_object);
 
 	/* Calulates the vertices, texcoords, normals, and indices of the OBB. Should be called whenever the object
 	that this OBB contains is transformed. */

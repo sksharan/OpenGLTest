@@ -6,14 +6,15 @@ continue to run). */
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <vector>
 
 /* Struct representing state of the program. */
 struct ProgramState {
 	/* False while program is to continue running. */
 	bool done;
 
-	/* The current GL program used for rendering. */
-	GLuint program;
+	/* All OpenGL programs that were created. */
+	std::vector<GLuint> allPrograms;
 
 	/* True if the user uses the mouse to look around. If so, then SDL forces the cursor to stay at the center of the screen. */
 	bool mouseLookModeEnabled;

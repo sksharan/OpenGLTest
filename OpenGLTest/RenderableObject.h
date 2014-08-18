@@ -27,12 +27,10 @@ public:
 	   specular: specular term of this object
 	   shininess: shininess term of this object
 	   tex_filename: filename of the texture associated with this object
-
-	   Each RenderableObject uses the current OpenGL program (see ProgramState.program). To use a different program with this object,
-	   call the method setProgram().
+	   program_object: the program used to render this object
 	*/
 	RenderableObject(std::string name, std::vector<float>& v, std::vector<float>& t, std::vector<float>& n, std::vector<GLuint>& i, bool isVisible,
-		             bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename);
+		             bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular, float shininess, std::string tex_filename, GLuint program_object);
 
 	~RenderableObject();
 
@@ -104,11 +102,11 @@ protected:
 	/* Children of RenderableObject may call this method at the start of their constructors. This handles initialization of all
 	RenderableObject fields except 'vertices', 'texcoords', 'normals', and 'indices', which must be handled by the child class. */
 	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
-		                           glm::vec4 specular, float shininess, std::string tex_filename);
+		                           glm::vec4 specular, float shininess, std::string tex_filename, GLuint program_object);
 
 	/* Same as previous method but with texture filename initialization. */
 	void initRenderableObjectStart(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse,
-		                           glm::vec4 specular, float shininess);
+		                           glm::vec4 specular, float shininess, GLuint program_object);
 
 	/* Children of RenderableObject may call this method at the end of their constructors. This handles the creation of VAOs and VBOs,
 	and binds the texture. */
@@ -118,19 +116,19 @@ protected:
 	virtual void initVao();
 
 	/* Initializes the vertex buffer object for vertices. */
-	void initVboVertices();
+	virtual void initVboVertices();
 
 	/* Initializes the vertex buffer object for texcoords. */
-	void initVboTexcoords();
+	virtual void initVboTexcoords();
 
 	/* Initializes the vertex buffer object for normals. */
-	void initVboNormals();
+	virtual void initVboNormals();
 
 	/* Initializes the vertex buffer object for indices. */
-	void initVboIndices();
+	virtual void initVboIndices();
 
 	/* Initialize the texture for use with this object. */
-	void initTexture();
+	virtual void initTexture();
 
 	/* Set up the uniforms for this object. */
 	void setUniforms();

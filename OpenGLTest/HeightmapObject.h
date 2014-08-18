@@ -25,6 +25,7 @@ public:
 	specular: specular term of this object
 	shininess: shininess term of this object
 	tex_filename: filename of the texture associated with this object
+	program_object: the program used to render this object
 	hm_filename: the name of the heightmap associated wit this object; must be length x length pixels (see below)
 	start_pos: position that generation of the heightmap will begin at. Heightmap grows in the positive x and
 	           negative z directions
@@ -33,7 +34,7 @@ public:
 	amplitude: affects the height values of the generated mesh
 	*/
 	HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                float shininess, std::string tex_filename, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
+	                float shininess, std::string tex_filename, GLuint program_object, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
 
 	/* Returns all HeightmapObjects that have been created. */
 	static std::vector<HeightmapObject*>& getHeightmapObjects();
@@ -51,10 +52,13 @@ protected:
 	virtual float getY(int x, int z);
 
 	/* Generates the heightmap and adds the data to 'vertices, 'texcoords, 'normals', and 'indices'. */
-	void generateHeightmap();
+	virtual void generateHeightmap();
 
 	/* Adds normals given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
-	void addNormals(int x, int z);
+	virtual void addNormals(int x, int z);
+
+	/* Adds texcoords given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
+	virtual void addTexcoords(int x, int z);
 
 	/* Name of the heightmap that will determine height values for this object. */
 	std::string heightmap_filename;

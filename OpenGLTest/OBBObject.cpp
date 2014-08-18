@@ -5,7 +5,7 @@
 
 std::vector<OBBObject*> OBBObject::obbObjects;
 
-OBBObject::OBBObject(RenderableObject* obj) {
+OBBObject::OBBObject(RenderableObject* obj, GLuint program_object) {
 	objectName = obj->getName() + OBB_SUFFIX;
 
 	//empty vectors would cause an error
@@ -23,6 +23,8 @@ OBBObject::OBBObject(RenderableObject* obj) {
 	shininess_term = 2.0f;
 
 	texture_filename = "textures/OBB.png";
+
+	program = program_object;
 
 	object = obj;
 
@@ -150,11 +152,14 @@ void OBBObject::setModelMatrix(glm::mat4 newModelMatrix) {
 }
 
 void OBBObject::render() {
+	glUseProgram(program);
 	setUniforms();
 	glBindVertexArray(vao);
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 glm::vec3 OBBObject::getMinCorner() {
