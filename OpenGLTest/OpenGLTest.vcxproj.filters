@@ -222,5 +222,11 @@
     <None Include="shaders\landscape.frag">
       <Filter>src\shaders</Filter>
     </None>
+    <None Include="shaders\landscape.geo">
+      <Filter>src\shaders</Filter>
+    </None>
+    <None Include="shaders\landscape.vert">
+      <Filter>src\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

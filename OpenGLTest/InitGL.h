@@ -17,5 +17,6 @@ GLuint createShader(std::string shader_filename, GLenum shader_type);
 /* Attaches the 'shaders' to a new program, links the program, and returns
  * the program */
 GLuint createProgram(GLuint vert_shader, GLuint frag_shader);
+GLuint createProgram(GLuint vert_shader, GLuint geo_shader, GLuint frag_shader);
 
 #endif

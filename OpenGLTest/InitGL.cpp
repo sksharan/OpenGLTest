@@ -49,3 +49,12 @@ GLuint createProgram(GLuint vert_shader, GLuint frag_shader) {
 	glLinkProgram(program);
 	return program;
 }
+
+GLuint createProgram(GLuint vert_shader, GLuint geo_shader, GLuint frag_shader) {
+	GLuint program = glCreateProgram();
+	glAttachShader(program, vert_shader);
+	glAttachShader(program, geo_shader);
+	glAttachShader(program, frag_shader);
+	glLinkProgram(program);
+	return program;
+}

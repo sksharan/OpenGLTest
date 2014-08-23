@@ -117,9 +117,9 @@ PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc) {
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
 	float shininess = 50.0f;
 
-	int length = 512;
-	float spacing = 0.6;
-	float amplitude = 50.0;
+	int length = 256;
+	float spacing = 1.0;
+	float amplitude = 12.0;
 
 	return new PerlinHeightmapObject("perlin_hm", true, false, ambient, diffuse, specular, shininess, programState.allPrograms[1],
 		                             start_loc, length, spacing, amplitude);

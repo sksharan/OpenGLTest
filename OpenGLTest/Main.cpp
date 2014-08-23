@@ -47,9 +47,12 @@ int main(int argc, char** argv) {
 	/* Set up the OpenGL program objects. */
 	GLuint default_vert_shader = createShader("shaders/default.vert", GL_VERTEX_SHADER);
 	GLuint default_frag_shader = createShader("shaders/default.frag", GL_FRAGMENT_SHADER);
+	GLuint landscape_vert_shader = createShader("shaders/landscape.vert", GL_VERTEX_SHADER);
+	GLuint landscape_geo_shader = createShader("shaders/landscape.geo", GL_GEOMETRY_SHADER);
 	GLuint landscape_frag_shader = createShader("shaders/landscape.frag", GL_FRAGMENT_SHADER);
 	GLuint default_program = createProgram(default_vert_shader, default_frag_shader);
-	GLuint landscape_program = createProgram(default_vert_shader, landscape_frag_shader);
+	GLuint landscape_program = createProgram(landscape_vert_shader, landscape_geo_shader, landscape_frag_shader);
+	//GLuint landscape_program = createProgram(default_vert_shader, landscape_frag_shader);
 	programState.allPrograms.push_back(default_program);
 	programState.allPrograms.push_back(landscape_program);
 
@@ -80,7 +83,7 @@ int main(int argc, char** argv) {
 	}
 
 	/* Create a new Scene. */
-	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
+	Scene scene("test", glm::vec4(0.7, 0.76, 0.85, 1.0), 1.0);
 
 	/* Create the objects. */
 	//RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
@@ -99,7 +102,7 @@ int main(int argc, char** argv) {
 	scene.addObject(object6);
 
 	/* Create the lights. */
-	PointLight light1(glm::vec3(50, 0, 0), glm::vec3(0.2, 0.2, 0.2), glm::vec3(0.7, 0.7, 0.7), glm::vec3(1.0, 1.0, 1.0), 1.0);
+	PointLight light1(glm::vec3(50, 10, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Begin the main loop. */
 	programState.done = false;

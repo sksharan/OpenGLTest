@@ -53,14 +53,14 @@ std::vector<PerlinHeightmapObject*>& PerlinHeightmapObject::getPerlinHeightmapOb
 float PerlinHeightmapObject::getY(int x, int z) {
 	double px = (x + start_position.x) / heightmap_amplitude * 0.15;
 	double pz = -((z + start_position.z) / heightmap_amplitude * 0.15);
-	double value = perlin_module.GetValue(px, 0, pz);
+	double value = perlin_module.GetValue(px, 1, pz);
 	return heightmap_amplitude * value;
 }
 
 void PerlinHeightmapObject::addTexcoords(int x, int z) {
 	float u, v;
-	u = (float)x / 8.0f;
-	v = (float)z / 8.0f;
+	u = (float)x / 4.0f;
+	v = (float)z / 4.0f;
 	texcoords.push_back(u);
 	texcoords.push_back(v);
 }
@@ -72,7 +72,7 @@ void PerlinHeightmapObject::initTexture() {
 	glActiveTexture(GL_TEXTURE0 + 0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	img_data = SOIL_load_image("textures/landscape/moss1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	img_data = SOIL_load_image("textures/landscape/grass1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -83,7 +83,7 @@ void PerlinHeightmapObject::initTexture() {
 	glActiveTexture(GL_TEXTURE0 + 1);
 	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1);
-	img_data = SOIL_load_image("textures/landscape/rock1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	img_data = SOIL_load_image("textures/landscape/grass2.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -94,7 +94,7 @@ void PerlinHeightmapObject::initTexture() {
 	glActiveTexture(GL_TEXTURE0 + 2);
 	glGenTextures(1, &texture2);
 	glBindTexture(GL_TEXTURE_2D, texture2);
-	img_data = SOIL_load_image("textures/landscape/grass1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	img_data = SOIL_load_image("textures/landscape/rock1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -116,7 +116,7 @@ void PerlinHeightmapObject::initTexture() {
 	glActiveTexture(GL_TEXTURE0 + 4);
 	glGenTextures(1, &texture4);
 	glBindTexture(GL_TEXTURE_2D, texture4);
-	img_data = SOIL_load_image("textures/landscape/ice1.jpg", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
+	img_data = SOIL_load_image("textures/landscape/plant_alpha.png", &img_width, &img_height, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img_width, img_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img_data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
