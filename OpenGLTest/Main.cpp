@@ -87,23 +87,27 @@ int main(int argc, char** argv) {
 	/* Create a new Scene. */
 	Scene scene("test", glm::vec4(0.7, 0.76, 0.85, 1.0), 1.0);
 
-	/* Create the objects. */
-	//RenderableObject* object1 = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
-	//RenderableObject* object2 = (RenderableObject*)genTower();
-	//RenderableObject* object3 = (RenderableObject*)genSuzanne();
-	//RenderableObject* object4 = (RenderableObject*)genDragon();
-	//RenderableObject* object5 = (RenderableObject*)genHeightmapObject(glm::vec3(0, 0, 50));
-	PerlinHeightmapObject* object6 = genPerlinHeightmapObject(glm::vec3(0, 0, 0));
+	/* Create the objects and add them to the Scene. */
+	RenderableObject* square = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
+	scene.addObject(square);
 
-	/* Add the objects to the Scene. */
-	//scene.addObject(object1);
-	//scene.addObject(object2);
-	//scene.addObject(object3);
-	//scene.addObject(object4);
-	//scene.addObject(object5);
-	scene.addObject((RenderableObject*)object6);
+	OBJObject* tower = genTower();
+	scene.addObject((RenderableObject*)tower);
 
-	landscapeManager.landscape = object6;
+	OBJObject* suzanne = genSuzanne();
+	scene.addObject((RenderableObject*)suzanne);
+
+	//OBJObject* dragon = genDragon();
+	//scene.addObject((RenderableObject*)dragon);
+
+	HeightmapObject* hm = genHeightmapObject(glm::vec3(0, 0, 100));
+	scene.addObject((RenderableObject*)hm);
+
+	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0));
+	scene.addObject((RenderableObject*)phm);
+
+	/* Register the PerlinHeightmapObject as the current landscape. The user can choose to "walk" on this object. */
+	landscapeManager.landscape = phm;
 
 	/* Create the lights. */
 	PointLight light1(glm::vec3(50, 25, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);

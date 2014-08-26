@@ -107,7 +107,8 @@ void Scene::setCurrObjectWithOBBIndex(int obb_index) {
 		return;
 	}
 
-	curr_object = scene_objects[obb_index * 3];
+	objectIndex = obb_index * 3;
+	curr_object = scene_objects[objectIndex];
 	printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 }
 
@@ -116,6 +117,7 @@ void Scene::setCurrObjectWithAABBIndex(int aabb_index) {
 		return;
 	}
 
-	curr_object = scene_objects[aabb_index * 3];
+	objectIndex = aabb_index * 3;
+	curr_object = scene_objects[objectIndex];
 	printf("%s now selected in scene %s\n", curr_object->getName().c_str(), name.c_str());
 }

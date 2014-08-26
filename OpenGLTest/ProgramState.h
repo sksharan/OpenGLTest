@@ -10,7 +10,7 @@ continue to run). */
 
 /* Struct representing state of the program. */
 struct ProgramState {
-	ProgramState() : wireframeEnabled(false), noClipEnabled(false), userHeight(2.5f) {}
+	ProgramState() : wireframeEnabled(false), noClipEnabled(true), userHeight(2.5f) {}
 
 	/* False while program is to continue running. */
 	bool done;

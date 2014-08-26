@@ -107,7 +107,7 @@ HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
 	float spacing = 0.5;
 	float amplitude = 25.0;
 
-	return new HeightmapObject("heightmap", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0],
+	return new HeightmapObject("heightmap", true, false, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0],
 		heightmap_filename, start_loc, length, spacing, amplitude);
 }
 

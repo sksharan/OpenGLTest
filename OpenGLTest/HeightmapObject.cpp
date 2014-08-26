@@ -82,6 +82,12 @@ void HeightmapObject::generateHeightmap() {
 /* Remember that we need to treat colors on a 0 to 1 scale. */
 float HeightmapObject::getY(int x, int z) {
 	int index = (x + z * heightmap_length) * HM_TEXTURE_NUM_CHANNELS;
+
+	/* Error check in case x or z are greater than ('heightmap_length' - 1). */
+	if (index > heightmap_length * heightmap_length * HM_TEXTURE_NUM_CHANNELS) {
+		index = heightmap_length * heightmap_length * HM_TEXTURE_NUM_CHANNELS - HM_TEXTURE_NUM_CHANNELS;
+	}
+
 	float red_value = (float)heightmap_pixels[index] * heightmap_amplitude / 255.0f;
 	float blue_value = (float)heightmap_pixels[index + 1] * heightmap_amplitude / 255.0f;
 	float green_value = (float)heightmap_pixels[index + 2] * heightmap_amplitude / 255.0f;
