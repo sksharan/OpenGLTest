@@ -13,6 +13,8 @@
 #include "RenderableObject.h"
 #include "OBJObject.h"
 #include "HeightmapObject.h"
+#include "PerlinHeightmapObject.h"
+#include "LandscapeManager.h"
 #include "Scene.h"
 #include "Test.h"
 #include "Util.h"
@@ -91,7 +93,7 @@ int main(int argc, char** argv) {
 	//RenderableObject* object3 = (RenderableObject*)genSuzanne();
 	//RenderableObject* object4 = (RenderableObject*)genDragon();
 	//RenderableObject* object5 = (RenderableObject*)genHeightmapObject(glm::vec3(0, 0, 50));
-	RenderableObject* object6 = (RenderableObject*)genPerlinHeightmapObject(glm::vec3(0, 0, 0));
+	PerlinHeightmapObject* object6 = genPerlinHeightmapObject(glm::vec3(0, 0, 0));
 
 	/* Add the objects to the Scene. */
 	//scene.addObject(object1);
@@ -99,10 +101,12 @@ int main(int argc, char** argv) {
 	//scene.addObject(object3);
 	//scene.addObject(object4);
 	//scene.addObject(object5);
-	scene.addObject(object6);
+	scene.addObject((RenderableObject*)object6);
+
+	landscapeManager.landscape = object6;
 
 	/* Create the lights. */
-	PointLight light1(glm::vec3(50, 10, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
+	PointLight light1(glm::vec3(50, 25, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Begin the main loop. */
 	programState.done = false;

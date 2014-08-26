@@ -81,7 +81,7 @@ vec3 phongForPointLight(int id, vec4 tex) {
 	//diffuse term
 	vec3 direction_to_light_eye = normalize( vec3(light_pos_eye - f_eye_position) );
 	vec3 Id = pLights[id].Ld * object.Kd * max( dot(direction_to_light_eye, f_eye_normal), 0.0 );
-	float texture_weight = 0.9;
+	float texture_weight = 1.0;
 	Id = mix(Id, vec3(tex), texture_weight);  //texture contributes to diffuse component
 
 	//specular term
@@ -109,18 +109,26 @@ void main() {
 	vec4 dirt_texture = texture(texture3, f_texcoord);
 	vec4 plant_alpha_texture = texture(texture4, f_texcoord);
 
-	if (tex_dot_prod < 0.85) {
+	if (tex_dot_prod < 0.75) {
+		frag_texture = rock_texture;
+	} else if (tex_dot_prod < 0.875) {
+		frag_texture = mix(rock_texture, dirt_texture, (tex_dot_prod - 0.75) / (1 - 0.75));
+	} else if (tex_dot_prod < 0.95) {
+		frag_texture = mix(dirt_texture, grass_texture_1, (tex_dot_prod - 0.875) / (1 - 0.875));
+	} else {
+		frag_texture = mix(grass_texture_1, grass_texture_2, (tex_dot_prod - 0.95) / (1 - 0.95));
+	}
+
+	/*if (tex_dot_prod < 0.75) {
 		frag_texture = rock_texture;
 	} else if (tex_dot_prod < 0.875) {
 		frag_texture = dirt_texture;
 	} else if (tex_dot_prod < 0.95) {
 		frag_texture = grass_texture_1;
-	} else if (tex_dot_prod < 0.98) {
-		frag_texture = grass_texture_2;
 	} else {
-		frag_texture = dirt_texture;
-	}
-	
+		frag_texture = grass_texture_2;
+	}*/
+
 	if (f_is_grass.x > 0.99) {
 		frag_texture = plant_alpha_texture;
 	}

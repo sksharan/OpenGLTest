@@ -15,6 +15,9 @@ public:
 	/* Get all the PerlinHeightmapObjects created */
 	static std::vector<PerlinHeightmapObject*>& getPerlinHeightmapObjects();
 
+	/* Given an (X, Z) coordinate in world space, returns the height of this heightmap at that location. */
+	float getY(float x_world_pos, float y_world_pos);
+
 	void render();
 
 private:

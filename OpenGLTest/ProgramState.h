@@ -10,8 +10,19 @@ continue to run). */
 
 /* Struct representing state of the program. */
 struct ProgramState {
+	ProgramState() : wireframeEnabled(false), noClipEnabled(false), userHeight(2.5f) {}
+
 	/* False while program is to continue running. */
 	bool done;
+
+	/* True iff wireframe mode is enabled. */
+	bool wireframeEnabled;
+
+	/* True iff the user can fly freely around the scene. */
+	bool noClipEnabled;
+
+	/* User's "height", used to lift the camera off of the ground when 'noClipEnabled' is false. */
+	float userHeight;
 
 	/* All OpenGL programs that were created. */
 	std::vector<GLuint> allPrograms;

@@ -9,6 +9,8 @@
 #include "AABBObject.h"
 #include "OBBObject.h"
 #include "EnumRenderMode.h"
+#include "EnumTransformation.h"
+#include "LandscapeManager.h"
 #include <SDL.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
@@ -25,6 +27,7 @@
 	K : hide OBB of the currently selected object
 	L : toggle whether or not the currently selected object is affected by lighting calculations
 	T : toggle wireframe mode on/off
+	Y : toggle free-flying camera mode on/off
 	Z : change to translate mode (then manipulate object with ALL ARROW KEYS, LSHIFT, SPACEBAR)
 	X : change to scale mode (then manipulate object with LEFT AND RIGHT ARROW KEYS)
 	C : change to rotate mode (then manipulate object with ALL ARROW KEYS)
@@ -34,13 +37,6 @@
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
-/* True iff wireframe mode is enabled. */
-bool wireframeEnabled = false;
-
-/* An enum for the different transformations that a user can make to an object. */
-enum Transformation {
-	TRANSLATE, SCALE, ROTATE
-};
 Transformation transformationMode = TRANSLATE;
 
 /* Function protoypes. */
@@ -54,7 +50,11 @@ void handleKeyInput(Scene& scene) {
 	if (keystate[SDL_SCANCODE_W]) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getDirection() * delta_time * movement_speed;
+		if (!programState.noClipEnabled) {
+			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+		}
 		mainViewer.setPosition(position);
+
 		if (KEYHANDLER_DEBUG) {
 			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
@@ -64,7 +64,11 @@ void handleKeyInput(Scene& scene) {
 	if (keystate[SDL_SCANCODE_A]) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getRightVector() * delta_time * movement_speed;
+		if (!programState.noClipEnabled) {
+			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+		}
 		mainViewer.setPosition(position);
+
 		if (KEYHANDLER_DEBUG) {
 			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
@@ -74,7 +78,11 @@ void handleKeyInput(Scene& scene) {
 	if (keystate[SDL_SCANCODE_S]) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getDirection() * delta_time * movement_speed;
+		if (!programState.noClipEnabled) {
+			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+		}
 		mainViewer.setPosition(position);
+
 		if (KEYHANDLER_DEBUG) {
 			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
@@ -84,7 +92,11 @@ void handleKeyInput(Scene& scene) {
 	if (keystate[SDL_SCANCODE_D]) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getRightVector() * delta_time * movement_speed;
+		if (!programState.noClipEnabled) {
+			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+		}
 		mainViewer.setPosition(position);
+
 		if (KEYHANDLER_DEBUG) {
 			printf("viewer position: %f, %f, %f\n", position.x, position.y, position.z);
 		}
@@ -101,13 +113,17 @@ void handleKeyInputNC(SDL_Event event, Scene& scene) {
 
 	/* T : toggle wirframe mode on/off */
 	case SDLK_t:
-		if (wireframeEnabled) {
+		if (programState.wireframeEnabled) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		}
-		else {
+		} else {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
-		wireframeEnabled = !wireframeEnabled;
+		programState.wireframeEnabled = !programState.wireframeEnabled;
+		break;
+
+	/* Y : toggle free-flying camera mode on/off */
+	case SDLK_y:
+		programState.noClipEnabled = !programState.noClipEnabled;
 		break;
 
 	/* M: toggle mouse-look mode on/off */

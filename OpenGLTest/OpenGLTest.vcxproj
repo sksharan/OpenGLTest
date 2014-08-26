@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABBObject.h" />
-    <ClInclude Include="ChunkManager.h" />
+    <ClInclude Include="LandscapeManager.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="EnumRenderMode.h" />
     <ClInclude Include="EnumTransformation.h" />
@@ -47,6 +47,7 @@
     <ClCompile Include="InitGLEW.cpp" />
     <ClCompile Include="InitSDL.cpp" />
     <ClCompile Include="KeyHandler.cpp" />
+    <ClCompile Include="LandscapeManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MatrixTransform.cpp" />

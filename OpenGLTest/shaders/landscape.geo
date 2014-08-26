@@ -115,11 +115,13 @@ void main() {
 	for (int i = 0; i < gl_in.length(); i++) {
 		//check to see if grass should be generated at this location (it should not grow on rock or dirt)
 		float tex_dot_prod = dot(g_normal[i], vec3(0, 1, 0));
-		if (tex_dot_prod < 0.875) continue;
+		if (length(g_eye_position[i]) > 100 || tex_dot_prod < 0.98) {
+		    continue;
+		}
 
-		float width = 0.75f;
-		float height = 0.75f;
-		float length = 0.75f;
+		float width = 1.15f;
+		float height = 0.45f;
+		float length = 1.15f;
 		vec4 position = g_world_position[i];
 
 		genHorizontalGrassPlane(i, position, width, height, length);
