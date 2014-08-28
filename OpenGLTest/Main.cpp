@@ -16,8 +16,9 @@
 #include "PerlinHeightmapObject.h"
 #include "LandscapeManager.h"
 #include "Scene.h"
-#include "Test.h"
+#include "ObjectGenerator.h"
 #include "Util.h"
+#include "PointLight.h"
 #include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -37,16 +38,7 @@ int main(int argc, char** argv) {
 	/* Enables OpenGL features as needed (e.g. depth buffering, culling, etc.) */
 	setupGLEnables();
 
-	/* Hide the mouse cursor. */
-	SDL_ShowCursor(0);
-
-	/* Enable mouse-look mode and force the mouse cursor to be at the center of the window. */
-	programState.mouseLookModeEnabled = true;
-	int half_width = mainWindow.width / 2;
-	int half_height = mainWindow.height / 2;
-	SDL_WarpMouseInWindow(mainWindow.window, half_width, half_height);
-
-	/* Set up the OpenGL program objects. */
+	/* Set up the OpenGL shader and program objects. */
 	GLuint default_vert_shader = createShader("shaders/default.vert", GL_VERTEX_SHADER);
 	GLuint default_frag_shader = createShader("shaders/default.frag", GL_FRAGMENT_SHADER);
 	GLuint landscape_vert_shader = createShader("shaders/landscape.vert", GL_VERTEX_SHADER);
@@ -54,7 +46,6 @@ int main(int argc, char** argv) {
 	GLuint landscape_frag_shader = createShader("shaders/landscape.frag", GL_FRAGMENT_SHADER);
 	GLuint default_program = createProgram(default_vert_shader, default_frag_shader);
 	GLuint landscape_program = createProgram(landscape_vert_shader, landscape_geo_shader, landscape_frag_shader);
-	//GLuint landscape_program = createProgram(default_vert_shader, landscape_frag_shader);
 	programState.allPrograms.push_back(default_program);
 	programState.allPrograms.push_back(landscape_program);
 
@@ -85,24 +76,9 @@ int main(int argc, char** argv) {
 	}
 
 	/* Create a new Scene. */
-	Scene scene("test", glm::vec4(0.7, 0.76, 0.85, 1.0), 1.0);
+	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
-	/* Create the objects and add them to the Scene. */
-	RenderableObject* square = genTestSquare(glm::vec3(0, 1.5, -2), 6.0);
-	scene.addObject(square);
-
-	OBJObject* tower = genTower();
-	scene.addObject((RenderableObject*)tower);
-
-	OBJObject* suzanne = genSuzanne();
-	scene.addObject((RenderableObject*)suzanne);
-
-	//OBJObject* dragon = genDragon();
-	//scene.addObject((RenderableObject*)dragon);
-
-	HeightmapObject* hm = genHeightmapObject(glm::vec3(0, 0, 100));
-	scene.addObject((RenderableObject*)hm);
-
+	/* Create objects (just the landscape in this case) and add them to the Scene. */
 	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0));
 	scene.addObject((RenderableObject*)phm);
 
@@ -111,6 +87,15 @@ int main(int argc, char** argv) {
 
 	/* Create the lights. */
 	PointLight light1(glm::vec3(50, 25, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
+
+	/* Hide the mouse cursor. */
+	SDL_ShowCursor(0);
+
+	/* Enable mouse-look mode and force the mouse cursor to be at the center of the window. */
+	programState.mouseLookModeEnabled = true;
+	int half_width = mainWindow.width / 2;
+	int half_height = mainWindow.height / 2;
+	SDL_WarpMouseInWindow(mainWindow.window, half_width, half_height);
 
 	/* Begin the main loop. */
 	programState.done = false;

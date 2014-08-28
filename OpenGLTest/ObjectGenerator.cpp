@@ -1,20 +1,15 @@
-#include "Test.h"
+#include "ObjectGenerator.h"
 #include <vector>
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-RenderableObject* genTestSquare(glm::vec3 center_location, float scaling_factor) {
-	/* Define vertices. */
-	float x = center_location.x;
-	float y = center_location.y;
-	float z = center_location.z;
-
+RenderableObject* genTestSquare(float scaling_factor) {
 	std::vector<float> vertices = {
-		x - 0.5f, y + 0.5f, z,  //top left
-		x - 0.5f, y - 0.5f, z,  //bottom left
-		x + 0.5f, y - 0.5f, z,  //bottom right
-		x + 0.5f, y + 0.5f, z  //top right
+		-0.5f,  0.5f, 0,  //top left
+		-0.5f, -0.5f, 0,  //bottom left
+		 0.5f, -0.5f, 0,  //bottom right
+		 0.5f,  0.5f, 0  //top right
 	};
 
 	for (int i = 0; i < vertices.size(); i++) {
@@ -67,33 +62,7 @@ OBJObject* genTower() {
 	return new OBJObject("tower_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
 }
 
-OBJObject* genSuzanne() {
-	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
-	glm::vec4 diffuse(0.5, 0.5, 0.5, 1.0);
-	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
-	float shininess = 15.0f;
-
-	std::string texture_filename = "textures/red.jpg";
-
-	std::string obj_filename = "obj/suzanne.obj";
-
-	return new OBJObject("suzanne_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
-}
-
-OBJObject* genDragon() {
-	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
-	glm::vec4 diffuse(0.5, 0.5, 0.5, 1.0);
-	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
-	float shininess = 15.0f;
-
-	std::string texture_filename = "textures/black.jpg";
-
-	std::string obj_filename = "obj/dragon.obj";
-
-	return new OBJObject("dragon_obj", true, true, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0], obj_filename);
-}
-
-HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
+HeightmapObject* genHeightmapObject() {
 	glm::vec4 ambient(1.0, 1.0, 1.0, 1.0);
 	glm::vec4 diffuse(1.0, 0.5, 0.0, 1.0);
 	glm::vec4 specular(1.0, 1.0, 1.0, 1.0);
@@ -108,7 +77,7 @@ HeightmapObject* genHeightmapObject(glm::vec3 start_loc) {
 	float amplitude = 25.0;
 
 	return new HeightmapObject("heightmap", true, false, ambient, diffuse, specular, shininess, texture_filename, programState.allPrograms[0],
-		heightmap_filename, start_loc, length, spacing, amplitude);
+		heightmap_filename, glm::vec3(0, 0, 0), length, spacing, amplitude);
 }
 
 PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc) {

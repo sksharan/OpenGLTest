@@ -11,6 +11,7 @@
 #include "EnumRenderMode.h"
 #include "EnumTransformation.h"
 #include "LandscapeManager.h"
+#include "ObjectGenerator.h"
 #include <SDL.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
@@ -31,6 +32,10 @@
 	Z : change to translate mode (then manipulate object with ALL ARROW KEYS, LSHIFT, SPACEBAR)
 	X : change to scale mode (then manipulate object with LEFT AND RIGHT ARROW KEYS)
 	C : change to rotate mode (then manipulate object with ALL ARROW KEYS)
+	1 : generate a test square (RenderableObject) at the viewer's location
+	2 : generate a tower (OBJObject) at the viewer's location
+	3 : generate a HeightmapObject at the viewer's location
+	4 : generate a PerlinHeightmapObject at the viewer's location
 */
 
 #define KEYHANDLER_DEBUG 0
@@ -171,7 +176,8 @@ void handleObjects(SDL_Event event, Scene& scene) {
 		if (currObject->getRenderMode() == RENDERMODE_NORMALS) {
 			currObject->setRenderMode(RENDERMODE_TEXTURED);
 			printf("changing render mode of %s to RENDERMODE_TEXTURED\n", scene.getCurrObject()->getName().c_str());
-		} else {
+		}
+		else {
 			currObject->setRenderMode(RENDERMODE_NORMALS);
 			printf("changing render mode of %s to RENDERMODE_NORMALS\n", scene.getCurrObject()->getName().c_str());
 		}
@@ -228,9 +234,11 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, -translation_factor)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
+		}
+		else if (transformationMode == SCALE) {
 			//does nothing
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
@@ -243,9 +251,11 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, 0.0f, translation_factor)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
+		}
+		else if (transformationMode == SCALE) {
 			//does nothing
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(1.0f, 0.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
@@ -258,11 +268,13 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(-translation_factor, 0.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
-			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(1.0/scaling_factor, 1.0/scaling_factor, 1.0/scaling_factor)));
+		}
+		else if (transformationMode == SCALE) {
+			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(1.0 / scaling_factor, 1.0 / scaling_factor, 1.0 / scaling_factor)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), -rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
@@ -275,26 +287,30 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(translation_factor, 0.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
+		}
+		else if (transformationMode == SCALE) {
 			currObject->setModelMatrix(glm::scale(currObject->getModelMatrix(), glm::vec3(scaling_factor, scaling_factor, scaling_factor)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			currObject->setModelMatrix(glm::rotate(currObject->getModelMatrix(), rotation_factor, glm::vec3(0.0f, 1.0f, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
 		}
 		break;
 
-    /* LSHIFT : depends on currently selected object (see Controls comment at top of file) */
+	/* LSHIFT : depends on currently selected object (see Controls comment at top of file) */
 	case SDLK_LSHIFT:
 		if (transformationMode == TRANSLATE) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, -translation_factor, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
+		}
+		else if (transformationMode == SCALE) {
 			//does nothing
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			//does nothing
 		}
 		break;
@@ -305,12 +321,49 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			currObject->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(0.0f, translation_factor, 0.0f)));
 			if (scene.getCurrAABB()->isVisible()) scene.getCurrAABB()->calculateAABB();
 			if (scene.getCurrOBB()->isVisible()) scene.getCurrOBB()->calculateOBB();
-		} else if (transformationMode == SCALE) {
+		}
+		else if (transformationMode == SCALE) {
 			//does nothing
-		} else if (transformationMode == ROTATE) {
+		}
+		else if (transformationMode == ROTATE) {
 			//does nothing
 		}
 		break;
+
+	/* 1 : generate a test square (RenderableObject) at the viewer's location */
+	case SDLK_1:
+		{
+			RenderableObject* object = genTestSquare(3.0f);
+			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+			scene.addObject(object);
+			break;
+		}
+
+	/* 2 : generate a tower (OBJObject) at the viewer's location */
+	case SDLK_2:
+		{
+			RenderableObject* object = genTower();
+			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+			scene.addObject(object);
+			break;
+		}
+
+	/* 3 : generate a HeightmapObject at the viewer's location */
+	case SDLK_3:
+		{
+			RenderableObject* object = genHeightmapObject();
+			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+			scene.addObject(object);
+			break;
+		}
+
+	/* 4 : generate a PerlinHeightmapObject at the viewer's location */
+	case SDLK_4:
+		{
+			RenderableObject* object = genPerlinHeightmapObject(mainViewer.getPosition());
+			scene.addObject(object);
+			break;
+		}
 
 	default:
 		break;

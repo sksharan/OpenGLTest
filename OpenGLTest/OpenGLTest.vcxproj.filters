@@ -37,9 +37,6 @@
     <Filter Include="src\light">
       <UniqueIdentifier>{87080235-9dc7-44fd-b2d2-337018d15ab8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\test">
-      <UniqueIdentifier>{b3ed91c8-b8f8-4319-bd40-238a59f4d287}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\ray">
       <UniqueIdentifier>{3fe94a74-1730-4b26-a526-c1754edd379e}</UniqueIdentifier>
     </Filter>
@@ -99,9 +96,6 @@
     <ClInclude Include="PointLight.h">
       <Filter>src\light</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>src\test</Filter>
-    </ClInclude>
     <ClInclude Include="EnumRenderMode.h">
       <Filter>src\globals</Filter>
     </ClInclude>
@@ -128,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="LandscapeManager.h">
       <Filter>src\globals</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGenerator.h">
+      <Filter>src\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +182,6 @@
     <ClCompile Include="PointLight.cpp">
       <Filter>src\light</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>src\test</Filter>
-    </ClCompile>
     <ClCompile Include="AABBObject.cpp">
       <Filter>src\object</Filter>
     </ClCompile>
@@ -208,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="LandscapeManager.cpp">
       <Filter>src\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGenerator.cpp">
+      <Filter>src\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
