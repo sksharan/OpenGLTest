@@ -67,7 +67,7 @@ out vec4 frag_color;
 parts are green, and forward-facing parts are blue. Any negative values are
 clamped to 0. See http://antongerdelan.net/opengl/debugshaders.html for more details. */
 vec4 testNormals() {
-    return vec4(f_normal, 1.0); 
+    return vec4(f_eye_normal, 1.0); 
 }
 
 /* Uses the Phong lighting equation to calculate the color of this fragment as if

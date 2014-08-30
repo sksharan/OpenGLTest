@@ -79,14 +79,14 @@ int main(int argc, char** argv) {
 	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
 	/* Create objects (just the landscape in this case) and add them to the Scene. */
-	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0));
+	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(-128, 0, 128));
 	scene.addObject((RenderableObject*)phm);
 
 	/* Register the PerlinHeightmapObject as the current landscape. The user can choose to "walk" on this object. */
 	landscapeManager.landscape = phm;
 
 	/* Create the lights. */
-	PointLight light1(glm::vec3(50, 25, -50), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
+	PointLight light1(glm::vec3(10, 10, 0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Hide the mouse cursor. */
 	SDL_ShowCursor(0);

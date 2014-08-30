@@ -40,9 +40,6 @@
     <Filter Include="src\ray">
       <UniqueIdentifier>{3fe94a74-1730-4b26-a526-c1754edd379e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\noiseutils_lib">
-      <UniqueIdentifier>{9da543d7-ad77-4d51-b65f-ca4250a92ab0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -116,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="PerlinHeightmapObject.h">
       <Filter>src\object</Filter>
-    </ClInclude>
-    <ClInclude Include="noiseutils\noiseutils.h">
-      <Filter>src\noiseutils_lib</Filter>
     </ClInclude>
     <ClInclude Include="LandscapeManager.h">
       <Filter>src\globals</Filter>
@@ -196,9 +190,6 @@
     </ClCompile>
     <ClCompile Include="PerlinHeightmapObject.cpp">
       <Filter>src\object</Filter>
-    </ClCompile>
-    <ClCompile Include="noiseutils\noiseutils.cpp">
-      <Filter>src\noiseutils_lib</Filter>
     </ClCompile>
     <ClCompile Include="LandscapeManager.cpp">
       <Filter>src\globals</Filter>
