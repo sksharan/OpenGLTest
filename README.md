@@ -1,18 +1,25 @@
-Sources used:
+OpenGLTest is a C++ program I’ve been writing to learn more about OpenGL and graphics programming in general.
 
-http://www.opengl-tutorial.org/beginners-tutorials/tutorial-6-keyboard-and-mouse/
+Currently, this program offers the following features:
 
-http://www.arcsynthesis.org/gltut/Basics/Tut01%20Making%20Shaders.html
+•	Implementation of the Phong reflection model using point lights
 
-http://antongerdelan.net/opengl/
+•	Object creation via Wavefront OBJ files (files that encode information about 3D models)
 
-https://github.com/OpenGLInsights/OpenGLInsightsCode/blob/master/Chapter%2026%20Indexing%20Multiple%20Vertex%20Arrays/article/suzanne.obj
+•	Terrain creation via height maps (greyscale images that encode height information)
 
-http://insanecoding.blogspot.com/2011/11/how-to-read-in-file-in-c.html
+•	Generation of procedural, multi-textured landscapes using Perlin noise
 
-http://www.chadvernon.com/blog/resources/directx9/terrain-generation-with-a-heightmap/
+•	Procedurally-generated grass that renders only within a certain distance of the user and only on appropriate surfaces (e.g. grass won’t grow on a steep rocky cliff)
 
-TODO:
+•	Creation of Axis-Aligned Bounding Boxes (AABB) and Oriented Bounding Boxes (OBB) for all objects
 
-- Will add suzanne.obj to obj folder
-- Will implement correct normals for heightmaps
+•	Users can generate a set of predefined objects through simple key presses
+
+•	Two movement modes: users can freely fly around the scene or simulate walking on the landscape itself
+
+•	Settings of one object (e.g. visibility, lighting, scale, position) can be modified independently of all other objects in the scene
+
+•	Objects can be selected by clicking on them with the mouse cursor (this mouse-picking is done via an algorithm that checks for ray-AABB intersections)
+
+A more detailed description of the program (in pdf format) can be found at https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/readme
