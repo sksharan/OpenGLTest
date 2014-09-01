@@ -13,3 +13,6 @@ Currently, this program offers the following features:
 <br>•	Objects can be selected by clicking on them with the mouse cursor (this mouse-picking is done via an algorithm that checks for ray-AABB intersections)<br/>
 
 A more detailed description of the program (in pdf format) can be found at https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/readme
+
+And images from the program can be found at
+https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/photos
