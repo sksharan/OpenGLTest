@@ -56,7 +56,11 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getDirection() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+				std::cout << "no landscape to walk on!" << std::endl;
+			} else {
+				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+			}
 		}
 		mainViewer.setPosition(position);
 
@@ -70,7 +74,12 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getRightVector() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+				std::cout << "no landscape to walk on!" << std::endl;
+			}
+			else {
+				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+			}
 		}
 		mainViewer.setPosition(position);
 
@@ -84,7 +93,12 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getDirection() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+				std::cout << "no landscape to walk on!" << std::endl;
+			}
+			else {
+				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+			}
 		}
 		mainViewer.setPosition(position);
 
@@ -98,7 +112,12 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getRightVector() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			position.y = landscapeManager.landscape->getY(position.x, position.z) + programState.userHeight;
+			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+				std::cout << "no landscape to walk on!" << std::endl;
+			}
+			else {
+				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+			}
 		}
 		mainViewer.setPosition(position);
 
@@ -152,15 +171,47 @@ void handleKeyInputNC(SDL_Event event, Scene& scene) {
 /* Function that specifically handles selection and manipulation of objects, given
 an SDL_Event. */
 void handleObjects(SDL_Event event, Scene& scene) {
-	RenderableObject* currObject = scene.getCurrObject();
+	RenderableObject* object;
+	switch (event.key.keysym.sym) {
+	/* 1 : generate a test square (RenderableObject) at the viewer's location */
+	case SDLK_1:
+		object = genTestSquare(3.0f);
+		object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+		scene.addObject(object);
+		break;
 
-	//return if there are no objects to manipulate
-	if (currObject == NULL) {
-		return;
+	/* 2 : generate a tower (OBJObject) at the viewer's location */
+	case SDLK_2:
+		object = genTower();
+		object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+		scene.addObject(object);
+		break;
+
+	/* 3 : generate a HeightmapObject at the viewer's location */
+	case SDLK_3:
+		object = genHeightmapObject();
+		object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+		scene.addObject(object);
+		break;
+
+	/* 4 : generate a PerlinHeightmapObject at the viewer's location */
+	case SDLK_4:
+		object = genPerlinHeightmapObject(mainViewer.getPosition());
+		object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+		scene.addObject(object);
+		break;
+
+	default:
+		break;
 	}
 
-	switch (event.key.keysym.sym) {
 
+	RenderableObject* currObject = scene.getCurrObject();
+	if (currObject == NULL) {
+		return;  //return if there are no objects to manipulate
+	}
+	switch (event.key.keysym.sym) {
+	
 	/* E: go to next object. */
 	case SDLK_e:
 		scene.changeToNextObject();
@@ -329,41 +380,6 @@ void handleObjects(SDL_Event event, Scene& scene) {
 			//does nothing
 		}
 		break;
-
-	/* 1 : generate a test square (RenderableObject) at the viewer's location */
-	case SDLK_1:
-		{
-			RenderableObject* object = genTestSquare(3.0f);
-			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
-			scene.addObject(object);
-			break;
-		}
-
-	/* 2 : generate a tower (OBJObject) at the viewer's location */
-	case SDLK_2:
-		{
-			RenderableObject* object = genTower();
-			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
-			scene.addObject(object);
-			break;
-		}
-
-	/* 3 : generate a HeightmapObject at the viewer's location */
-	case SDLK_3:
-		{
-			RenderableObject* object = genHeightmapObject();
-			object->setModelMatrix(glm::translate(currObject->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
-			scene.addObject(object);
-			break;
-		}
-
-	/* 4 : generate a PerlinHeightmapObject at the viewer's location */
-	case SDLK_4:
-		{
-			RenderableObject* object = genPerlinHeightmapObject(mainViewer.getPosition());
-			scene.addObject(object);
-			break;
-		}
 
 	default:
 		break;

@@ -51,7 +51,7 @@ std::vector<PerlinHeightmapObject*>& PerlinHeightmapObject::getPerlinHeightmapOb
 }
 
 float PerlinHeightmapObject::getY(float x_world_pos, float z_world_pos) {
-	return getY(int(x_world_pos / heightmap_spacing), int(-z_world_pos / heightmap_spacing));
+	return getY(int((x_world_pos - start_position.x) / heightmap_spacing), int(-(z_world_pos - start_position.z) / heightmap_spacing));
 }
 
 float PerlinHeightmapObject::getY(int x, int z) {

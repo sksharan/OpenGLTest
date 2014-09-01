@@ -17,6 +17,12 @@
 #define MOUSEHANDLER_VIEWERPOS_DEBUG 0
 #define MOUSEHANDLER_AABB_INTERSECTION_DEBUG 0
 
+/* These varaibles are used in handleMouseMovement() */
+Uint32 old_time = 0;
+Uint32 current_time = 0;
+float horizontal_angle = 3.14f;
+float vertical_angle = 0.0f;
+
 //Function prototypes
 void selectObjWithAABBIntersection(Scene& scene, Ray& ray);
 

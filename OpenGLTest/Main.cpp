@@ -24,12 +24,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 int main(int argc, char** argv) {
-
 	/* Initialize SDL. */
 	if (!initSDL()) {
 		return -1;
 	}
-
 	/* Initialize GLEW. */
 	if (!initGLEW()) {
 		return -2;
@@ -75,22 +73,20 @@ int main(int argc, char** argv) {
 		updateUniformNormal(program);
 	}
 
-	/* Create a new Scene. */
+	/* Create a new Scene. The objects in the Scene will all be generated at runtime. */
 	Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
-	/* Create objects (just the landscape in this case) and add them to the Scene. */
+	/* Register a landscape to walk on. This object is not added to Scene, meaning it is not an object that can be selected,
+	which is desirable since the AABB of a PerlinHeightmapObject would be too large. However, a selectable PerlinHeightmapObject
+	can be generated at runtime.*/
 	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(-128, 0, 128));
-	scene.addObject((RenderableObject*)phm);
-
-	/* Register the PerlinHeightmapObject as the current landscape. The user can choose to "walk" on this object. */
-	landscapeManager.landscape = phm;
+	landscapeManager.registerLandscape(phm);
 
 	/* Create the lights. */
 	PointLight light1(glm::vec3(10, 10, 0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4, 0.4, 0.4), glm::vec3(1.0, 1.0, 1.0), 1.0);
 
 	/* Hide the mouse cursor. */
 	SDL_ShowCursor(0);
-
 	/* Enable mouse-look mode and force the mouse cursor to be at the center of the window. */
 	programState.mouseLookModeEnabled = true;
 	int half_width = mainWindow.width / 2;

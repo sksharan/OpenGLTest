@@ -4,14 +4,15 @@
 #include "RenderableObject.h"
 #include "AABBObject.h"
 #include "OBBObject.h"
+#include "LandscapeManager.h"
 #include <vector>
 #include <string>
 
 
-/* Class representing a scene with objects in it that can be manipulated. */
+/* Class representing a scene with objects in it that can be manipulated and rendered. */
 class Scene {
 public:
-	/* Creates a new scene with the designated 'clearing_color' and 'clearing_depth' (used by glClearColr() and glClearDepth()). */
+	/* Creates a new scene with the designated 'clearing_color' and 'clearing_depth' (used by glClearColor() and glClearDepth()). */
 	Scene(std::string scene_name, glm::vec4 clearing_color, float clearing_depth);
 
 	/* Returns reference to all the objects in this scene that are to be rendered. */

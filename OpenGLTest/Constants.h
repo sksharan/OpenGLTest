@@ -21,10 +21,6 @@ be modifed in the program's lifetime. */
 /* Name of the uniform associated with the main texture for each RenderableObject. */
 #define TEXTURE_UNIFORM_STR "texture0"
 
-/* The maximum number of directional lights allowed (must correspond with the
-number in the fragment shader). */
-#define MAX_DIRECTIONAL_LIGHTS 2
-
 /* An AABB around an object named 'obj' will have the name 'obj_AABB'. */
 #define AABB_SUFFIX "_AABB"
 
@@ -55,19 +51,7 @@ extern float scaling_factor;
 /* Controls the rate of rotation for objects. */
 extern float rotation_factor;
 
-/* Time at last update. */
-extern Uint32 old_time;
-
-/* The current time. */
-extern Uint32 current_time;
-
-/* The difference between the current time and the old time. */
+/* The difference between the current time and the old time. Used in KeyHandler.cpp and MouseHandler.cpp. */
 extern float delta_time;
-
-/* Angle used in calculating mouse movement. */
-extern float horizontal_angle;
-
-/* Angle used in calculating mouse movement. */
-extern float vertical_angle;
 
 #endif

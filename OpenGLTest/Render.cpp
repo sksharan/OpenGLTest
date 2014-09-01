@@ -12,12 +12,17 @@ void render(Scene& scene) {
 	glClearDepth(clear_depth);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//begin rendering
 	for (int i = 0; i < scene.getSceneObjects().size(); i++) {
 		RenderableObject* object = scene.getSceneObjects()[i];
 		if (object->isVisible()) {
 			object->render();
 		}
 	}
+	if (landscapeManager.getLandscape(mainViewer) != NULL) {
+		landscapeManager.getLandscape(mainViewer)->render();
+	}
+	//end rendering
 
 	SDL_GL_SwapWindow(mainWindow.window);
 }

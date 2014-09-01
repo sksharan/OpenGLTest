@@ -18,12 +18,4 @@ float scaling_factor = 1.2f;
 
 float rotation_factor = 2.0f;
 
-Uint32 old_time = 0;
-
-Uint32 current_time = 0;
-
 float delta_time = 0.0f;
-
-float horizontal_angle = 3.14f;
-
-float vertical_angle = 0.0f;
