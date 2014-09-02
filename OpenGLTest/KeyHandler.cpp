@@ -197,7 +197,7 @@ void handleObjects(SDL_Event event, Scene& scene) {
 	/* 4 : generate a PerlinHeightmapObject at the viewer's location */
 	case SDLK_4:
 		object = genPerlinHeightmapObject(mainViewer.getPosition());
-		object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
+		//object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
 		scene.addObject(object);
 		break;
 

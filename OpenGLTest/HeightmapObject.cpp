@@ -49,7 +49,7 @@ void HeightmapObject::generateHeightmap() {
 		for (int x = 0; x < heightmap_length; x++, position += glm::vec3(heightmap_spacing, 0, 0)) {
 			//add vertex
 			vertices.push_back(position.x);
-			vertices.push_back(getY(x, z));
+			vertices.push_back(getY(x, z) + position.y);
 			vertices.push_back(position.z);
 
 			//add texcoord
