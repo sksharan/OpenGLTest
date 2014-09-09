@@ -19,4 +19,4 @@ And images from the program can be found at
 https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/photos
 
 ![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/scene.jpg)
-
+![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/pointlight.jpg)
