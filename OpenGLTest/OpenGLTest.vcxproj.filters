@@ -224,5 +224,14 @@
     <Library Include="glew-1.10.0\lib\Release\Win32\glew32.lib">
       <Filter>src\lib</Filter>
     </Library>
+    <Library Include="libnoise\bin\libnoise.lib">
+      <Filter>src\lib</Filter>
+    </Library>
+    <Library Include="SDL2-2.0.3\lib\x64\SDL2.lib">
+      <Filter>src\lib</Filter>
+    </Library>
+    <Library Include="SDL2-2.0.3\lib\x64\SDL2main.lib">
+      <Filter>src\lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>

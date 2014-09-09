@@ -76,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="glew-1.10.0\lib\Release\Win32\glew32.lib" />
+    <Library Include="libnoise\bin\libnoise.lib" />
+    <Library Include="SDL2-2.0.3\lib\x64\SDL2.lib" />
+    <Library Include="SDL2-2.0.3\lib\x64\SDL2main.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B97D0D68-C5E2-47BD-96A7-5B06B30F3F7D}</ProjectGuid>
