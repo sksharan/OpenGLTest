@@ -70,6 +70,9 @@
     <Text Include="shaders\default.vert" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="glew-1.10.0\glew32.dll" />
+    <None Include="libnoise\bin\libnoise.dll" />
+    <None Include="SDL2-2.0.3\lib\x64\SDL2.dll" />
     <None Include="shaders\landscape.frag" />
     <None Include="shaders\landscape.geo" />
     <None Include="shaders\landscape.vert" />
@@ -79,6 +82,7 @@
     <Library Include="libnoise\bin\libnoise.lib" />
     <Library Include="SDL2-2.0.3\lib\x64\SDL2.lib" />
     <Library Include="SDL2-2.0.3\lib\x64\SDL2main.lib" />
+    <Library Include="Simple OpenGL Image Library\lib\SOIL.lib" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B97D0D68-C5E2-47BD-96A7-5B06B30F3F7D}</ProjectGuid>
@@ -112,6 +116,10 @@
     <IncludePath>$(ProjectDir)\libnoise\include;$(ProjectDir)\Simple OpenGL Image Library\src;$(ProjectDir)\glew-1.10.0\include;$(ProjectDir)\SDL2-2.0.3\include;$(ProjectDir)\glm;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\libnoise\bin;$(ProjectDir)\Simple OpenGL Image Library\lib;$(ProjectDir)\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(ProjectDir)\libnoise\include;$(ProjectDir)\Simple OpenGL Image Library\src;$(ProjectDir)\glew-1.10.0\include;$(ProjectDir)\SDL2-2.0.3\include;$(ProjectDir)\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libnoise\bin;$(ProjectDir)\Simple OpenGL Image Library\lib;$(ProjectDir)\glew-1.10.0\lib\Release\Win32;$(ProjectDir)\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -136,6 +144,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SOIL.lib;libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
