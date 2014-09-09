@@ -1,4 +1,3 @@
-<font face="Consolas">
 
 OpenGLTest is a C++ program I’ve been writing to learn more about OpenGL and graphics programming in general.
 
@@ -19,4 +18,5 @@ A more detailed description of the program (in pdf format) can be found at https
 And images from the program can be found at
 https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/photos
 
-</font>
+![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/scene.jpg)
+
