@@ -40,6 +40,9 @@
     <Filter Include="src\ray">
       <UniqueIdentifier>{3fe94a74-1730-4b26-a526-c1754edd379e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\lib">
+      <UniqueIdentifier>{68f9408c-ffe8-4e69-ab82-ad7e4ce673a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitSDL.h">
@@ -216,5 +219,10 @@
     <None Include="shaders\landscape.vert">
       <Filter>src\shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="glew-1.10.0\lib\Release\Win32\glew32.lib">
+      <Filter>src\lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>
