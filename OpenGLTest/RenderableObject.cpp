@@ -1,9 +1,11 @@
 #include "RenderableObject.h"
 #include "MatrixTransform.h"
+#include "Window.h"
 #include <SOIL.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <limits>
+#include <SDL.h>
 
 #define RENDERABLEOBJECT_DEBUG 0
 
@@ -163,6 +165,11 @@ void RenderableObject::initRenderableObjectStart(std::string name, bool isVisibl
 void RenderableObject::initRenderableObjectEnd() {
 	initVao();
 	initTexture();
+
+	//shift the mouse back to the center in case user moved it during object creation
+	int half_width = mainWindow.width / 2;
+	int half_height = mainWindow.height / 2;
+	SDL_WarpMouseInWindow(mainWindow.window, half_width, half_height);
 }
 
 void RenderableObject::initVao() {

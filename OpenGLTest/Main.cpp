@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
 	/* Register a landscape to walk on. This object is not added to Scene, meaning it is not an object that can be selected,
 	which is desirable since the AABB of a PerlinHeightmapObject would be too large. However, a selectable PerlinHeightmapObject
 	can be generated at runtime.*/
-	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(-128, 0, 128));
+	PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0), 64);
 	landscapeManager.registerLandscape(phm);
 
 	/* Create the lights. */

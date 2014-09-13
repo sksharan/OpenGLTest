@@ -56,10 +56,10 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getDirection() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+			if (landscapeManager.getRegisteredLandscape(mainViewer) == NULL) {
 				std::cout << "no landscape to walk on!" << std::endl;
 			} else {
-				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+				position.y = landscapeManager.getRegisteredLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
 			}
 		}
 		mainViewer.setPosition(position);
@@ -74,11 +74,11 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getRightVector() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+			if (landscapeManager.getRegisteredLandscape(mainViewer) == NULL) {
 				std::cout << "no landscape to walk on!" << std::endl;
 			}
 			else {
-				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+				position.y = landscapeManager.getRegisteredLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
 			}
 		}
 		mainViewer.setPosition(position);
@@ -93,11 +93,11 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position -= mainViewer.getDirection() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+			if (landscapeManager.getRegisteredLandscape(mainViewer) == NULL) {
 				std::cout << "no landscape to walk on!" << std::endl;
 			}
 			else {
-				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+				position.y = landscapeManager.getRegisteredLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
 			}
 		}
 		mainViewer.setPosition(position);
@@ -112,11 +112,11 @@ void handleKeyInput(Scene& scene) {
 		glm::vec3 position = mainViewer.getPosition();
 		position += mainViewer.getRightVector() * delta_time * movement_speed;
 		if (!programState.noClipEnabled) {
-			if (landscapeManager.getLandscape(mainViewer) == NULL) {
+			if (landscapeManager.getRegisteredLandscape(mainViewer) == NULL) {
 				std::cout << "no landscape to walk on!" << std::endl;
 			}
 			else {
-				position.y = landscapeManager.getLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
+				position.y = landscapeManager.getRegisteredLandscape(mainViewer)->getY(position.x, position.z) + programState.userHeight;
 			}
 		}
 		mainViewer.setPosition(position);
@@ -196,7 +196,7 @@ void handleObjects(SDL_Event event, Scene& scene) {
 
 	/* 4 : generate a PerlinHeightmapObject at the viewer's location */
 	case SDLK_4:
-		object = genPerlinHeightmapObject(mainViewer.getPosition());
+		object = genPerlinHeightmapObject(mainViewer.getPosition(), 64);
 		//object->setModelMatrix(glm::translate(object->getModelMatrix(), glm::vec3(mainViewer.getPosition().x, mainViewer.getPosition().y, mainViewer.getPosition().z)));
 		scene.addObject(object);
 		break;

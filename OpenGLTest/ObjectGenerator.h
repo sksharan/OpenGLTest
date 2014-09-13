@@ -18,7 +18,7 @@ HeightmapObject* genHeightmapObject();
 
 /* Generates a heightmap whose height values are determined by Perlin noise equations.
 'start_loc' is the point to start generating the object from and will influence the
-geometry of the generated object. */
-PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc);
+geometry of the generated object. 'length' determines the dimensions of the heightmap. */
+PerlinHeightmapObject* genPerlinHeightmapObject(glm::vec3 start_loc, int length);
 
 #endif

@@ -19,8 +19,12 @@ void render(Scene& scene) {
 			object->render();
 		}
 	}
-	if (landscapeManager.getLandscape(mainViewer) != NULL) {
-		landscapeManager.getLandscape(mainViewer)->render();
+	/*if (landscapeManager.getRegisteredLandscape(mainViewer) != NULL) {
+		landscapeManager.getRegisteredLandscape(mainViewer)->render();
+	}*/
+	std::vector<PerlinHeightmapObject*> chunks = landscapeManager.getLandscapeChunks(mainViewer);
+	for (int i = 0; i < chunks.size(); i++) {
+		chunks[i]->render();
 	}
 	//end rendering
 

@@ -55,8 +55,8 @@ float PerlinHeightmapObject::getY(float x_world_pos, float z_world_pos) {
 }
 
 float PerlinHeightmapObject::getY(int x, int z) {
-	double px = (x * heightmap_spacing + start_position.x) / heightmap_amplitude * 0.15;
-	double pz = -((z * heightmap_spacing + start_position.z) / heightmap_amplitude * 0.15);
+	double px = ((float)x * heightmap_spacing + start_position.x) / heightmap_amplitude * 0.15;
+	double pz = ((float)z * heightmap_spacing - start_position.z) / heightmap_amplitude * 0.15;
 	double value = perlin_module.GetValue(px, 1, pz);
 	return heightmap_amplitude * value;
 }

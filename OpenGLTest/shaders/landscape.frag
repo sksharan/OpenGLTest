@@ -119,16 +119,6 @@ void main() {
 		frag_texture = mix(grass_texture_1, grass_texture_2, (tex_dot_prod - 0.95) / (1 - 0.95));
 	}
 
-	/*if (tex_dot_prod < 0.75) {
-		frag_texture = rock_texture;
-	} else if (tex_dot_prod < 0.875) {
-		frag_texture = dirt_texture;
-	} else if (tex_dot_prod < 0.95) {
-		frag_texture = grass_texture_1;
-	} else {
-		frag_texture = grass_texture_2;
-	}*/
-
 	if (f_is_grass.x > 0.99) {
 		frag_texture = plant_alpha_texture;
 	}

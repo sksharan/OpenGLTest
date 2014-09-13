@@ -115,12 +115,12 @@ void main() {
 	for (int i = 0; i < gl_in.length(); i++) {
 		//check to see if grass should be generated at this location (it should not grow on rock or dirt)
 		float tex_dot_prod = dot(g_normal[i], vec3(0, 1, 0));
-		if (length(g_eye_position[i]) > 50 || tex_dot_prod < 0.98) {
+		if (length(g_eye_position[i]) > 50 || tex_dot_prod < 0.99) {
 		    continue;
 		}
 
 		float width = 1.15f;
-		float height = 0.45f;
+		float height = 0.65f;
 		float length = 1.15f;
 		vec4 position = g_world_position[i];
 
