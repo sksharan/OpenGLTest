@@ -111,6 +111,8 @@ void main() {
 	}
 	EndPrimitive();
 
+	return;
+
 	//create grass blades
 	for (int i = 0; i < gl_in.length(); i++) {
 		//check to see if grass should be generated at this location (it should not grow on rock or dirt)

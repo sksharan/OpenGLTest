@@ -63,8 +63,9 @@ float PerlinHeightmapObject::getY(int x, int z) {
 
 void PerlinHeightmapObject::addTexcoords(int x, int z) {
 	float u, v;
-	u = (float)x / 16.0f;
-	v = (float)z / 16.0f;
+	float repeat_factor = 16.0f;
+	u = (float)x / repeat_factor;
+	v = (float)z / repeat_factor;
 	texcoords.push_back(u);
 	texcoords.push_back(v);
 }

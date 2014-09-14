@@ -129,9 +129,9 @@ int main(int argc, char** argv) {
 	for (unsigned int i = 0; i < OBBObject::getOBBObjects().size(); i++) {
 		delete OBBObject::getOBBObjects()[i];
 	}
-	for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
+	/*for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
 		delete PerlinHeightmapObject::getPerlinHeightmapObjects()[i];
-	}
+	}*/
 
 	/* Deinitialize SDL. */
 	deinitSDL();

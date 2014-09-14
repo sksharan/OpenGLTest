@@ -38,7 +38,7 @@
 	4 : generate a PerlinHeightmapObject at the viewer's location
 */
 
-#define KEYHANDLER_DEBUG 0
+#define KEYHANDLER_DEBUG 1
 
 const Uint8* keystate = SDL_GetKeyboardState(NULL);
 

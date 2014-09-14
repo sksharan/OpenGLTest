@@ -13,7 +13,7 @@ void setupGLEnables() {
 
 	//backface culling
 	/*glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);*/
+	glCullFace(GL_FRONT);*/
 
 	//blending
 	glEnable(GL_BLEND);
