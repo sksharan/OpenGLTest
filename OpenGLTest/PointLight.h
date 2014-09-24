@@ -11,41 +11,41 @@ number in the fragment shader). */
 
 class PointLight : public Light {
 public:
-	/* Creates a new PointLight with the specified ambient, diffuse, and specular terms at the
-	specified position with the given intensity. Reports an error if the maximum number of lights
-	has been created already. */
-	PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float light_intensity);
+    /* Creates a new PointLight with the specified ambient, diffuse, and specular terms at the
+    specified position with the given intensity. Reports an error if the maximum number of lights
+    has been created already. */
+    PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float light_intensity);
 
-	/* Returns the position of this light (in world coordinates). */
-	glm::vec3 getPosition();
+    /* Returns the position of this light (in world coordinates). */
+    glm::vec3 getPosition();
 
 private:
-	/* Update the position uniform for this light. */
-	void updatePositionUniform();
+    /* Update the position uniform for this light. */
+    void updatePositionUniform();
 
-	/* Update the ambient uniform for this light */
-	virtual void updateAmbientUniform();
+    /* Update the ambient uniform for this light */
+    virtual void updateAmbientUniform();
 
-	/* Update the diffuse uniform for this light */
-	virtual void updateDiffuseUniform();
+    /* Update the diffuse uniform for this light */
+    virtual void updateDiffuseUniform();
 
-	/* Update the specular uniform for this light */
-	virtual void updateSpecularUniform();
+    /* Update the specular uniform for this light */
+    virtual void updateSpecularUniform();
 
-	/* Update the intensity uniform for this light. */
-	virtual void updateIntensityUniform();
+    /* Update the intensity uniform for this light. */
+    virtual void updateIntensityUniform();
 
-	/* Update uniform to indicate number of point lights active. */
-	void updateNumPLightsUniform();
+    /* Update uniform to indicate number of point lights active. */
+    void updateNumPLightsUniform();
 
-	/* Position of this light (in world coordinates) */
-	glm::vec3 pos;
+    /* Position of this light (in world coordinates) */
+    glm::vec3 pos;
 
-	/* Name of the position uniform for this light. */
-	std::string positionUniformName;
+    /* Name of the position uniform for this light. */
+    std::string positionUniformName;
 
-	/* Number of point light created so far. */
-	static int num_plights_created;
+    /* Number of point light created so far. */
+    static int num_plights_created;
 };
 
 #endif

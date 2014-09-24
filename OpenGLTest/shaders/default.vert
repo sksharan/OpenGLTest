@@ -17,12 +17,12 @@ out vec3 f_normal;
 out vec3 f_eye_normal;
 
 void main() {
-	f_world_position = modelMatrix * vec4(v_vertex, 1.0f);             //in world space
+    f_world_position = modelMatrix * vec4(v_vertex, 1.0f);             //in world space
     f_eye_position = viewMatrix * f_world_position;                    //in eye space
     gl_Position = perspectiveMatrix * f_eye_position;                  //in clip space
 
-	f_texcoord = v_texcoord;
+    f_texcoord = v_texcoord;
 
-	f_normal = v_normal;
-	f_eye_normal = normalize(normalMatrix * v_normal);                 //in eye space
+    f_normal = v_normal;
+    f_eye_normal = normalize(normalMatrix * v_normal);                 //in eye space
 }

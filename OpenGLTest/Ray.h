@@ -7,20 +7,20 @@
 by the equation R(t) = O + Dt. Fields of this ray are directly accessible.  */
 class Ray {
 public:
-	/* Makes a Ray at (0, 0, 0) facing in the -z direction. */
-	Ray();
+    /* Makes a Ray at (0, 0, 0) facing in the -z direction. */
+    Ray();
 
-	/* Creates a new ray with origin at 'origin' and facing towards 'direction.' */
-	Ray(glm::vec3 origin, glm::vec3 direction);
+    /* Creates a new ray with origin at 'origin' and facing towards 'direction.' */
+    Ray(glm::vec3 origin, glm::vec3 direction);
 
-	/* Get a position along this ray at time t. */
-	glm::vec3 getPos(float t);
+    /* Get a position along this ray at time t. */
+    glm::vec3 getPos(float t);
 
-	/* Ray origin.*/
-	glm::vec3 o;
+    /* Ray origin.*/
+    glm::vec3 o;
 
-	/* Ray direction. */
-	glm::vec3 d;
+    /* Ray direction. */
+    glm::vec3 d;
 };
 
 #endif

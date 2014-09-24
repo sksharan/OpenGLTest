@@ -16,71 +16,71 @@ a given point - see the method getY(). */
 
 class HeightmapObject : public RenderableObject {
 public:
-	/* name: name of this object
-	v: vertices of this object
-	isVisible: true iff this object is visible
-	lighting_enabled: true iff lighting calculations should affect this object
-	ambient: ambient term of this object
-	diffuse: diffuse term of this object
-	specular: specular term of this object
-	shininess: shininess term of this object
-	tex_filename: filename of the texture associated with this object
-	program_object: the program used to render this object
-	hm_filename: the name of the heightmap associated wit this object; must be length x length pixels (see below)
-	start_pos: position that generation of the heightmap will begin at. Heightmap grows in the positive x and
-	           negative z directions
+    /* name: name of this object
+    v: vertices of this object
+    isVisible: true iff this object is visible
+    lighting_enabled: true iff lighting calculations should affect this object
+    ambient: ambient term of this object
+    diffuse: diffuse term of this object
+    specular: specular term of this object
+    shininess: shininess term of this object
+    tex_filename: filename of the texture associated with this object
+    program_object: the program used to render this object
+    hm_filename: the name of the heightmap associated wit this object; must be length x length pixels (see below)
+    start_pos: position that generation of the heightmap will begin at. Heightmap grows in the positive x and
+    negative z directions
     length: the generated heightmap will be length x length vertices in dimension
-	spacing: spacing between vertices
-	amplitude: affects the height values of the generated mesh
-	*/
-	HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
-	                float shininess, std::string tex_filename, GLuint program_object, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
+    spacing: spacing between vertices
+    amplitude: affects the height values of the generated mesh
+    */
+    HeightmapObject(std::string name, bool isVisible, bool lighting_enabled, glm::vec4 ambient, glm::vec4 diffuse, glm::vec4 specular,
+        float shininess, std::string tex_filename, GLuint program_object, std::string hm_filename, glm::vec3 start_pos, int length, float spacing, float amplitude);
 
-	/* Returns all HeightmapObjects that have been created. */
-	static std::vector<HeightmapObject*>& getHeightmapObjects();
+    /* Returns all HeightmapObjects that have been created. */
+    static std::vector<HeightmapObject*>& getHeightmapObjects();
 
 protected:
-	/* A constructor that does nothing. */
-	HeightmapObject();
+    /* A constructor that does nothing. */
+    HeightmapObject();
 
-	/* Uses GL_TRIANGLE_STRIP for rendering. */
-	virtual void render();
+    /* Uses GL_TRIANGLE_STRIP for rendering. */
+    virtual void render();
 
-	/* Get the height value at a given position (x, z). We use this coordinate to represent the vertices rather than the world position,
-	so (0, 0) is the start position and (heightmap_length - 1, heightmap_length - 1) is the end position of the heightmap. The returned value
-	is in terms of world coordinates. */
-	virtual float getY(int x, int z);
+    /* Get the height value at a given position (x, z). We use this coordinate to represent the vertices rather than the world position,
+    so (0, 0) is the start position and (heightmap_length - 1, heightmap_length - 1) is the end position of the heightmap. The returned value
+    is in terms of world coordinates. */
+    virtual float getY(int x, int z);
 
-	/* Generates the heightmap and adds the data to 'vertices, 'texcoords, 'normals', and 'indices'. */
-	virtual void generateHeightmap();
+    /* Generates the heightmap and adds the data to 'vertices, 'texcoords, 'normals', and 'indices'. */
+    virtual void generateHeightmap();
 
-	/* Adds normals given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
-	virtual void addNormals(int x, int z);
+    /* Adds normals given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
+    virtual void addNormals(int x, int z);
 
-	/* Adds texcoords given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
-	virtual void addTexcoords(int x, int z);
+    /* Adds texcoords given a vertex at (X, Z). Coordinates work as described in the comment for getY() */
+    virtual void addTexcoords(int x, int z);
 
-	/* Name of the heightmap that will determine height values for this object. */
-	std::string heightmap_filename;
+    /* Name of the heightmap that will determine height values for this object. */
+    std::string heightmap_filename;
 
-	/* Generation of the heightmap starts at this position and extends in the positive x and negative z directions. */
-	glm::vec3 start_position;
+    /* Generation of the heightmap starts at this position and extends in the positive x and negative z directions. */
+    glm::vec3 start_position;
 
-	/* The heightmap is length x length vertices. */
-	int heightmap_length;
+    /* The heightmap is length x length vertices. */
+    int heightmap_length;
 
-	/* Distance between vertices. */
-	float heightmap_spacing;
+    /* Distance between vertices. */
+    float heightmap_spacing;
 
-	/* Affects the height values of the generated mesh. */
-	float heightmap_amplitude;
+    /* Affects the height values of the generated mesh. */
+    float heightmap_amplitude;
 
-	/* The pixels that make up the heightmap image (the one used to determine height values, not the texture
-	applied to the object. */
-	unsigned char* heightmap_pixels;
+    /* The pixels that make up the heightmap image (the one used to determine height values, not the texture
+    applied to the object. */
+    unsigned char* heightmap_pixels;
 
-	/* All HeightmapObjects that have been created. */
-	static std::vector<HeightmapObject*> heightmapObjects;
+    /* All HeightmapObjects that have been created. */
+    static std::vector<HeightmapObject*> heightmapObjects;
 };
 
 #endif

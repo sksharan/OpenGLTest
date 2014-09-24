@@ -22,7 +22,7 @@ in 'programState' (see ProgramState.h). Requires an OpenGL 'program'.  */
 void updateUniformNormal(GLuint program);
 
 /* Updates the normal matrix in ProgramState based on the current model and
-view matrices. Automatically called when updateUniformModel() or 
+view matrices. Automatically called when updateUniformModel() or
 updateUniformView() is called. Requires an OpenGL 'program'.  */
 void updateNormalMatrix(GLuint program);
 

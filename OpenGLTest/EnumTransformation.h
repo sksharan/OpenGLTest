@@ -3,7 +3,7 @@
 
 /* Enum representing different types of transformations. */
 enum Transformation {
-	TRANSLATE, SCALE, ROTATE
+    TRANSLATE, SCALE, ROTATE
 };
 
 #endif
