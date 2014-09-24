@@ -121,6 +121,12 @@
       <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SOIL.lib;libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)\libnoise\bin\libnoise.dll" "$(SolutionDir)\Debug"
+copy "$(ProjectDir)\Simple OpenGL Image Library\lib\SOIL.lib" "$(SolutionDir)\Debug"
+copy "$(ProjectDir)\glew-1.10.0\glew32.dll" "$(SolutionDir)\Debug"
+copy "$(ProjectDir)\SDL2-2.0.3\lib\x86\SDL2.dll" "$(SolutionDir)\Debug"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -138,6 +144,12 @@
       <SubSystem>Console</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)\libnoise\bin\libnoise.dll" "$(SolutionDir)\Release"
+copy "$(ProjectDir)\Simple OpenGL Image Library\lib\SOIL.lib" "$(SolutionDir)\Release"
+copy "$(ProjectDir)\glew-1.10.0\glew32.dll" "$(SolutionDir)\Release"
+copy "$(ProjectDir)\SDL2-2.0.3\lib\x86\SDL2.dll" "$(SolutionDir)\Release"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

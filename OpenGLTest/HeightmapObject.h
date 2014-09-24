@@ -28,7 +28,7 @@ public:
     program_object: the program used to render this object
     hm_filename: the name of the heightmap associated wit this object; must be length x length pixels (see below)
     start_pos: position that generation of the heightmap will begin at. Heightmap grows in the positive x and
-    negative z directions
+               negative z directions
     length: the generated heightmap will be length x length vertices in dimension
     spacing: spacing between vertices
     amplitude: affects the height values of the generated mesh
