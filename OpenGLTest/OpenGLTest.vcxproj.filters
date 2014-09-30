@@ -120,6 +120,9 @@
     <ClInclude Include="ObjectGenerator.h">
       <Filter>src\object</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectDeleter.h">
+      <Filter>src\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InitSDL.cpp">

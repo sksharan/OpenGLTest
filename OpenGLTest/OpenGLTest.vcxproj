@@ -25,6 +25,7 @@
     <ClInclude Include="MatrixTransform.h" />
     <ClInclude Include="MouseHandler.h" />
     <ClInclude Include="OBBObject.h" />
+    <ClInclude Include="ObjectDeleter.h" />
     <ClInclude Include="OBJObject.h" />
     <ClInclude Include="PerlinHeightmapObject.h" />
     <ClInclude Include="PointLight.h" />
