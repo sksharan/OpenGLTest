@@ -17,6 +17,7 @@
 #include "LandscapeManager.h"
 #include "Scene.h"
 #include "ObjectGenerator.h"
+#include "ObjectDeleter.h"
 #include "Util.h"
 #include "PointLight.h"
 #include <SDL.h>
@@ -76,9 +77,7 @@ int main(int argc, char** argv) {
     /* Create a new Scene. The objects in the Scene will all be generated at runtime. */
     Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
-    /* Register a landscape to walk on. This object is not added to Scene, meaning it is not an object that can be selected,
-    which is desirable since the AABB of a PerlinHeightmapObject would be too large. However, a selectable PerlinHeightmapObject
-    can be generated at runtime.*/
+    /* Register a landscape to walk on. */
     PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0), 64);
     landscapeManager.registerLandscape(phm);
 
@@ -114,24 +113,7 @@ int main(int argc, char** argv) {
     }
 
     /* Delete all objects. */
-    for (unsigned int i = 0; i < RenderableObject::getRenderableObjects().size(); i++) {
-        delete RenderableObject::getRenderableObjects()[i];
-    }
-    for (unsigned int i = 0; i < OBJObject::getOBJObjects().size(); i++) {
-        delete OBJObject::getOBJObjects()[i];
-    }
-    for (unsigned int i = 0; i < HeightmapObject::getHeightmapObjects().size(); i++) {
-        delete HeightmapObject::getHeightmapObjects()[i];
-    }
-    for (unsigned int i = 0; i < AABBObject::getAABBObjects().size(); i++) {
-        delete AABBObject::getAABBObjects()[i];
-    }
-    for (unsigned int i = 0; i < OBBObject::getOBBObjects().size(); i++) {
-        delete OBBObject::getOBBObjects()[i];
-    }
-    /*for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
-        delete PerlinHeightmapObject::getPerlinHeightmapObjects()[i];
-        }*/
+    deleteObjects();
 
     /* Deinitialize SDL. */
     deinitSDL();

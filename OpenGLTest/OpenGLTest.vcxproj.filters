@@ -200,6 +200,9 @@
     <ClCompile Include="ObjectGenerator.cpp">
       <Filter>src\object</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectDeleter.cpp">
+      <Filter>src\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="shaders\default.frag">

@@ -53,6 +53,7 @@
     <ClCompile Include="MatrixTransform.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
     <ClCompile Include="OBBObject.cpp" />
+    <ClCompile Include="ObjectDeleter.cpp" />
     <ClCompile Include="OBJObject.cpp" />
     <ClCompile Include="PerlinHeightmapObject.cpp" />
     <ClCompile Include="PointLight.cpp" />

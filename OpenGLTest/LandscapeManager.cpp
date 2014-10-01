@@ -14,7 +14,6 @@ void LandscapeManager::registerLandscape(PerlinHeightmapObject* perlin_hm) {
 }
 
 PerlinHeightmapObject* LandscapeManager::getRegisteredLandscape(Viewer& viewer) {
-    //viewer is not used right now, but can be used later if we want infinite chunked landscapes
     return landscape;
 }
 
