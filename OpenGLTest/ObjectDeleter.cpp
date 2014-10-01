@@ -16,7 +16,9 @@ void deleteObjects() {
     for (unsigned int i = 0; i < OBBObject::getOBBObjects().size(); i++) {
         delete OBBObject::getOBBObjects()[i];
     }
-    for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
+
+    // to be fixed to account for chunking algorithm
+    /*for (unsigned int i = 0; i < PerlinHeightmapObject::getPerlinHeightmapObjects().size(); i++) {
         delete PerlinHeightmapObject::getPerlinHeightmapObjects()[i];
-    }
+    }*/
 }
