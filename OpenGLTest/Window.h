@@ -8,8 +8,8 @@
 
 /* Parameters used to construct the main window. */
 const std::string WINDOW_NAME = "OpenGLTest";
-const int WINDOW_WIDTH = 1024;
-const int WINDOW_HEIGHT = 768;
+const int WINDOW_WIDTH = 1080;
+const int WINDOW_HEIGHT = 720;
 const int WINDOW_XPOS = SDL_WINDOWPOS_UNDEFINED;
 const int WINDOW_YPOS = SDL_WINDOWPOS_UNDEFINED;
 
