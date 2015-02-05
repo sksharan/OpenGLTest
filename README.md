@@ -7,15 +7,6 @@ The program creates an infinite procedural, multi-textured landscape using Perli
 
 The program supports multiple methods for creating objects in the scene. A <code>RenderableObject</code> is any object that can be rendered to the screen, and all of the following object types are subclasses of <code>RenderableObject</code>. An <code>OBJObject</code> is an object with the data that comes from Wavefront OBJ files; this project implements a basic OBJ parser but there are also libraries like Assimp that can handle parsing (http://assimp.sourceforge.net/). A <code>HeightmapObject</code> is a grid-based object with height values given by a greyscale 'heightmap' image. A <code>PerlinHeightmapObject</code> is much like a <code>HeightmapObject</code> but with height values given by a Perlin noise equation, and the infinite landscape is made up of multiple instances of <code>PerlinHeightmapObject</code>. 
 
-<br>•	Object creation via Wavefront OBJ files (files that encode information about 3D models)</br>
-<br>•	Terrain creation via height maps (greyscale images that encode height information)</br>
-<br>•	Users can generate a set of predefined objects through simple key presses</br>
-<br>• Users can apply affine transformations to these objects and change the way that they are rendered</br>
-<br>•	Axis-Aligned Bounding Boxes (AABB) and Oriented Bounding Boxes (OBB) for each object, allowing for mouse picking</br>
-<br>•	Multiple point lights can be placed, each implementing the Phong reflection model per-fragment</br>
-
-When the program is started, the user starts in the middle of a procedurally generated landscape. The user can then move around the scene and generate a variety of objects, each of which can be manipulated in various ways. The landscape is generated in chunks, and as the user moves around, new chunks are created around the user, making the world infinitely large. The controls are:
-
 <br>• <b>Moving the mouse</b>: Look around the screen. To regain control of the mouse cursor, press the M key. To go back to looking around in the scene, press the M key again.</br>
 <br>• <b>Left-click</b>: Select an object on the screen. The landscape itself cannot be selected.</br>
 <br>• <b>ESC</b>: Closes the window and terminates the program.</br>
