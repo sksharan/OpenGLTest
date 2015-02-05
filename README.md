@@ -1,10 +1,8 @@
 # OpenGLTest
+![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/opengltest.jpg)
 
-![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/test.jpg)
+OpenGLTest is a C++ program for Windows that I’ve been writing to learn more about OpenGL and graphics programming in general. The libraries used include SDL, GLEW, GLM, SOIL, and libnoise.
 
-OpenGLTest is a C++ program for Windows that I’ve been writing to learn more about OpenGL and graphics programming in general. The libraries used include SDL, GLEW, GLM, SOIL, and libnoise. The code can be built and run via the Microsoft Visual Studio Solution file included with the source code. Support for OpenGL 3.3 or higher is required to run the program.
-Features
---------
 <br>•	Generation of procedural, multi-textured landscapes using Perlin noise, and procedurally-generated grass</br>
 <br>• Chunking algorithm for landscapes that allows for infinite worlds</br>
 <br>•	Object creation via Wavefront OBJ files (files that encode information about 3D models)</br>
@@ -14,8 +12,6 @@ Features
 <br>•	Axis-Aligned Bounding Boxes (AABB) and Oriented Bounding Boxes (OBB) for each object, allowing for mouse picking</br>
 <br>•	Multiple point lights can be placed, each implementing the Phong reflection model per-fragment</br>
 
-Using the Program
--------
 When the program is started, the user starts in the middle of a procedurally generated landscape. The user can then move around the scene and generate a variety of objects, each of which can be manipulated in various ways. The landscape is generated in chunks, and as the user moves around, new chunks are created around the user, making the world infinitely large. The controls are:
 
 <br>• <b>Moving the mouse</b>: Look around the screen. To regain control of the mouse cursor, press the M key. To go back to looking around in the scene, press the M key again.</br>
