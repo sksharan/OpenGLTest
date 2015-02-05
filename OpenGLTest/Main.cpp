@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     Scene scene("test", glm::vec4(0.7, 0.7, 0.7, 1.0), 1.0);
 
     /* Register a landscape to walk on. */
-    PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0), 64);
+    PerlinHeightmapObject* phm = genPerlinHeightmapObject(glm::vec3(0, 0, 0), 128);
     landscapeManager.registerLandscape(phm);
 
     /* Create the lights. */
