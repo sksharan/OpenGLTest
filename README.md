@@ -1,11 +1,9 @@
 # OpenGLTest
 ![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/opengltest.jpg)
 
-**OpenGLTest** is a program for that I’ve been writing to learn more about OpenGL and graphics programming in general. The libraries used include SDL, GLEW, GLM, SOIL, and libnoise.
+**OpenGLTest** is a test program for that I wrote to learn more about OpenGL and graphics programming in general. The libraries used include SDL, GLEW, GLM, SOIL, and libnoise. 
 
-The program creates an infinite procedural, multi-textured landscape using Perlin noise. The landscape is generated in chunks, and grass blades are generated on the terrain through the use of a geometry shader.
-
-The program supports multiple methods for creating objects in the scene. A <code>RenderableObject</code> is any object that can be rendered to the screen, and all of the following object types are subclasses of <code>RenderableObject</code>. An <code>OBJObject</code> is an object with the data that comes from Wavefront OBJ files; this project implements a basic OBJ parser but there are also libraries like Assimp that can handle parsing (http://assimp.sourceforge.net/). A <code>HeightmapObject</code> is a grid-based object with height values given by a greyscale 'heightmap' image. A <code>PerlinHeightmapObject</code> is much like a <code>HeightmapObject</code> but with height values given by a Perlin noise equation, and the infinite landscape is made up of multiple instances of <code>PerlinHeightmapObject</code>. 
+The program creates an infinite procedural, multi-textured landscape using Perlin noise. The landscape is generated in chunks, and grass blades are generated on the terrain through the use of a geometry shader. This program also supports multiple methods for creating objects in the scene. A <code>RenderableObject</code> is any object that can be rendered to the screen, and all of the following object types are subclasses of <code>RenderableObject</code>. An <code>OBJObject</code> is an object with the data that comes from Wavefront OBJ files; this project implements a basic OBJ parser but there are also libraries like Assimp that can handle parsing (http://assimp.sourceforge.net/). A <code>HeightmapObject</code> is a grid-based object with height values given by a greyscale 'heightmap' image. A <code>PerlinHeightmapObject</code> is much like a <code>HeightmapObject</code> but with height values given by a Perlin noise equation, and the infinite landscape is made up of multiple instances of <code>PerlinHeightmapObject</code>. 
 
 The controls are:
 
