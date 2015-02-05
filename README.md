@@ -1,3 +1,6 @@
+# OpenGLTest
+
+![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/test.jpg)
 
 OpenGLTest is a C++ program for Windows that I’ve been writing to learn more about OpenGL and graphics programming in general. The libraries used include SDL, GLEW, GLM, SOIL, and libnoise. The code can be built and run via the Microsoft Visual Studio Solution file included with the source code. Support for OpenGL 3.3 or higher is required to run the program.
 Features
@@ -37,18 +40,4 @@ occurs in terms of world space.</br>
 <br>• <b>3</b>: Generates a HeightmapObject at the user’s current location. A HeightmapObject is a grid-based object
 whose height values at each vertex are determined by a grayscale “height map” image.</br>
 <br>• <b>4</b>: Generates a PerlinHeightmapObject at the user’s current location. They are just like HeightmapObjects except that the height values are determined by a Perlin noise equation.</br>
-
-Images
-------
-Images showing the program in action can be found at:
-https://github.com/sksharan/OpenGLTest/tree/master/OpenGLTest/photos
-
-![](https://github.com/sksharan/OpenGLTest/blob/master/OpenGLTest/photos/pointlight.jpg)
-
-Future Ideas
-----
-<br>• Implement normal mapping</br>
-<br>• Make grass more realistic</br>
-<br>• Allow the user to place point lights at runtime</br>
-<br>• Make the chunking algorithm more efficient by using multiple threads</br>
 
