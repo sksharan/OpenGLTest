@@ -9,6 +9,7 @@ Features
 - Supports multiple methods for creating objects in the scene. A <code>RenderableObject</code> is any object that can be rendered to the screen. An <code>OBJObject</code> is a <code>RenderableObject</code> with data that comes from Wavefront OBJ files; this project implements a basic OBJ parser but there are also libraries like Assimp that can handle parsing (http://assimp.sourceforge.net/). A <code>HeightmapObject</code> is a grid-based <code>RenderableObject</code> with height values given by a greyscale "heightmap" image. A <code>PerlinHeightmapObject</code> is much like a <code>HeightmapObject</code> but with height values given by a Perlin noise equation. The infinite landscape is made up of multiple instances of <code>PerlinHeightmapObject</code>. 
 - Axis-Aligned Bounding Boxes (AABBs) and Oriented Bounding Boxes (OBBs) are created for each object. AABBs and OBBs are called <code>AABBObject</code> and <code>OBBObject</code> in the code, and both are subclasses of <code>RenderableObject</code>.
 - Objects can be selected by clicking on them. A ray casting technique is used with AABBs to implement this mouse picking.
+- Objects can be transformed and manipulated independently of other objects (see the "Controls" section to see how objects can be manipulated).
 
 Controls
 --------
