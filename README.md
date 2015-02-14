@@ -15,16 +15,16 @@ Features
 Controls
 --------
 **Moving the mouse**: Look around the scene.<br></br>
-**Left-click**: Select an object on the screen. (The infinite landscape cannot be selected.)<br></br>
+**Left-click**: Select an object on the screen. The infinite landscape cannot be selected.<br></br>
 **ESC**: Ends the program.<br></br>
 **W, A, S, D**: Move around the scene.<br></br>
 **M**: Toggles mouselook mode on/off.<br></br>
-**Q, E**: Select the previous/next object on the list. (Current object is shown on the console).<br></br>
+**Q, E**: Select the previous/next object on the list. Current object is shown on the console.<br></br>
 **R**: Change the rendering mode of the currently selected item.<br></br>
 **H**: Toggles the visibility of the currently selected object..<br></br>
 **J**: Toggles the visibility of the currently selected object’s AABB (red box).<br></br>
 **K**: Toggles the visibility of the currently selected object’s OBB (blue box).<br></br>
-**L**: Toggles lighting calculations on the current object on/off. (Phong-reflection model is implemented per-fragment.)<br></br>
+**L**: Toggles lighting calculations on the current object on/off.<br></br>
 **T**: Toggles global wireframe rendering on/off.<br></br>
 **Y**: Toggles between walk mode and fly mode.<br></br>
 **Z**: Change to translate mode. Current object can then be translated using the ARROW KEYS, LSHIFT, and SPACEBAR.<br></br>
